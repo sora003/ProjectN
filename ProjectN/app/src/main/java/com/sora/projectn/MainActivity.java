@@ -1,5 +1,7 @@
 package com.sora.projectn;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,15 +16,21 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.sora.projectn.Service.CrawlerService;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private ListView listView;
+    private Intent intent;
+    private Context mContext;
+
 
 
 
     private ActionBarDrawerToggle mDrawerToggle;
+    //
     private String[] data = {"data1","data2","data3","data4","data5","data6"};
     private ArrayAdapter arrayAdapter;
 
@@ -31,9 +39,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        initService();
+    }
+
+    //启动Service
+    private void initService() {
+        intent = new Intent(mContext, CrawlerService.class);
+        //启动WeatherService
+        startService(intent);
+        //绑定Service
+//        bindService(intent, conn, Context.BIND_AUTO_CREATE);
     }
 
     private void init() {
+        mContext = this;
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         listView = (ListView) findViewById(R.id.lv_left_menu);
@@ -42,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         //设置Toolbar标题
         toolbar.setTitle("NBA");
         //设置标题颜色
-        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
         setSupportActionBar(toolbar);
         //设置返回键可用
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -52,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        //设置抽屉内的内容
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
         listView.setAdapter(arrayAdapter);
+
     }
 }
