@@ -3,8 +3,11 @@ package com.sora.projectn.Service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 /**
  * Created by Sora on 2016/1/11.
@@ -15,8 +18,9 @@ public class CrawlerService extends Service {
     //关联Service和Activity
     private CrawlerServiceBinder binder = new CrawlerServiceBinder();
     private OnParserCallBack callBack;
-
-    private boolean crawlered;
+    private final int CRAWLER_DATA = 0x01;
+    private final int CRAWLER_SUCCESS = 0x02;
+    private final int CRAWLER_ERROR = 0x03;
 
 
     //返回binder 使得Service的引用可以通过返回的IBinder对象得到
@@ -29,8 +33,31 @@ public class CrawlerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //爬取未完成
-        crawlered = false;
+        handler.sendEmptyMessage(CRAWLER_DATA);
+    }
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case CRAWLER_DATA:
+                    crawlerData();
+                    break;
+                case CRAWLER_SUCCESS:
+                    //爬取数据完成
+                    if (callBack != null){
+                        callBack.OnParserComplete(true);
+                    }
+                    break;
+                case CRAWLER_ERROR:
+                    Toast.makeText(CrawlerService.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    //爬取数据
+    private void crawlerData() {
+
     }
 
     //定义CrawlerServiceBinder
