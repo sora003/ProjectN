@@ -23,8 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private ListView listView;
-    private Intent intent;
-    private Context mContext;
+
 
 
 
@@ -39,20 +38,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        initService();
     }
 
-    //启动Service
-    private void initService() {
-        intent = new Intent(mContext, CrawlerService.class);
-        //启动WeatherService
-        startService(intent);
-        //绑定Service
-//        bindService(intent, conn, Context.BIND_AUTO_CREATE);
-    }
+
 
     private void init() {
-        mContext = this;
+//        mContext = this;
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         listView = (ListView) findViewById(R.id.lv_left_menu);
