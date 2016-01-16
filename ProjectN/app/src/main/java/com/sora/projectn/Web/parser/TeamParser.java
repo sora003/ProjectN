@@ -1,4 +1,4 @@
-package com.sora.projectn.Web.dataservice.impl.parser;
+package com.sora.projectn.Web.parser;
 
 /**
  * Created by Sora on 2016/1/16.

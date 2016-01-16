@@ -32,7 +32,8 @@ public class TeamData implements TeamDS{
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String line = null;
             while ((line = reader.readLine()) != null){
-                result.append(new String(line.getBytes(),"utf-8") + "\n");
+                //必须在一行中 否则用正则表达式取值时会出错
+                result.append(new String(line.getBytes(),"utf-8"));
             }
             reader.close();
         } catch (MalformedURLException e) {
