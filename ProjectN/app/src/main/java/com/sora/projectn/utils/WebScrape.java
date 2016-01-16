@@ -54,10 +54,7 @@ public class WebScrape {
 }
 
 
-//f = open('data/teams/teams.txt', 'w')
-//url = main_url + 'teams/'
-//response = urllib2.urlopen(url)
-//html = response.read()
+
 //result = re.search(r'<div class="table_container p402_hide " id="div_active">([\s\S]*?)</div>', html)
 //result = result.groups()[0].replace('\n', '')
 //result = re.findall(r'<td align="left" ><a href="/teams/(.*?)/">(.*?)</a></td>[\s\S]*?'
