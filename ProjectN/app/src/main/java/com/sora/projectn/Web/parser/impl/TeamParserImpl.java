@@ -15,12 +15,21 @@ public class TeamParserImpl implements TeamParser{
 
     @Override
     public void parseTeamList(StringBuffer result) {
-        // 取出<div class="table_container p402_hide " id="div_defunct"> 和 </div> 之间的部分
-        pattern = Pattern.compile("(.*)(<div class=\"table_container p402_hide \" id=\"div_defunct\">)(.*?)(</div>)(.*)");
+        /**
+         * group(3) 球队信息
+         */
+        pattern = Pattern.compile("(.*)(<div class=\"table_container p402_hide \" id=\"div_active\">)(.*?)(</div>)(.*)");
         matcher = pattern.matcher(result);
         if (matcher.matches()){
             String str1 = matcher.group(3);
-            pattern = Pattern.compile("");
+            /**
+             * group(3) 球队缩写
+             * group(5) 球队名
+             * group(9) 球队创建时间
+             */
+            pattern = Pattern.compile("(.*)(<td align=\"left\" ><a href=\"/teams/)(.*?)(/\">)(.*?)(</a></td>   <td align=\"left\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)()");
+            matcher = pattern.matcher(str1);
+
         }
     }
 }
