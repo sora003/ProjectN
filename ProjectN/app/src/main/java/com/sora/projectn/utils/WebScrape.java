@@ -18,8 +18,7 @@ public class WebScrape {
     private static String MAIN_URL = "http://www.basketball-reference.com/";
     //爬取内容保存路径
     private static String PATH = "D:/data";
-    //获取球队基本数据
-    private Pattern pattern_getTeamList = Pattern.compile("(.*)(<div class=\"table_container p402_hide \" id=\"div_defunct\">)(.*?)(</div>)(.*)");
+
 
     public void main(String args[]){
         getTeamList();
@@ -48,8 +47,10 @@ public class WebScrape {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(result.toString());
+//        System.out.println(result.toString());
     }
+    private Pattern pattern_getTeamList = Pattern.compile("(.*)(<div class=\"table_container p402_hide \" id=\"div_defunct\">)(.*?)(</div>)(.*)");
+
 
 }
 
