@@ -29,6 +29,7 @@ public class WelcomeActivity extends AppCompatActivity{
     }
 
 
+    //TODO 考虑到爬取数据尤其是图片是非常耗时的操作 因此考虑仅在第一次启动程序时爬取数据 可在Setting中添加更新数据库操作功能  不排除每次启动时仅更新部分数据的可行性
     //启动Service
     private void initService() {
         intent = new Intent(mContext, ScrapeService.class);
