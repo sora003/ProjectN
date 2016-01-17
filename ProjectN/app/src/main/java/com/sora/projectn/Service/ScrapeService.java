@@ -3,10 +3,14 @@ package com.sora.projectn.Service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.widget.Toast;
+
+import com.sora.projectn.Web.ioservice.TeamIO;
+import com.sora.projectn.Web.ioservice.impl.TeamIOimpl;
 
 /**
  * Created by Sora on 2016/1/11.
@@ -20,6 +24,7 @@ public class ScrapeService extends Service {
     private final int SCRAPE_DATA = 0x01;
     private final int SCRAPE_SUCCESS = 0x02;
     private final int SCRAPE_ERROR = 0x03;
+    private final int IO_ERROR = 0x04;
 
 
     //返回binder 使得Service的引用可以通过返回的IBinder对象得到
@@ -50,6 +55,9 @@ public class ScrapeService extends Service {
                     break;
                 case SCRAPE_ERROR:
                     Toast.makeText(ScrapeService.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    break;
+                case IO_ERROR:
+                    Toast.makeText(ScrapeService.this,"无法读取SDCard",Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -57,7 +65,18 @@ public class ScrapeService extends Service {
     //爬取数据
     //TODO MATCH的日期选择问题 尽可能在SETTING中设置 实现重新获取的功能 目前默认为获取  [20141001-20151231] 的比赛记录
     private void crawlerData() {
-
+        //判断SD卡是否存在 若不存在 发送错误报告
+        if (!Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)){
+            handler.sendEmptyMessage(IO_ERROR);
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TeamIO teamIO = new TeamIOimpl();
+                teamIO.saveTeamList();
+            }
+        }).start();
     }
 
     //定义CrawlerServiceBinder
