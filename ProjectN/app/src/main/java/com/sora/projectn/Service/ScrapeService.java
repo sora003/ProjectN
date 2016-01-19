@@ -74,7 +74,7 @@ public class ScrapeService extends Service {
             @Override
             public void run() {
                 TeamIO teamIO = new TeamIOimpl();
-                teamIO.saveTeamList();
+                teamIO.setTeamList();
             }
         }).start();
     }

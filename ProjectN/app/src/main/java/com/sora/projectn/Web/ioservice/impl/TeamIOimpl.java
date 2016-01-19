@@ -1,7 +1,6 @@
 package com.sora.projectn.Web.ioservice.impl;
 
 import android.os.Environment;
-import android.widget.Toast;
 
 import com.sora.projectn.Web.dataservice.TeamDS;
 import com.sora.projectn.Web.dataservice.impl.TeamData;
@@ -18,6 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,11 +29,11 @@ public class TeamIOimpl implements TeamIO{
 
 
     @Override
-    public void saveTeamList() {
+    public void setTeamList() {
 
         //调用TeamDS接口 获取爬取数据
         TeamDS teamDS = new TeamData();
-        StringBuffer result = teamDS.getTeamList();
+        StringBuffer result = teamDS.getTeamListFromWeb();
 
 
         //调用TeamParser接口 获取球队基本数据 List
@@ -66,6 +66,7 @@ public class TeamIOimpl implements TeamIO{
         if (!Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)){
             return;
         }
+
         //设置文件路径  SDCard/NBADATA/Team/TeamList
         File file = new File(Environment.getExternalStorageDirectory().toString() + File.separator + "NBADATA" + File.separator + "Team" + File.separator + "TeamList");
         //判断文件是否存在 若不存在 则创建文件
@@ -87,5 +88,26 @@ public class TeamIOimpl implements TeamIO{
             }
         }
 
+    }
+
+    @Override
+    public List<TeamPo> readTeamList() {
+        List<TeamPo> list = new ArrayList<TeamPo>();
+        //判断SD卡是否存在
+        if (!Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)){
+            return null;
+        }
+
+        //设置文件路径  SDCard/NBADATA/Team/TeamList
+        File file = new File(Environment.getExternalStorageDirectory().toString() + File.separator + "NBADATA" + File.separator + "Team" + File.separator + "TeamList");
+
+        //判断文件是否存在 若不存在 则返回
+        if (!file.getParentFile().exists()){
+            return  null;
+        }
+
+
+
+        return list;
     }
 }

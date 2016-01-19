@@ -10,7 +10,7 @@ import java.util.List;
 public interface TeamIO {
 
     /**
-     * 获取球队基本数据 存储在本地SDCard
+     * 获取从网页爬取并分析得到的球队基本数据 存储在本地SDCard
      *
      * 用json封装数据并存储
      * List<TeamPo> ：
@@ -18,7 +18,17 @@ public interface TeamIO {
      *      TeamPo.name
      *      TeamPo.founded
      */
-    public void saveTeamList();
+    public void setTeamList();
 
-
+    /**
+     * 读取存储在本地的球队基本数据
+     *
+     * 读取用json封装的数据并返回List<TeamPo>
+     * @return List<TeamPo>
+     * List<TeamPo> ：
+     *      TeamPo.abbr
+     *      TeamPo.name
+     *      TeamPo.founded
+     */
+    public List<TeamPo> readTeamList();
 }

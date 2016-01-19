@@ -6,18 +6,19 @@ package com.sora.projectn.po;
  * 代码复用
  *
  * 球队基本数据
+ *
+ * name         球队名字
+ * abbr         球队缩写
+ * city         球队所在城市
+ * league       球队所在联盟
+ * conference
+ * arena        球队所在区域
+ * founded      球队成立时间
  */
+
 public class TeamPo {
 
-    /**
-     * name         球队名字
-     * abbr         球队缩写
-     * city         球队所在城市
-     * league       球队所在联盟
-     * conference
-     * arena        球队所在区域
-     * founded      球队成立时间
-     */
+
 
     private String name;
     private String abbr;

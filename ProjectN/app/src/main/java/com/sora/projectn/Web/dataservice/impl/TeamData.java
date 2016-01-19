@@ -21,7 +21,7 @@ public class TeamData implements TeamDS{
 
 
     @Override
-    public StringBuffer getTeamList() {
+    public StringBuffer getTeamListFromWeb() {
         StringBuffer result = new StringBuffer();
         try {
             URL url = new URL(MAIN_URL + "/teams");
