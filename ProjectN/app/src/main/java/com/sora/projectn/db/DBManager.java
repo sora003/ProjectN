@@ -27,10 +27,24 @@ public class DBManager  {
     }
 
     /**
+     * 增加 球队基本数据 仅包含name abbr founded
+     * @param list
+     */
+    public void add_part(List<TeamPo> list) {
+        for (TeamPo teamPo : list) {
+            ContentValues cv = new ContentValues();
+            cv.put("name", teamPo.getName());
+            cv.put("abbr", teamPo.getAbbr());
+            cv.put("founded", teamPo.getFounded());
+            db.insert("team",null,cv);
+        }
+    }
+
+    /**
      * 增加 球队基本数据
      * @param list
      */
-    public void add(List<TeamPo> list) {
+    public void add_total(List<TeamPo> list) {
         for (TeamPo teamPo : list) {
             ContentValues cv = new ContentValues();
             cv.put("name", teamPo.getName());
@@ -64,10 +78,30 @@ public class DBManager  {
     }
 
     /**
+     * 查找球队基本数据 仅查找name abbr founded
+     * @return List<TeamPo>
+     */
+    public List<TeamPo> query_part(){
+        List<TeamPo> list = new ArrayList<TeamPo>();
+        Cursor c = queryTheCursor_team();
+
+        while (c.moveToNext()){
+            TeamPo teamPo = new TeamPo();
+            teamPo.setName(c.getString(c.getColumnIndex("name")));
+            teamPo.setAbbr(c.getString(c.getColumnIndex("abbr")));
+            teamPo.setFounded(c.getInt(c.getColumnIndex("founded")));
+            list.add(teamPo);
+        }
+
+        c.close();
+        return list;
+    }
+
+    /**
      * 查找球队基本数据
      * @return List<TeamPo>
      */
-    public List<TeamPo> query(){
+    public List<TeamPo> query_total(){
         List<TeamPo> list = new ArrayList<TeamPo>();
         Cursor c = queryTheCursor_team();
 
