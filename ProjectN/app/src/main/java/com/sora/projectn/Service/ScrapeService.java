@@ -9,8 +9,10 @@ import android.os.IBinder;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.sora.projectn.Web.ioservice.TeamIO;
-import com.sora.projectn.Web.ioservice.impl.TeamIOimpl;
+import com.sora.projectn.Web.sqlDS.TeamSDS;
+import com.sora.projectn.Web.sqlDS.impl.Teamimpl;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Sora on 2016/1/11.
@@ -25,6 +27,8 @@ public class ScrapeService extends Service {
     private final int SCRAPE_SUCCESS = 0x02;
     private final int SCRAPE_ERROR = 0x03;
     private final int IO_ERROR = 0x04;
+
+    private CountDownLatch countDownLatch = new CountDownLatch(1);
 
 
     //返回binder 使得Service的引用可以通过返回的IBinder对象得到
@@ -73,10 +77,20 @@ public class ScrapeService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                TeamIO teamIO = new TeamIOimpl();
+                //TODO 加入如果第一次运行 爬取数据 否则 调用Sql中的数据的处理
+                TeamSDS teamIO = new Teamimpl();
                 teamIO.setTeamListToSql(getApplicationContext());
+                countDownLatch.countDown();
             }
         }).start();
+
+        //进程运行完毕时 发送已爬取好数据的信息
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        handler.sendEmptyMessage(SCRAPE_SUCCESS);
     }
 
     //定义CrawlerServiceBinder

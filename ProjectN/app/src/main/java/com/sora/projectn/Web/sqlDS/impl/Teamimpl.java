@@ -1,17 +1,15 @@
-package com.sora.projectn.Web.ioservice.impl;
+package com.sora.projectn.Web.sqlDS.impl;
 
 import android.content.Context;
-import android.os.Environment;
 
-import com.sora.projectn.Web.dataservice.TeamDS;
-import com.sora.projectn.Web.dataservice.impl.TeamData;
-import com.sora.projectn.Web.ioservice.TeamIO;
+import com.sora.projectn.Web.webDS.TeamWDS;
+import com.sora.projectn.Web.webDS.impl.TeamData;
+import com.sora.projectn.Web.sqlDS.TeamSDS;
 import com.sora.projectn.Web.parser.TeamParser;
 import com.sora.projectn.Web.parser.impl.TeamParserImpl;
 import com.sora.projectn.db.DBManager;
 import com.sora.projectn.po.TeamPo;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +17,7 @@ import java.util.List;
  * Created by Sora on 2016/1/17.
  *
  */
-public class TeamIOimpl implements TeamIO {
+public class Teamimpl implements TeamSDS {
 
 
 
@@ -27,9 +25,9 @@ public class TeamIOimpl implements TeamIO {
     @Override
     public void setTeamListToSql(Context context) {
 
-        //调用TeamDS接口 获取爬取数据
-        TeamDS teamDS = new TeamData();
-        StringBuffer result = teamDS.getTeamListFromWeb();
+        //调用TeamWDS接口 获取爬取数据
+        TeamWDS teamWDS = new TeamData();
+        StringBuffer result = teamWDS.getTeamListFromWeb();
 
 
         //调用TeamParser接口 获取球队基本数据 List
@@ -45,29 +43,28 @@ public class TeamIOimpl implements TeamIO {
     }
 
     @Override
-    public List<TeamPo> getTeamListFromSql(Context context) {
+    public List<String> getTeamAbbrFromSql(Context context) {
 
-        List<TeamPo> list = new ArrayList<TeamPo>();
+        List<String> list = new ArrayList<String>();
 
         //调用数据库
         DBManager dbManager = new DBManager(context);
 
         //查找球队基本数据 并返回 list
-        list = dbManager.query_part();
+        list = dbManager.queryTeamAbbr();
 
         return list;
     }
 
+    @Override
+    public void setTeamInfoToSql(Context context) {
 
+    }
 
+    @Override
+    public void setTeamLogoToLocal(Context context) {
 
-
-
-
-
-
-
-
+    }
 
 
     //改变数据存储方式  考虑到数据量过大及数据存储格式的统一性 将使用SQL代替保存为JSON对象本地存储
@@ -75,8 +72,8 @@ public class TeamIOimpl implements TeamIO {
 //    public void setTeamListToSql() {
 //
 //        //调用TeamDS接口 获取爬取数据
-//        TeamDS teamDS = new TeamData();
-//        StringBuffer result = teamDS.getTeamListFromWeb();
+//        TeamWDS teamWDS = new TeamData();
+//        StringBuffer result = teamWDS.getTeamListFromWeb();
 //
 //
 //        //调用TeamParser接口 获取球队基本数据 List

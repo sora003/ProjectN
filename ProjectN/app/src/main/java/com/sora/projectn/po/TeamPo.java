@@ -10,9 +10,9 @@ package com.sora.projectn.po;
  * name         球队名字
  * abbr         球队缩写
  * city         球队所在城市
- * league       球队所在联盟
- * conference
- * arena        球队所在区域
+ * league       球队所在赛区
+ * conference   球队所在分区
+ * arena        球队所在主场
  * founded      球队成立时间
  */
 

@@ -78,19 +78,17 @@ public class DBManager  {
     }
 
     /**
-     * 查找球队基本数据 仅查找name abbr founded
-     * @return List<TeamPo>
+     * 查找球队基本数据 仅查找abbr项
+     * @return List<String>
      */
-    public List<TeamPo> query_part(){
-        List<TeamPo> list = new ArrayList<TeamPo>();
+    public List<String> queryTeamAbbr(){
+        List<String> list = new ArrayList<String>();
         Cursor c = queryTheCursor_team();
 
         while (c.moveToNext()){
-            TeamPo teamPo = new TeamPo();
-            teamPo.setName(c.getString(c.getColumnIndex("name")));
-            teamPo.setAbbr(c.getString(c.getColumnIndex("abbr")));
-            teamPo.setFounded(c.getInt(c.getColumnIndex("founded")));
-            list.add(teamPo);
+            String abbr = null;
+            abbr = c.getString(c.getColumnIndex("abbr"));
+            list.add(abbr);
         }
 
         c.close();
@@ -101,7 +99,7 @@ public class DBManager  {
      * 查找球队基本数据
      * @return List<TeamPo>
      */
-    public List<TeamPo> query_total(){
+    public List<TeamPo> queryTeamList(){
         List<TeamPo> list = new ArrayList<TeamPo>();
         Cursor c = queryTheCursor_team();
 
