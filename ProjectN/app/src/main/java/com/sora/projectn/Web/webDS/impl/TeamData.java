@@ -30,13 +30,15 @@ public class TeamData implements TeamWDS {
     private static String MAIN_URL = "http://www.basketball-reference.com/";
     //球队logo 网址路径
     private static String LOGO_PATH = "http://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/";
+    //球队联盟信息网址路径
+    private static String LEAGUE_PATH = "http://www.nba.com/teams/";
 
 
     @Override
     public StringBuffer getTeamListFromWeb() {
         StringBuffer result = new StringBuffer();
         try {
-            URL url = new URL(MAIN_URL + "/teams");
+            URL url = new URL(MAIN_URL + "teams");
             URLConnection conn = url.openConnection();
             conn.connect();
             InputStream in = conn.getInputStream();
@@ -85,6 +87,56 @@ public class TeamData implements TeamWDS {
             }
         }
         return map;
+    }
+
+    @Override
+    public StringBuffer getTeamInfoFromWeb(String abbr) {
+        StringBuffer result = new StringBuffer();
+        try {
+            URL url = new URL(MAIN_URL+ "teams/"+abbr);
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            InputStream in = conn.getInputStream();
+            //Reader
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line = null;
+            while ((line = reader.readLine()) != null){
+                //必须在一行中 否则用正则表达式取值时会出错
+                result.append(new String(line.getBytes(),"utf-8"));
+            }
+            reader.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    @Override
+    public StringBuffer getTeamLeagueFromWeb() {
+        StringBuffer result = new StringBuffer();
+        try {
+            URL url = new URL(LEAGUE_PATH);
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            InputStream in = conn.getInputStream();
+            //Reader
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line = null;
+            while ((line = reader.readLine()) != null){
+                //必须在一行中 否则用正则表达式取值时会出错
+                result.append(new String(line.getBytes(),"utf-8"));
+            }
+            reader.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
 

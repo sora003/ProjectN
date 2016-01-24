@@ -18,13 +18,25 @@ public interface TeamWDS {
 
 
     /**
-     * 爬取球队logo 返回Map<String, Bitmap>
+     * 根据球队缩写 爬取球队logo 返回Map<String, Bitmap>
      *
-     * @param list
-     * @return Map<String, Bitmap>
+     * @param list abbr 球队缩写
+     * @return Map<String,Bitmap>
      *     key      -   abbr 球队缩写
      *     value    -   Bitmap 球队Logo
      */
     public Map<String, Bitmap> getTeamLogoFromWeb(List<String> list);
 
+    /**
+     *
+     * @param abbr 球队缩写
+     * @return 球队具体数据.html
+     */
+    public StringBuffer getTeamInfoFromWeb(String abbr);
+
+    /**
+     *
+     * @return  球队联盟数据.html
+     */
+    public StringBuffer getTeamLeagueFromWeb();
 }

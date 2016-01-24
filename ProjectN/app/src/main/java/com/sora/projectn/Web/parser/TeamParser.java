@@ -1,5 +1,6 @@
 package com.sora.projectn.Web.parser;
 
+import com.sora.projectn.po.TeamInfoPo;
 import com.sora.projectn.po.TeamPo;
 
 import java.util.List;
@@ -20,5 +21,15 @@ public interface TeamParser {
      */
     public List<TeamPo> parseTeamList(StringBuffer result);
 
+
+    /**
+     * 读取 球队详细数据.html有效部分
+     * @param result  球队详细数据.html
+     * @return String city 球队所在城市
+     */
+    public String parseTeamCity(StringBuffer result);
+
+
+    public List<TeamPo> parseTeamLeague(StringBuffer result);
 
 }

@@ -40,7 +40,7 @@ public interface TeamSDS {
      *
      * @param context
      */
-    public void setTeamInfoToSql(Context context);
+    public void setTeamListInfoToSql(Context context);
 
     /**
      * 获取球队logo存储的本地路径 存储在SQL

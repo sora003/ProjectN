@@ -38,7 +38,7 @@ public class Teamimpl implements TeamSDS {
         DBManager dbManager = new DBManager(context);
 
         //将球队基本数据存储到SQL
-        dbManager.add_part(list);
+        dbManager.add(list);
 
     }
 
@@ -57,7 +57,35 @@ public class Teamimpl implements TeamSDS {
     }
 
     @Override
-    public void setTeamInfoToSql(Context context) {
+    public void setTeamListInfoToSql(Context context) {
+
+        //调用TeamWDS接口 获取爬取数据
+        TeamWDS teamWDS = new TeamData();
+        StringBuffer result = teamWDS.getTeamLeagueFromWeb();
+
+        //调用TeamParser接口 获取球队基本数据 List
+        TeamParser teamParser = new TeamParserImpl();
+        List<TeamPo> list = teamParser.parseTeamLeague(result);
+
+        //添加城市信息
+        for (int i = 0; i < list.size(); i++) {
+            //调用TeamWDS接口 获取爬取数据
+            TeamWDS teamWDS1 = new TeamData();
+            StringBuffer result1 = teamWDS1.getTeamLeagueFromWeb();
+
+            //调用TeamParser接口 获取球队基本数据 List
+            TeamParser teamParser1 = new TeamParserImpl();
+            String city = teamParser1.parseTeamCity(result1);
+
+            list.get(i).setCity(city);
+        }
+
+        //调用数据库
+        DBManager dbManager = new DBManager(context);
+
+        //将球队基本数据存储到SQL
+        dbManager.update(list);
+
 
     }
 

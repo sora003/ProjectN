@@ -30,7 +30,7 @@ public class DBManager  {
      * 增加 球队基本数据 仅包含name abbr founded
      * @param list
      */
-    public void add_part(List<TeamPo> list) {
+    public void add(List<TeamPo> list) {
         for (TeamPo teamPo : list) {
             ContentValues cv = new ContentValues();
             cv.put("name", teamPo.getName());
@@ -41,38 +41,15 @@ public class DBManager  {
     }
 
     /**
-     * 增加 球队基本数据
-     * @param list
-     */
-    public void add_total(List<TeamPo> list) {
-        for (TeamPo teamPo : list) {
-            ContentValues cv = new ContentValues();
-            cv.put("name", teamPo.getName());
-            cv.put("abbr", teamPo.getAbbr());
-            cv.put("city", teamPo.getCity());
-            cv.put("league", teamPo.getLeague());
-            cv.put("conference", teamPo.getConference());
-            cv.put("arena", teamPo.getArena());
-            cv.put("founded", teamPo.getFounded());
-            db.insert("team",null,cv);
-        }
-    }
-
-    /**
-     * TODO
-     * 修改 球队基本数据
+     * 更新 球队基本数据
      * @param list
      */
     public  void update(List<TeamPo> list){
         for (TeamPo teamPo : list) {
             ContentValues cv = new ContentValues();
-            cv.put("name", teamPo.getName());
-            cv.put("abbr", teamPo.getAbbr());
             cv.put("city", teamPo.getCity());
             cv.put("league", teamPo.getLeague());
             cv.put("conference", teamPo.getConference());
-            cv.put("arena", teamPo.getArena());
-            cv.put("founded", teamPo.getFounded());
             db.update("team", cv, "abbr=?", new String[]{teamPo.getAbbr()});
         }
     }
