@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
@@ -16,16 +17,34 @@ import com.sora.projectn.Service.ScrapeService;
  */
 public class WelcomeActivity extends AppCompatActivity{
 
+    private static final String HAS_TEAMINFO = "hasTeamLogo";
+
     private Intent intent;
     private Context mContext = this;
     private ScrapeService scrapeService;
+    private Boolean hasTeamInfo;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        initService();
+        //使用SharedPreferences 读取球队基本数据是否已经存在
+        SharedPreferences sharedPreferences = getSharedPreferences("hasData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        hasTeamInfo = sharedPreferences.getBoolean(HAS_TEAMINFO,false);
+        if (hasTeamInfo){
+            startActivity(new Intent(mContext,MainActivity.class));
+            finish();
+        }
+        else {
+            initService();
+            editor.remove(HAS_TEAMINFO);
+            editor.putBoolean(HAS_TEAMINFO, true);
+            //取代commit使用
+            editor.apply();
+        }
+
 
 
     }
@@ -71,7 +90,10 @@ public class WelcomeActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(conn);
-        stopService(intent);
+        //添加了是否使用Service爬取数据的判断 防止数据已爬取过不调用Service而报错的情况
+        if (!hasTeamInfo){
+            unbindService(conn);
+            stopService(intent);
+        }
     }
 }

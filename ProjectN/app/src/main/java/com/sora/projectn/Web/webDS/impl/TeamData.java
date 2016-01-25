@@ -64,11 +64,12 @@ public class TeamData implements TeamWDS {
         for (String abbr : list) {
             try {
                 String webPath = LOGO_PATH + abbr + ".png";
-                if (abbr == "NOH") {
-                    webPath = "http://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/no.png";
+                //String相同  用equals判断
+                if (abbr.equals("NOH")) {
+                    webPath = LOGO_PATH + "no.png";
                 }
-                if (abbr == "UTA") {
-                    webPath = "http://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/utah.png";
+                if (abbr.equals("UTA")) {
+                    webPath = LOGO_PATH + "utah.png";
                 }
                 //从Web获取图片 存储为bmp
                 URL url = new URL(webPath);

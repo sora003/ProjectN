@@ -3,6 +3,7 @@ package com.sora.projectn.Web.bitmapDS.impl;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.widget.Toast;
 
 import com.sora.projectn.Web.bitmapDS.TeamBDS;
 import com.sora.projectn.Web.sqlDS.TeamSDS;
@@ -39,7 +40,7 @@ public class TeamLogo implements TeamBDS {
 
 
         //判断SDCard是否存在
-        if (!Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)) {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return;
         }
 
@@ -53,13 +54,23 @@ public class TeamLogo implements TeamBDS {
             Bitmap bmp = map.get(key);
 
             //设置文件路径  SDCard/NBADATA/TeamLogo
-            File file = new File(Environment.getExternalStorageDirectory().toString() + File.separator + "NBADATA" + File.separator + "TeamLogo" + File.separator + abbr + ".png");
+            String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/NBADATA/TeamLogo" ;
 
+            String fileName = abbr + ".png";
+
+            File pFile = new File(filePath);
 
             //判断文件是否存在 若不存在 则创建文件
-            if (!file.getParentFile().exists()){
-                file.getParentFile().mkdir();
+            //这里使用mkdirs 因为创建的是多级文件夹
+            if (! pFile.exists()){
+                pFile.mkdirs();
             }
+
+           File file = new File(filePath + "/" + fileName);
+
+
+
+
 
             FileOutputStream fileOutputStream = null;
             try {

@@ -89,10 +89,7 @@ public class Teamimpl implements TeamSDS {
 
     }
 
-    @Override
-    public void setTeamLogoToLocal(Context context) {
 
-    }
 
 
     //改变数据存储方式  考虑到数据量过大及数据存储格式的统一性 将使用SQL代替保存为JSON对象本地存储

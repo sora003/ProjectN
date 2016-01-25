@@ -9,6 +9,8 @@ import android.os.IBinder;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.sora.projectn.Web.bitmapDS.TeamBDS;
+import com.sora.projectn.Web.bitmapDS.impl.TeamLogo;
 import com.sora.projectn.Web.sqlDS.TeamSDS;
 import com.sora.projectn.Web.sqlDS.impl.Teamimpl;
 
@@ -62,6 +64,7 @@ public class ScrapeService extends Service {
                     break;
                 case IO_ERROR:
                     Toast.makeText(ScrapeService.this,"无法读取SDCard",Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
@@ -69,29 +72,47 @@ public class ScrapeService extends Service {
     //爬取数据
     //TODO MATCH的日期选择问题 尽可能在SETTING中设置 实现重新获取的功能 目前默认为获取  [20141001-20151231] 的比赛记录
     private void crawlerData() {
+
         //判断SD卡是否存在 若不存在 发送错误报告
-        if (!Environment.getExternalStorageDirectory().equals(Environment.MEDIA_MOUNTED)){
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
             handler.sendEmptyMessage(IO_ERROR);
             return;
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //TODO 加入如果第一次运行 爬取数据 否则 调用Sql中的数据的处理
-                TeamSDS teamIO = new Teamimpl();
-                teamIO.setTeamListToSql(getApplicationContext());
-                countDownLatch.countDown();
-            }
-        }).start();
+        //TODO 加入如果第一次运行 爬取数据 否则 调用Sql中的数据的处理
 
-        //进程运行完毕时 发送已爬取好数据的信息
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        handler.sendEmptyMessage(SCRAPE_SUCCESS);
+        getTeamList.start();
+
+        getTeamLogo.start();
+
+
     }
+
+    /**
+     * 获取球队的基本信息 包含了球队的缩写 名字  建立时间  并将这些数据添加到数据库中
+     */
+    Thread getTeamList = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            TeamSDS teamIO = new Teamimpl();
+            teamIO.setTeamListToSql(getApplicationContext());
+            countDownLatch.countDown();
+        }
+    });
+
+    Thread getTeamLogo = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            TeamBDS teamBDS = new TeamLogo();
+            teamBDS.setTeamLogoToSDCard(getApplicationContext());
+
+            handler.sendEmptyMessage(SCRAPE_SUCCESS);
+        }
+    });
 
     //定义CrawlerServiceBinder
     public class CrawlerServiceBinder extends Binder{

@@ -26,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //创建table team
         db.execSQL("CREATE TABLE IF NOT EXISTS team (id integer primary key autoincrement ,abbr varchar(20), name varchar(60) , city varchar(60) , league varchar(60) , conference varchar(60) , arena varchar(60) , founded integer)");
 
+
     }
 
     //TODO 如果DATABASE_VERSION 的值被改为2  系统发现数据库版本更新 将调用OnUpgrade
