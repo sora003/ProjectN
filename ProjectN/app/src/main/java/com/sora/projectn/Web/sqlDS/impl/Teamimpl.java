@@ -71,7 +71,7 @@ public class Teamimpl implements TeamSDS {
         for (int i = 0; i < list.size(); i++) {
             //调用TeamWDS接口 获取爬取数据
             TeamWDS teamWDS1 = new TeamData();
-            StringBuffer result1 = teamWDS1.getTeamLeagueFromWeb();
+            StringBuffer result1 = teamWDS1.getTeamInfoFromWeb(list.get(i).getAbbr());
 
             //调用TeamParser接口 获取球队基本数据 List
             TeamParser teamParser1 = new TeamParserImpl();

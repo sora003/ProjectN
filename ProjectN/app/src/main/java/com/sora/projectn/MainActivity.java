@@ -1,10 +1,14 @@
 package com.sora.projectn;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -12,14 +16,15 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
-    private ListView listView;
+    private ListView lv_left_menu;
+    private Context mContext;
 
 
 
 
-
+    //ActionBarDrawerToggle控件
     private ActionBarDrawerToggle mDrawerToggle;
-    //
+    //ActionBarDrawerToggle控件内的内容
     private String[] data = {"data1","data2","data3","data4","data5","data6"};
     private ArrayAdapter arrayAdapter;
 
@@ -27,22 +32,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+        init_ActionBarDrawerToggle();
+
+        lv_left_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        startActivity(new Intent(mContext,TeamActivity.class));
+                        break;
+                }
+            }
+        });
     }
 
 
 
-    private void init() {
-//        mContext = this;
+    private void init_ActionBarDrawerToggle() {
+        mContext = this;
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        listView = (ListView) findViewById(R.id.lv_left_menu);
+        lv_left_menu = (ListView) findViewById(R.id.lv_left_menu);
 
 
         //设置Toolbar标题
         toolbar.setTitle("NBA");
         //设置标题颜色
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.color_white));
         setSupportActionBar(toolbar);
         //设置返回键可用
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -54,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         //设置抽屉内的内容
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
-        listView.setAdapter(arrayAdapter);
+        lv_left_menu.setAdapter(arrayAdapter);
 
     }
 }

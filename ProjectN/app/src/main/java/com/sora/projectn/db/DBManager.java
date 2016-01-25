@@ -18,6 +18,19 @@ public class DBManager  {
     private  DBHelper helper;
     private SQLiteDatabase db;
 
+    private static final String TABLE_TEAM = "team";
+
+
+
+    private static final String KEY_NAME = "name";
+    private static final String KEY_ABBR = "abbr";
+    private static final String KEY_FOUNDED = "founded";
+    private static final String KEY_CITY = "city";
+    private static final String KEY_LEAGUE = "league";
+    private static final String KEY_CONFERENCE = "conference";
+//    private static final String KEY = ;
+//    private static final String KEY = ;
+
 
     public DBManager(Context context) {
         helper = new DBHelper(context);
@@ -33,10 +46,10 @@ public class DBManager  {
     public void add(List<TeamPo> list) {
         for (TeamPo teamPo : list) {
             ContentValues cv = new ContentValues();
-            cv.put("name", teamPo.getName());
-            cv.put("abbr", teamPo.getAbbr());
-            cv.put("founded", teamPo.getFounded());
-            db.insert("team",null,cv);
+            cv.put(KEY_NAME, teamPo.getName());
+            cv.put(KEY_ABBR, teamPo.getAbbr());
+            cv.put(KEY_FOUNDED, teamPo.getFounded());
+            db.insert(TABLE_TEAM,null,cv);
         }
     }
 
@@ -47,10 +60,10 @@ public class DBManager  {
     public  void update(List<TeamPo> list){
         for (TeamPo teamPo : list) {
             ContentValues cv = new ContentValues();
-            cv.put("city", teamPo.getCity());
-            cv.put("league", teamPo.getLeague());
-            cv.put("conference", teamPo.getConference());
-            db.update("team", cv, "abbr=?", new String[]{teamPo.getAbbr()});
+            cv.put(KEY_CITY, teamPo.getCity());
+            cv.put(KEY_LEAGUE, teamPo.getLeague());
+            cv.put(KEY_CONFERENCE, teamPo.getConference());
+            db.update(TABLE_TEAM, cv, "abbr=?", new String[]{teamPo.getAbbr()});
         }
     }
 
@@ -64,7 +77,7 @@ public class DBManager  {
 
         while (c.moveToNext()){
             String abbr = null;
-            abbr = c.getString(c.getColumnIndex("abbr"));
+            abbr = c.getString(c.getColumnIndex(KEY_ABBR));
             list.add(abbr);
         }
 
@@ -82,13 +95,12 @@ public class DBManager  {
 
         while (c.moveToNext()){
             TeamPo teamPo = new TeamPo();
-            teamPo.setName(c.getString(c.getColumnIndex("name")));
-            teamPo.setAbbr(c.getString(c.getColumnIndex("abbr")));
-            teamPo.setCity(c.getString(c.getColumnIndex("city")));
-            teamPo.setLeague(c.getString(c.getColumnIndex("league")));
-            teamPo.setConference(c.getString(c.getColumnIndex("conference")));
-            teamPo.setArena(c.getString(c.getColumnIndex("arena")));
-            teamPo.setFounded(c.getInt(c.getColumnIndex("founded")));
+            teamPo.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+            teamPo.setAbbr(c.getString(c.getColumnIndex(KEY_ABBR)));
+            teamPo.setCity(c.getString(c.getColumnIndex(KEY_CITY)));
+            teamPo.setLeague(c.getString(c.getColumnIndex(KEY_LEAGUE)));
+            teamPo.setConference(c.getString(c.getColumnIndex(KEY_CONFERENCE)));
+            teamPo.setFounded(c.getInt(c.getColumnIndex(KEY_FOUNDED)));
             list.add(teamPo);
         }
 
@@ -101,7 +113,7 @@ public class DBManager  {
      * @return Cursor
      */
     public Cursor queryTheCursor_team(){
-        Cursor c = db.rawQuery("SELECT * FROM team",null);
+        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_TEAM,null);
         return c;
     }
 

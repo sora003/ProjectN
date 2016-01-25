@@ -3,4 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="teamSize">20sp</dimen>
+    <dimen name="teamPadding">12dp</dimen>
+    <dimen name="conference_horizontal_margin">10dp</dimen>
+    <dimen name="team_horizontal_margin">10dp</dimen>
+    <dimen name="conferenceSize">18sp</dimen>
+    <dimen name="conference_vertical_margin">5dp</dimen>
 </resources>

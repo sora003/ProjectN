@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //创建table team
-        db.execSQL("CREATE TABLE IF NOT EXISTS team (abbr varchar(20) primary key autoincrement , name varchar(60) , city varchar(60) , league varchar(60) , conference varchar(60) , arena varchar(60) , founded integer)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS team (id integer primary key autoincrement ,abbr varchar(20), name varchar(60) , city varchar(60) , league varchar(60) , conference varchar(60) , arena varchar(60) , founded integer)");
 
     }
 

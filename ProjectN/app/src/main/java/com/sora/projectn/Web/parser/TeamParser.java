@@ -30,6 +30,16 @@ public interface TeamParser {
     public String parseTeamCity(StringBuffer result);
 
 
+    /**
+     * 读取 球队联盟数据.html有效部分
+     * @param result 球队联盟数据.html
+     * @return List<TeamPo>
+     *  List<TeamPo> ：
+     *      TeamPo.abbr
+     *      TeamPo.league
+     *      TeamPo.conference
+     */
     public List<TeamPo> parseTeamLeague(StringBuffer result);
 
+//    public List<TeamInfoPo> par
 }
