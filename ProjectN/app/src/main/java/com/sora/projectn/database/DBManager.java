@@ -1,4 +1,4 @@
-package com.sora.projectn.db;
+package com.sora.projectn.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -28,7 +28,7 @@ public class DBManager  {
     private static final String KEY_CITY = "city";
     private static final String KEY_LEAGUE = "league";
     private static final String KEY_CONFERENCE = "conference";
-//    private static final String KEY = ;
+    private static final String KEY_SNAME = "sName" ;
 //    private static final String KEY = ;
 
 
@@ -40,7 +40,7 @@ public class DBManager  {
     }
 
     /**
-     * 增加 球队基本数据 仅包含name abbr founded
+     * 增加 球队基本数据 仅包含name abbr founded sName
      * @param list
      */
     public void add(List<TeamPo> list) {
@@ -49,6 +49,7 @@ public class DBManager  {
             cv.put(KEY_NAME, teamPo.getName());
             cv.put(KEY_ABBR, teamPo.getAbbr());
             cv.put(KEY_FOUNDED, teamPo.getFounded());
+            cv.put(KEY_SNAME, teamPo.getsName());
             db.insert(TABLE_TEAM,null,cv);
         }
     }

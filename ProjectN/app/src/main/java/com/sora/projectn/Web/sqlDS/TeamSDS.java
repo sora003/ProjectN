@@ -17,20 +17,13 @@ public interface TeamSDS {
      *      TeamPo.abbr
      *      TeamPo.name
      *      TeamPo.founded
+     *      TeamPo.sName
      */
     public void setTeamListToSql(Context context);
 
 
 
 
-    /**
-     * 读取存储在SQL的球队基本数据 返回List<String>
-     *
-     * @return List<String>
-     * List<String> ：
-     *      TeamPo.abbr
-     */
-    public List<String> getTeamAbbrFromSql(Context context);
 
 
 

@@ -67,7 +67,7 @@ public class TestActivity extends AppCompatActivity {
 
                 //调用TeamSDS接口 获取球队缩写列表
                 TeamSDS teamSDS = new Teamimpl();
-                List list = teamSDS.getTeamAbbrFromSql(getApplicationContext());
+//                List list = teamSDS.getTeamAbbrFromSql(getApplicationContext());
 
                 //调用TeamWDS接口 获取(k,v)=(球队缩写,球队logo)的Map
                 TeamWDS teamWDS = new TeamData();

@@ -42,10 +42,21 @@ public class TeamParserImpl implements TeamParser{
             matcher = pattern.matcher(str1);
             //查找所有符合pattern的数据
             while (matcher.find()){
+                String name = matcher.group(4);
                 TeamPo teamPo = new TeamPo();
                 teamPo.setAbbr(matcher.group(2));
-                teamPo.setName(matcher.group(4));
+                teamPo.setName(name);
                 teamPo.setFounded(Integer.parseInt(matcher.group(8)));
+
+                //查询球队缩略名
+                //新建Pattern Matcher对象
+                Pattern pattern1 = Pattern.compile("(.*)( )(\\w+)");
+                Matcher matcher1 = pattern1.matcher(name);
+                if (matcher1.matches()){
+                    teamPo.setsName(matcher1.group(3));
+                }
+
+
                 list.add(teamPo);
             }
         }

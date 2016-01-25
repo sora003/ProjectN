@@ -10,6 +10,8 @@ import com.sora.projectn.Web.sqlDS.TeamSDS;
 import com.sora.projectn.Web.sqlDS.impl.Teamimpl;
 import com.sora.projectn.Web.webDS.TeamWDS;
 import com.sora.projectn.Web.webDS.impl.TeamData;
+import com.sora.projectn.dataservice.TeamDS;
+import com.sora.projectn.dataservice.impl.TeamDSImpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,8 +31,8 @@ public class TeamLogo implements TeamBDS {
     public void setTeamLogoToSDCard(Context context) {
 
         //调用TeamSDS接口 获取球队缩写列表
-        TeamSDS teamSDS = new Teamimpl();
-        List list = teamSDS.getTeamAbbrFromSql(context);
+        TeamDS teamDS = new TeamDSImpl();
+        List list = teamDS.getTeamAbbrFromSql(context);
 
         //调用TeamWDS接口 获取(k,v)=(球队缩写,球队logo)的Map
         TeamWDS teamWDS = new TeamData();

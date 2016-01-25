@@ -18,6 +18,7 @@ public interface TeamParser {
      *      TeamPo.abbr
      *      TeamPo.name
      *      TeamPo.founded
+     *      TeamPo.sName
      */
     public List<TeamPo> parseTeamList(StringBuffer result);
 

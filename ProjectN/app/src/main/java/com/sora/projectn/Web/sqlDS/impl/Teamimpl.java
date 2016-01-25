@@ -7,7 +7,7 @@ import com.sora.projectn.Web.webDS.impl.TeamData;
 import com.sora.projectn.Web.sqlDS.TeamSDS;
 import com.sora.projectn.Web.parser.TeamParser;
 import com.sora.projectn.Web.parser.impl.TeamParserImpl;
-import com.sora.projectn.db.DBManager;
+import com.sora.projectn.database.DBManager;
 import com.sora.projectn.po.TeamPo;
 
 import java.util.ArrayList;
@@ -42,19 +42,7 @@ public class Teamimpl implements TeamSDS {
 
     }
 
-    @Override
-    public List<String> getTeamAbbrFromSql(Context context) {
 
-        List<String> list = new ArrayList<String>();
-
-        //调用数据库
-        DBManager dbManager = new DBManager(context);
-
-        //查找球队基本数据 并返回 list
-        list = dbManager.queryTeamAbbr();
-
-        return list;
-    }
 
     @Override
     public void setTeamListInfoToSql(Context context) {

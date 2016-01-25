@@ -4,6 +4,7 @@ package com.sora.projectn.po;
  * Created by Sora on 2016/1/17.
  *
  * 代码复用
+ * 修改 ： 将arena(主场信息)改为sName(球队缩略名)
  *
  * 球队基本数据
  *
@@ -12,7 +13,7 @@ package com.sora.projectn.po;
  * city         球队所在城市
  * league       球队所在赛区
  * conference   球队所在分区
- * arena        球队所在主场
+ * sName        球队缩略名
  * founded      球队成立时间
  */
 
@@ -25,7 +26,7 @@ public class TeamPo {
     private String city;
     private String league;
     private String conference;
-    private String arena;
+    private String sName;
     private int founded;
 
     public String getAbbr() {
@@ -36,12 +37,12 @@ public class TeamPo {
         this.abbr = abbr;
     }
 
-    public String getArena() {
-        return arena;
+    public String getsName() {
+        return sName;
     }
 
-    public void setArena(String arena) {
-        this.arena = arena;
+    public void setsName(String sName) {
+        this.sName = sName;
     }
 
     public String getCity() {
