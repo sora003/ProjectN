@@ -42,5 +42,4 @@ public interface TeamParser {
      */
     public List<TeamPo> parseTeamLeague(StringBuffer result);
 
-//    public List<TeamInfoPo> par
 }

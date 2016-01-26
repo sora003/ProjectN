@@ -1,5 +1,7 @@
 package com.sora.projectn.Web.parser.impl;
 
+import android.util.Log;
+
 import com.sora.projectn.Web.parser.TeamParser;
 import com.sora.projectn.po.TeamInfoPo;
 import com.sora.projectn.po.TeamPo;
@@ -97,13 +99,14 @@ public class TeamParserImpl implements TeamParser{
              *
              * 正则表达式 前后不可以加(.*)  否则无法匹配到所有满足条件的子序列
              */
-            pattern = Pattern.compile("(.*)(<span class=\"nbaDivision\">)(.*?)(</span>)(.*?)(</ul>)(.*)");
+            pattern = Pattern.compile("(<span class=\"nbaDivision\">)(.*?)(</span>)(.*?)(</ul>)");
             matcher = pattern.matcher(strE);
             //查找所有符合pattern的数据
             while (matcher.find()){
-                String conference = matcher.group(3);
+                String conference = matcher.group(2);
+
                 //该分区包含的球队
-                String str = matcher.group(5);
+                String str = matcher.group(4);
                 /**
                  * 源码示例：<a href="/celtics?ls=iref:nba:gnav" title="Link to Boston Celtics" class="nbaTeamBOS" target=>Boston Celtics</a>
                  * group(4) 球队缩写
@@ -128,6 +131,7 @@ public class TeamParserImpl implements TeamParser{
                     teamPo.setAbbr(abbr);
                     teamPo.setLeague("E");
                     teamPo.setConference(conference);
+//                    Log.i("db_Conference", conference);
                     list.add(teamPo);
                 }
             }
@@ -141,20 +145,20 @@ public class TeamParserImpl implements TeamParser{
         pattern = Pattern.compile("(.*)(<span class=\"nbaNavSubheading\">Western Conference</span>)(.*?)(</div>)(.*)");
         matcher = pattern.matcher(result);
         if (matcher.matches()){
-            String strE = matcher.group(3);
+            String strW = matcher.group(3);
             /**
              * group(3) 球队分区
              * group(5) 该分区包含的球队
              *
              * 正则表达式 前后不可以加(.*)  否则无法匹配到所有满足条件的子序列
              */
-            pattern = Pattern.compile("(.*)(<span class=\"nbaDivision\">)(.*?)(</span>)(.*?)(</ul>)(.*)");
-            matcher = pattern.matcher(strE);
+            pattern = Pattern.compile("(<span class=\"nbaDivision\">)(.*?)(</span>)(.*?)(</ul>)");
+            matcher = pattern.matcher(strW);
             //查找所有符合pattern的数据
             while (matcher.find()){
-                String conference = matcher.group(3);
+                String conference = matcher.group(2);
                 //该分区包含的球队
-                String str = matcher.group(5);
+                String str = matcher.group(4);
                 /**
                  * 源码示例：<a href="/celtics?ls=iref:nba:gnav" title="Link to Boston Celtics" class="nbaTeamBOS" target=>Boston Celtics</a>
                  * group(4) 球队缩写
@@ -179,6 +183,7 @@ public class TeamParserImpl implements TeamParser{
                     teamPo.setAbbr(abbr);
                     teamPo.setLeague("W");
                     teamPo.setConference(conference);
+//                    Log.i("db_Conference", conference);
                     list.add(teamPo);
                 }
             }

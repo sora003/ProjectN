@@ -1,5 +1,7 @@
 package com.sora.projectn.vo;
 
+import android.graphics.Bitmap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +11,8 @@ import java.util.Map;
 public class TeamConferenceVo {
 
     private String conference;
-    private List<String> list;
+    private List<String> sNameList;
+    private List<Bitmap> logoList;
 
     public String getConference() {
         return conference;
@@ -19,11 +22,19 @@ public class TeamConferenceVo {
         this.conference = conference;
     }
 
-    public List<String> getList() {
-        return list;
+    public List<Bitmap> getLogoList() {
+        return logoList;
     }
 
-    public void setList(List<String> list) {
-        this.list = list;
+    public void setLogoList(List<Bitmap> logoList) {
+        this.logoList = logoList;
+    }
+
+    public List<String> getsNameList() {
+        return sNameList;
+    }
+
+    public void setsNameList(List<String> sNameList) {
+        this.sNameList = sNameList;
     }
 }

@@ -10,10 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sora.projectn.Web.sqlDS.TeamSDS;
-import com.sora.projectn.Web.sqlDS.impl.Teamimpl;
-import com.sora.projectn.Web.webDS.TeamWDS;
-import com.sora.projectn.Web.webDS.impl.TeamData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,7 +27,9 @@ import java.util.concurrent.CountDownLatch;
 public class TestActivity extends AppCompatActivity {
 
     CountDownLatch countDownLatch = new CountDownLatch(1);
-    TextView textView;
+    TextView textView1;
+    TextView textView2;
+
     List<String> list = new ArrayList<String>();
     Bitmap bmp = null;
 
@@ -43,31 +41,14 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
-        textView = (TextView) findViewById(R.id.testText);
+        textView1 = (TextView) findViewById(R.id.testText1);
+        textView2 = (TextView) findViewById(R.id.testText2);
 
-        imageView = (ImageView) findViewById(R.id.testImage);
-
-
-
-
-
+        textView1.setText("111");
+        String s = (String) textView1.getText();
+        textView2.setText(s);
     }
 
-    Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case 1:
-                    textView.setText(list.get(10));
-                    break;
-                case 2:
-                    imageView.setImageBitmap(bmp);
-                    break;
-                case 3:
-                    Toast.makeText(getApplicationContext(),file.toString(),Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
+
 
 }

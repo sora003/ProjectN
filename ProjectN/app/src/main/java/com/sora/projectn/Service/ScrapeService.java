@@ -7,7 +7,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
+
 
 
 import com.sora.projectn.dataservice.TeamDS;
@@ -29,8 +31,13 @@ public class ScrapeService extends Service {
     private final int SCRAPE_ERROR = 0x03;
     private final int IO_ERROR = 0x04;
 
+    //球队基本数据 子线程
     private CountDownLatch countDownLatch = new CountDownLatch(1);
+    //球队logo爬取和球队联盟等信息爬取子线程
     private CountDownLatch handlerCountDownLatch = new CountDownLatch(2);
+
+    //获取TeamDS接口
+    TeamDS teamDS = new TeamDSImpl();
 
 
     //返回binder 使得Service的引用可以通过返回的IBinder对象得到
@@ -73,11 +80,7 @@ public class ScrapeService extends Service {
     //TODO MATCH的日期选择问题 尽可能在SETTING中设置 实现重新获取的功能 目前默认为获取  [20141001-20151231] 的比赛记录
     private void crawlerData() {
 
-        //判断SD卡是否存在 若不存在 发送错误报告
-        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            handler.sendEmptyMessage(IO_ERROR);
-            return;
-        }
+
         //TODO 加入如果第一次运行 爬取数据 否则 调用Sql中的数据的处理
 
         getTeamList.start();
@@ -95,7 +98,6 @@ public class ScrapeService extends Service {
     Thread getTeamList = new Thread(new Runnable() {
         @Override
         public void run() {
-            TeamDS teamDS = new TeamDSImpl();
             teamDS.setTeamList(getApplicationContext());
             countDownLatch.countDown();
         }
@@ -103,20 +105,28 @@ public class ScrapeService extends Service {
 
     /**
      * 获取球队的logo 并将这些数据存储到SDCard
+     * 需要判断SDCard是否存在
      */
     Thread getTeamLogo = new Thread(new Runnable() {
         @Override
         public void run() {
+            //判断SD卡是否存在 若不存在 发送错误报告
+            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                handler.sendEmptyMessage(IO_ERROR);
+                return;
+            }
+            //等待球队Abbr等信息爬取完成
             try {
                 countDownLatch.await();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            TeamBDS teamBDS = new TeamLogo();
-//            teamBDS.setTeamLogoToSDCard(getApplicationContext());
+
+            teamDS.setTeamLogo(getApplicationContext());
 
             handlerCountDownLatch.countDown();
 
+            //等待getTeamLogo getTeamListInfo两个子线程执行完毕
             try {
                 handlerCountDownLatch.await();
             } catch (InterruptedException e) {
@@ -132,8 +142,14 @@ public class ScrapeService extends Service {
     Thread getTeamListInfo = new Thread(new Runnable() {
         @Override
         public void run() {
-            TeamDS teamDS = new TeamDSImpl();
+            //等待球队Abbr等信息爬取完成
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             teamDS.setTeamListInfo(getApplicationContext());
+//            Log.i("Service","setTeamListInfo");
             handlerCountDownLatch.countDown();
         }
     });

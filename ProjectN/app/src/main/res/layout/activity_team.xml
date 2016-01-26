@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        >
+        android:background="?attr/colorPrimary">
 
     </android.support.v7.widget.Toolbar>
 
@@ -50,7 +49,7 @@
                         android:layout_alignTop="@+id/tv_westConference"
                         android:layout_alignBottom="@+id/tv_westConference"
                         android:adjustViewBounds="true"
-                        android:maxWidth="50dp"/>
+                        android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                     <TextView
                         android:id="@+id/tv_westConference"
@@ -100,11 +99,10 @@
                                 android:id="@+id/iv_wC1T1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC1T1"
                                 android:layout_alignBottom="@+id/tv_wC1T1"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC1T1"
@@ -127,11 +125,10 @@
                                 android:id="@+id/iv_wC1T2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC1T2"
                                 android:layout_alignBottom="@+id/tv_wC1T2"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC1T2"
@@ -154,11 +151,10 @@
                                 android:id="@+id/iv_wC1T3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC1T3"
                                 android:layout_alignBottom="@+id/tv_wC1T3"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC1T3"
@@ -181,11 +177,10 @@
                                 android:id="@+id/iv_wC1T4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC1T4"
                                 android:layout_alignBottom="@+id/tv_wC1T4"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC1T4"
@@ -208,11 +203,10 @@
                                 android:id="@+id/iv_wC1T5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC1T5"
                                 android:layout_alignBottom="@+id/tv_wC1T5"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC1T5"
@@ -267,11 +261,10 @@
                                 android:id="@+id/iv_wC2T1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC2T1"
                                 android:layout_alignBottom="@+id/tv_wC2T1"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC2T1"
@@ -294,11 +287,10 @@
                                 android:id="@+id/iv_wC2T2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC2T2"
                                 android:layout_alignBottom="@+id/tv_wC2T2"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC2T2"
@@ -321,11 +313,10 @@
                                 android:id="@+id/iv_wC2T3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC2T3"
                                 android:layout_alignBottom="@+id/tv_wC2T3"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC2T3"
@@ -348,11 +339,10 @@
                                 android:id="@+id/iv_wC2T4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC2T4"
                                 android:layout_alignBottom="@+id/tv_wC2T4"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC2T4"
@@ -375,11 +365,10 @@
                                 android:id="@+id/iv_wC2T5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC2T5"
                                 android:layout_alignBottom="@+id/tv_wC2T5"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC2T5"
@@ -434,11 +423,10 @@
                                 android:id="@+id/iv_wC3T1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC3T1"
                                 android:layout_alignBottom="@+id/tv_wC3T1"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC3T1"
@@ -461,11 +449,10 @@
                                 android:id="@+id/iv_wC3T2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC3T2"
                                 android:layout_alignBottom="@+id/tv_wC3T2"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC3T2"
@@ -488,11 +475,10 @@
                                 android:id="@+id/iv_wC3T3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC3T3"
                                 android:layout_alignBottom="@+id/tv_wC3T3"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC3T3"
@@ -515,11 +501,10 @@
                                 android:id="@+id/iv_wC3T4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC3T4"
                                 android:layout_alignBottom="@+id/tv_wC3T4"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC3T4"
@@ -542,11 +527,10 @@
                                 android:id="@+id/iv_wC3T5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/western_logo"
                                 android:layout_alignTop="@+id/tv_wC3T5"
                                 android:layout_alignBottom="@+id/tv_wC3T5"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_wC3T5"
@@ -592,7 +576,7 @@
                         android:layout_alignTop="@+id/tv_eastConference"
                         android:layout_alignBottom="@+id/tv_eastConference"
                         android:adjustViewBounds="true"
-                        android:maxWidth="50dp"/>
+                        android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                     <TextView
                         android:id="@+id/tv_eastConference"
@@ -641,11 +625,10 @@
                                 android:id="@+id/iv_eC1T1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC1T1"
                                 android:layout_alignBottom="@+id/tv_eC1T1"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC1T1"
@@ -668,11 +651,10 @@
                                 android:id="@+id/iv_eC1T2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC1T2"
                                 android:layout_alignBottom="@+id/tv_eC1T2"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC1T2"
@@ -695,11 +677,10 @@
                                 android:id="@+id/iv_eC1T3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC1T3"
                                 android:layout_alignBottom="@+id/tv_eC1T3"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC1T3"
@@ -722,11 +703,10 @@
                                 android:id="@+id/iv_eC1T4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC1T4"
                                 android:layout_alignBottom="@+id/tv_eC1T4"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC1T4"
@@ -749,11 +729,10 @@
                                 android:id="@+id/iv_eC1T5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC1T5"
                                 android:layout_alignBottom="@+id/tv_eC1T5"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC1T5"
@@ -808,11 +787,10 @@
                                 android:id="@+id/iv_eC2T1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC2T1"
                                 android:layout_alignBottom="@+id/tv_eC2T1"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC2T1"
@@ -835,11 +813,10 @@
                                 android:id="@+id/iv_eC2T2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC2T2"
                                 android:layout_alignBottom="@+id/tv_eC2T2"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC2T2"
@@ -862,11 +839,10 @@
                                 android:id="@+id/iv_eC2T3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC2T3"
                                 android:layout_alignBottom="@+id/tv_eC2T3"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC2T3"
@@ -889,11 +865,10 @@
                                 android:id="@+id/iv_eC2T4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC2T4"
                                 android:layout_alignBottom="@+id/tv_eC2T4"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC2T4"
@@ -916,11 +891,10 @@
                                 android:id="@+id/iv_eC2T5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC2T5"
                                 android:layout_alignBottom="@+id/tv_eC2T5"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC2T5"
@@ -975,11 +949,10 @@
                                 android:id="@+id/iv_eC3T1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC3T1"
                                 android:layout_alignBottom="@+id/tv_eC3T1"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC3T1"
@@ -1002,11 +975,10 @@
                                 android:id="@+id/iv_eC3T2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC3T2"
                                 android:layout_alignBottom="@+id/tv_eC3T2"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC3T2"
@@ -1029,11 +1001,10 @@
                                 android:id="@+id/iv_eC3T3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC3T3"
                                 android:layout_alignBottom="@+id/tv_eC3T3"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC3T3"
@@ -1056,11 +1027,10 @@
                                 android:id="@+id/iv_eC3T4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC3T4"
                                 android:layout_alignBottom="@+id/tv_eC3T4"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC3T4"
@@ -1083,11 +1053,10 @@
                                 android:id="@+id/iv_eC3T5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/eastern_logo"
                                 android:layout_alignTop="@+id/tv_eC3T5"
                                 android:layout_alignBottom="@+id/tv_eC3T5"
                                 android:adjustViewBounds="true"
-                                android:maxWidth="50dp"/>
+                                android:maxWidth="@dimen/teamLogo_maxWidth" />
 
                             <TextView
                                 android:id="@+id/tv_eC3T5"

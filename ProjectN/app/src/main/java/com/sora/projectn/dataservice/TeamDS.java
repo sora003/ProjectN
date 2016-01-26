@@ -1,6 +1,7 @@
 package com.sora.projectn.dataservice;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.sora.projectn.po.TeamPo;
 
@@ -46,6 +47,21 @@ public interface TeamDS {
     public Map<String,String> getTeamSNameAndAbbr(Context context);
 
 
+    /**
+     * 根据球队缩略名查询球队缩写
+     * @param context
+     * @param sName
+     * @return String
+     */
+    public String getTeamAbbr(Context context,String sName);
+
+    /**
+     * 根据球队缩略名获取球队logo
+     * @param context
+     * @param abbr
+     * @return Bitmap
+     */
+    public Bitmap getTeamLogo(Context context,String abbr);
 
     /**
      * 获取从网页爬取并分析得到的球队基本数据 存储在SQL
@@ -67,4 +83,13 @@ public interface TeamDS {
      * @param context
      */
     public void setTeamListInfo(Context context);
+
+
+    /**
+     * 将bitmap存入本地
+     * @param context
+     */
+    public void setTeamLogo(Context context);
+
+
 }

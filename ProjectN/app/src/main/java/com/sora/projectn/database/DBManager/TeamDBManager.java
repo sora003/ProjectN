@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.sora.projectn.database.DBHelper;
 import com.sora.projectn.po.TeamPo;
@@ -68,7 +69,11 @@ public class TeamDBManager {
             cv.put(KEY_CITY, teamPo.getCity());
             cv.put(KEY_LEAGUE, teamPo.getLeague());
             cv.put(KEY_CONFERENCE, teamPo.getConference());
-            db.update(TABLE_TEAM, cv, "abbr=?", new String[]{teamPo.getAbbr()});
+            String[] whereArgs = {teamPo.getAbbr()};
+
+//            Log.i("db_Conference",teamPo.getConference());
+
+            db.update(TABLE_TEAM, cv, "abbr=?", whereArgs);
         }
     }
 

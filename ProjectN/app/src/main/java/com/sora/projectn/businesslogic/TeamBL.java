@@ -1,6 +1,7 @@
 package com.sora.projectn.businesslogic;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.sora.projectn.businesslogicservice.TeamBLS;
 import com.sora.projectn.dataservice.TeamDS;
@@ -25,7 +26,7 @@ public class TeamBL implements TeamBLS {
         Map<String,String> map_STOC = teamDS.getTeamSNameAndConference(context);
 
 
-        //建立6个分区的对应list
+        //建立6个分区的对应sNameList
 
         //Southwest
         List<String> swlist =  new ArrayList<String>();
@@ -40,7 +41,20 @@ public class TeamBL implements TeamBLS {
         //Atlantic
         List<String> atlist =  new ArrayList<String>();
 
+        //建立6个分区的对应sNameList
 
+        //Southwest
+        List<Bitmap> swlogo = new ArrayList<Bitmap>();
+        //Southeast
+        List<Bitmap> selogo =  new ArrayList<Bitmap>();
+        //Pacific
+        List<Bitmap> palogo =  new ArrayList<Bitmap>();
+        //Central
+        List<Bitmap> celogo =  new ArrayList<Bitmap>();
+        //Northwest
+        List<Bitmap> nwlogo =  new ArrayList<Bitmap>();
+        //Atlantic
+        List<Bitmap> atlogo =  new ArrayList<Bitmap>();
 
         //建立6个分区的对应vo
 
@@ -70,25 +84,33 @@ public class TeamBL implements TeamBLS {
             String conference = map_STOC.get(key);
 
 
+
+
             //判断球队所属分区
             switch (conference){
                 case "Southwest":
                     swlist.add(sName);
+                    swlogo.add(teamDS.getTeamLogo(context,teamDS.getTeamAbbr(context,sName)));
                     break;
                 case "Southeast":
                     selist.add(sName);
+                    selogo.add(teamDS.getTeamLogo(context,teamDS.getTeamAbbr(context,sName)));
                     break;
                 case "Pacific":
                     palist.add(sName);
+                    palogo.add(teamDS.getTeamLogo(context,teamDS.getTeamAbbr(context,sName)));
                     break;
                 case "Central":
                     celist.add(sName);
+                    celogo.add(teamDS.getTeamLogo(context,teamDS.getTeamAbbr(context,sName)));
                     break;
                 case "Northwest":
                     nwlist.add(sName);
+                    nwlogo.add(teamDS.getTeamLogo(context,teamDS.getTeamAbbr(context,sName)));
                     break;
                 case "Atlantic":
                     atlist.add(sName);
+                    atlogo.add(teamDS.getTeamLogo(context,teamDS.getTeamAbbr(context,sName)));
                     break;
             }
 
@@ -105,12 +127,22 @@ public class TeamBL implements TeamBLS {
         atVo.setConference("Atlantic");
 
         //List<sName>
-        swVo.setList(swlist);
-        seVo.setList(selist);
-        paVo.setList(palist);
-        ceVo.setList(celist);
-        nwVo.setList(nwlist);
-        atVo.setList(atlist);
+        swVo.setsNameList(swlist);
+        seVo.setsNameList(selist);
+        paVo.setsNameList(palist);
+        ceVo.setsNameList(celist);
+        nwVo.setsNameList(nwlist);
+        atVo.setsNameList(atlist);
+
+        //List<logo>
+        swVo.setLogoList(swlogo);
+        swVo.setLogoList(swlogo);
+        seVo.setLogoList(selogo);
+        paVo.setLogoList(palogo);
+        ceVo.setLogoList(celogo);
+        nwVo.setLogoList(nwlogo);
+        atVo.setLogoList(atlogo);
+
 
 
         //新建List<TeamConferenceVo>对象
@@ -127,5 +159,8 @@ public class TeamBL implements TeamBLS {
 
         return list;
     }
+
+
+
 
 }

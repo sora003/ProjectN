@@ -1,6 +1,7 @@
 package com.sora.projectn;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.sora.projectn.businesslogic.TeamBL;
 import com.sora.projectn.businesslogicservice.TeamBLS;
+import com.sora.projectn.dataservice.TeamDS;
+import com.sora.projectn.dataservice.impl.TeamDSImpl;
 import com.sora.projectn.vo.TeamConferenceVo;
 
 import java.util.List;
@@ -19,10 +22,13 @@ import java.util.List;
  */
 public class TeamActivity extends AppCompatActivity {
 
+
+
     private static final int GET_DATA = 0x001;
 
     private List<TeamConferenceVo> list;
     private Context mContext;
+    private TeamDS DS = new TeamDSImpl();
 
     //TextView
     private TextView tv_wC1T1;
@@ -163,7 +169,42 @@ public class TeamActivity extends AppCompatActivity {
         tv_eC3T4 = (TextView) findViewById(R.id.tv_eC3T4);
         tv_eC3T5 = (TextView) findViewById(R.id.tv_eC3T5);
 
+        //ImageView
+        iv_wC1T1 = (ImageView) findViewById(R.id.iv_wC1T1);
+        iv_wC1T2 = (ImageView) findViewById(R.id.iv_wC1T2);
+        iv_wC1T3 = (ImageView) findViewById(R.id.iv_wC1T3);
+        iv_wC1T4 = (ImageView) findViewById(R.id.iv_wC1T4);
+        iv_wC1T5 = (ImageView) findViewById(R.id.iv_wC1T5);
 
+        iv_wC2T1 = (ImageView) findViewById(R.id.iv_wC2T1);
+        iv_wC2T2 = (ImageView) findViewById(R.id.iv_wC2T2);
+        iv_wC2T3 = (ImageView) findViewById(R.id.iv_wC2T3);
+        iv_wC2T4 = (ImageView) findViewById(R.id.iv_wC2T4);
+        iv_wC2T5 = (ImageView) findViewById(R.id.iv_wC2T5);
+
+        iv_wC3T1 = (ImageView) findViewById(R.id.iv_wC3T1);
+        iv_wC3T2 = (ImageView) findViewById(R.id.iv_wC3T2);
+        iv_wC3T3 = (ImageView) findViewById(R.id.iv_wC3T3);
+        iv_wC3T4 = (ImageView) findViewById(R.id.iv_wC3T4);
+        iv_wC3T5 = (ImageView) findViewById(R.id.iv_wC3T5);
+
+        iv_eC1T1 = (ImageView) findViewById(R.id.iv_eC1T1);
+        iv_eC1T2 = (ImageView) findViewById(R.id.iv_eC1T2);
+        iv_eC1T3 = (ImageView) findViewById(R.id.iv_eC1T3);
+        iv_eC1T4 = (ImageView) findViewById(R.id.iv_eC1T4);
+        iv_eC1T5 = (ImageView) findViewById(R.id.iv_eC1T5);
+
+        iv_eC2T1 = (ImageView) findViewById(R.id.iv_eC2T1);
+        iv_eC2T2 = (ImageView) findViewById(R.id.iv_eC2T2);
+        iv_eC2T3 = (ImageView) findViewById(R.id.iv_eC2T3);
+        iv_eC2T4 = (ImageView) findViewById(R.id.iv_eC2T4);
+        iv_eC2T5 = (ImageView) findViewById(R.id.iv_eC2T5);
+
+        iv_eC3T1 = (ImageView) findViewById(R.id.iv_eC3T1);
+        iv_eC3T2 = (ImageView) findViewById(R.id.iv_eC3T2);
+        iv_eC3T3 = (ImageView) findViewById(R.id.iv_eC3T3);
+        iv_eC3T4 = (ImageView) findViewById(R.id.iv_eC3T4);
+        iv_eC3T5 = (ImageView) findViewById(R.id.iv_eC3T5);
     }
 
     /**
@@ -187,54 +228,113 @@ public class TeamActivity extends AppCompatActivity {
 
         //TextView
         for (int i = 0; i < list.size(); i++) {
+            
             //获取sNameList 球队缩略名表
-            List<String> sNameList = list.get(i).getList();
+            List<String> sNameList = list.get(i).getsNameList();
+            //获取logoList 球队logo表
+            List<Bitmap> logoList = list.get(i).getLogoList();
+            
             switch (list.get(i).getConference()){
                 case "Southwest":
-                    tv_eC1T1.setText(sNameList.get(0));
-                    tv_wC1T1.setText(sNameList.get(1));
-                    tv_wC1T2.setText(sNameList.get(2));
-                    tv_wC1T3.setText(sNameList.get(3));
-                    tv_wC1T4.setText(sNameList.get(4));
-                    tv_wC1T5.setText(sNameList.get(5));
+                    
+                    tv_wC1T1.setText(sNameList.get(0));
+                    tv_wC1T2.setText(sNameList.get(1));
+                    tv_wC1T3.setText(sNameList.get(2));
+                    tv_wC1T4.setText(sNameList.get(3));
+                    tv_wC1T5.setText(sNameList.get(4));
+
+                    iv_wC1T1.setImageBitmap(logoList.get(0));
+                    iv_wC1T2.setImageBitmap(logoList.get(1));
+                    iv_wC1T3.setImageBitmap(logoList.get(2));
+                    iv_wC1T4.setImageBitmap(logoList.get(3));
+                    iv_wC1T5.setImageBitmap(logoList.get(4));
+
                     break;
+
                 case "Pacific":
+
                     tv_wC2T1.setText(sNameList.get(0));
                     tv_wC2T2.setText(sNameList.get(1));
                     tv_wC2T3.setText(sNameList.get(2));
                     tv_wC2T4.setText(sNameList.get(3));
                     tv_wC2T5.setText(sNameList.get(4));
+
+                    iv_wC2T1.setImageBitmap(logoList.get(0));
+                    iv_wC2T2.setImageBitmap(logoList.get(1));
+                    iv_wC2T3.setImageBitmap(logoList.get(2));
+                    iv_wC2T4.setImageBitmap(logoList.get(3));
+                    iv_wC2T5.setImageBitmap(logoList.get(4));
+
                     break;
+
                 case "Northwest":
+
                     tv_wC3T1.setText(sNameList.get(0));
                     tv_wC3T2.setText(sNameList.get(1));
                     tv_wC3T3.setText(sNameList.get(2));
                     tv_wC3T4.setText(sNameList.get(3));
                     tv_wC3T5.setText(sNameList.get(4));
+
+                    iv_wC3T1.setImageBitmap(logoList.get(0));
+                    iv_wC3T2.setImageBitmap(logoList.get(1));
+                    iv_wC3T3.setImageBitmap(logoList.get(2));
+                    iv_wC3T4.setImageBitmap(logoList.get(3));
+                    iv_wC3T5.setImageBitmap(logoList.get(4));
+
                     break;
+
                 case "Southeast":
+
                     tv_eC1T1.setText(sNameList.get(0));
                     tv_eC1T2.setText(sNameList.get(1));
                     tv_eC1T3.setText(sNameList.get(2));
                     tv_eC1T4.setText(sNameList.get(3));
                     tv_eC1T5.setText(sNameList.get(4));
+
+                    iv_eC1T1.setImageBitmap(logoList.get(0));
+                    iv_eC1T2.setImageBitmap(logoList.get(1));
+                    iv_eC1T3.setImageBitmap(logoList.get(2));
+                    iv_eC1T4.setImageBitmap(logoList.get(3));
+                    iv_eC1T5.setImageBitmap(logoList.get(4));
+
                     break;
+
                 case "Central":
+
                     tv_eC2T1.setText(sNameList.get(0));
                     tv_eC2T2.setText(sNameList.get(1));
                     tv_eC2T3.setText(sNameList.get(2));
                     tv_eC2T4.setText(sNameList.get(3));
                     tv_eC2T5.setText(sNameList.get(4));
+
+                    iv_eC2T1.setImageBitmap(logoList.get(0));
+                    iv_eC2T2.setImageBitmap(logoList.get(1));
+                    iv_eC2T3.setImageBitmap(logoList.get(2));
+                    iv_eC2T4.setImageBitmap(logoList.get(3));
+                    iv_eC2T5.setImageBitmap(logoList.get(4));
+
                     break;
+
                 case "Atlantic":
+
                     tv_eC3T1.setText(sNameList.get(0));
                     tv_eC3T2.setText(sNameList.get(1));
                     tv_eC3T3.setText(sNameList.get(2));
                     tv_eC3T4.setText(sNameList.get(3));
                     tv_eC3T5.setText(sNameList.get(4));
+
+                    iv_eC3T1.setImageBitmap(logoList.get(0));
+                    iv_eC3T2.setImageBitmap(logoList.get(1));
+                    iv_eC3T3.setImageBitmap(logoList.get(2));
+                    iv_eC3T4.setImageBitmap(logoList.get(3));
+                    iv_eC3T5.setImageBitmap(logoList.get(4));
+
                     break;
             }
         }
+
+
+
     }
 
 

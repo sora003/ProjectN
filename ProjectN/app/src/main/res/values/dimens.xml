@@ -9,4 +9,5 @@
     <dimen name="team_horizontal_margin">10dp</dimen>
     <dimen name="conferenceSize">18sp</dimen>
     <dimen name="conference_vertical_margin">5dp</dimen>
+    <dimen name="teamLogo_maxWidth">30dp</dimen>
 </resources>
