@@ -9,10 +9,9 @@ import android.os.IBinder;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.sora.projectn.Web.bitmapDS.TeamBDS;
-import com.sora.projectn.Web.bitmapDS.impl.TeamLogo;
-import com.sora.projectn.Web.sqlDS.TeamSDS;
-import com.sora.projectn.Web.sqlDS.impl.Teamimpl;
+
+import com.sora.projectn.dataservice.TeamDS;
+import com.sora.projectn.dataservice.impl.TeamDSImpl;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -31,6 +30,7 @@ public class ScrapeService extends Service {
     private final int IO_ERROR = 0x04;
 
     private CountDownLatch countDownLatch = new CountDownLatch(1);
+    private CountDownLatch handlerCountDownLatch = new CountDownLatch(2);
 
 
     //返回binder 使得Service的引用可以通过返回的IBinder对象得到
@@ -84,6 +84,8 @@ public class ScrapeService extends Service {
 
         getTeamLogo.start();
 
+        getTeamListInfo.start();
+
 
     }
 
@@ -93,12 +95,15 @@ public class ScrapeService extends Service {
     Thread getTeamList = new Thread(new Runnable() {
         @Override
         public void run() {
-            TeamSDS teamIO = new Teamimpl();
-            teamIO.setTeamListToSql(getApplicationContext());
+            TeamDS teamDS = new TeamDSImpl();
+            teamDS.setTeamList(getApplicationContext());
             countDownLatch.countDown();
         }
     });
 
+    /**
+     * 获取球队的logo 并将这些数据存储到SDCard
+     */
     Thread getTeamLogo = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -107,10 +112,29 @@ public class ScrapeService extends Service {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            TeamBDS teamBDS = new TeamLogo();
-            teamBDS.setTeamLogoToSDCard(getApplicationContext());
+//            TeamBDS teamBDS = new TeamLogo();
+//            teamBDS.setTeamLogoToSDCard(getApplicationContext());
 
+            handlerCountDownLatch.countDown();
+
+            try {
+                handlerCountDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             handler.sendEmptyMessage(SCRAPE_SUCCESS);
+        }
+    });
+
+    /**
+     * 获取球队的基本信息 包含了球队的城市 分区 联盟 等信息
+     */
+    Thread getTeamListInfo = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            TeamDS teamDS = new TeamDSImpl();
+            teamDS.setTeamListInfo(getApplicationContext());
+            handlerCountDownLatch.countDown();
         }
     });
 

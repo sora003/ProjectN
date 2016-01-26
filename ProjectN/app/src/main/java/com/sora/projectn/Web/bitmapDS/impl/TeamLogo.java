@@ -3,11 +3,8 @@ package com.sora.projectn.Web.bitmapDS.impl;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
-import android.widget.Toast;
 
 import com.sora.projectn.Web.bitmapDS.TeamBDS;
-import com.sora.projectn.Web.sqlDS.TeamSDS;
-import com.sora.projectn.Web.sqlDS.impl.Teamimpl;
 import com.sora.projectn.Web.webDS.TeamWDS;
 import com.sora.projectn.Web.webDS.impl.TeamData;
 import com.sora.projectn.dataservice.TeamDS;
@@ -30,9 +27,9 @@ public class TeamLogo implements TeamBDS {
     @Override
     public void setTeamLogoToSDCard(Context context) {
 
-        //调用TeamSDS接口 获取球队缩写列表
+        //调用TeamDS接口 获取球队缩写列表
         TeamDS teamDS = new TeamDSImpl();
-        List list = teamDS.getTeamAbbrFromSql(context);
+        List list = teamDS.getTeamAbbr(context);
 
         //调用TeamWDS接口 获取(k,v)=(球队缩写,球队logo)的Map
         TeamWDS teamWDS = new TeamData();

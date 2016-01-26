@@ -46,89 +46,11 @@ public class TestActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.testText);
 
         imageView = (ImageView) findViewById(R.id.testImage);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                    TeamSDS teamSDS = new Teamimpl();
-//                    list = teamSDS.getTeamAbbrFromSql(getApplicationContext());
-//                    handler.sendEmptyMessage(1);
-//
-//            }
-//        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                TeamSDS teamIO = new Teamimpl();
-                teamIO.setTeamListToSql(getApplicationContext());
-
-
-                //调用TeamSDS接口 获取球队缩写列表
-                TeamSDS teamSDS = new Teamimpl();
-//                List list = teamSDS.getTeamAbbrFromSql(getApplicationContext());
-
-                //调用TeamWDS接口 获取(k,v)=(球队缩写,球队logo)的Map
-                TeamWDS teamWDS = new TeamData();
-                Map<String,Bitmap> map = teamWDS.getTeamLogoFromWeb(list);
-
-
-                //获取map的key 的首个对象
-                Iterator iterator = map.keySet().iterator();
-
-                //遍历set(key)
-                while (iterator.hasNext()) {
-                    Object key = iterator.next();
-                    String abbr = key.toString();
-                    Bitmap bmp = map.get(key);
-
-                    //设置文件路径  SDCard/NBADATA/TeamLogo
-                    String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/NBADATA/TeamLogo" ;
 
 
 
-                    String fileName = abbr + ".png";
-
-                    File pFile = new File(filePath);
-
-                    //判断文件是否存在 若不存在 则创建文件
-                    if (! pFile.exists()){
-                        pFile.mkdirs();
-                    }
-
-                    file = new File(filePath + "/" + fileName);
-
-                    handler.sendEmptyMessage(3);
 
 
-
-                    FileOutputStream fileOutputStream;
-                    try {
-                        fileOutputStream = new FileOutputStream(file);
-
-                        //存储图片
-                        bmp.compress(Bitmap.CompressFormat.PNG,100,fileOutputStream);
-
-                        //关闭文件
-                        fileOutputStream.flush();
-                        fileOutputStream.close();
-
-
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-
-//                handler.sendEmptyMessage(2);
-            }
-        }).start();
     }
 
     Handler handler = new Handler(){

@@ -1,21 +1,25 @@
-package com.sora.projectn.database;
+package com.sora.projectn.database.DBManager;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.sora.projectn.database.DBHelper;
 import com.sora.projectn.po.TeamPo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sora on 2016/1/19.
  */
-public class DBManager  {
+public class TeamDBManager {
 
-    private  DBHelper helper;
+    private DBHelper helper;
     private SQLiteDatabase db;
 
     private static final String TABLE_TEAM = "team";
@@ -32,7 +36,7 @@ public class DBManager  {
 //    private static final String KEY = ;
 
 
-    public DBManager(Context context) {
+    public TeamDBManager(Context context) {
         helper = new DBHelper(context);
         //因为getWritableDatabase内部调用了mContext.openOrCreateDatabase(mName, 0, mFactory);
         //所以要确保context已初始化,我们可以把实例化DBManager的步骤放在Activity的onCreate里
@@ -87,6 +91,52 @@ public class DBManager  {
     }
 
     /**
+     * 查找球队分区和缩略名信息
+     * @return Map<String,String>
+     *     key - sName
+     *     value - conference
+     */
+    public Map<String,String> queryTeamSNameAndConference(){
+
+        //由于conference可能相同 将sName作为key存储 虽然在取出的时候会产生一些麻烦
+        Map<String,String> map = new HashMap<>();
+
+        Cursor c = queryTheCursor_team();
+
+        while (c.moveToNext()){
+            String value = c.getString(c.getColumnIndex(KEY_CONFERENCE));
+            String key = c.getString(c.getColumnIndex(KEY_SNAME));
+            map.put(key, value);
+        }
+
+        c.close();
+        return map;
+    }
+
+
+    /**
+     * 查找球队缩略名和缩写信息
+     * @return Map<String,String>
+     *     key - sName
+     *     value - abbr
+     */
+    public Map<String,String> queryTeamSNameAndAbbr(){
+        Map<String,String> map = new HashMap<String,String>();
+
+        Cursor c = queryTheCursor_team();
+
+        while (c.moveToNext()){
+            String key = c.getString(c.getColumnIndex(KEY_SNAME));
+            String value = c.getString(c.getColumnIndex(KEY_ABBR));
+            map.put(key, value);
+        }
+
+        c.close();
+        return map;
+    }
+
+
+    /**
      * 查找球队基本数据
      * @return List<TeamPo>
      */
@@ -102,6 +152,7 @@ public class DBManager  {
             teamPo.setLeague(c.getString(c.getColumnIndex(KEY_LEAGUE)));
             teamPo.setConference(c.getString(c.getColumnIndex(KEY_CONFERENCE)));
             teamPo.setFounded(c.getInt(c.getColumnIndex(KEY_FOUNDED)));
+            teamPo.setsName(c.getString(c.getColumnIndex(KEY_SNAME)));
             list.add(teamPo);
         }
 

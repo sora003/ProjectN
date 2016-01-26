@@ -23,6 +23,7 @@ public class WelcomeActivity extends AppCompatActivity{
     private Context mContext = this;
     private ScrapeService scrapeService;
     private Boolean hasTeamInfo;
+    private SharedPreferences.Editor editor;
 
 
     @Override
@@ -31,7 +32,7 @@ public class WelcomeActivity extends AppCompatActivity{
         setContentView(R.layout.activity_welcome);
         //使用SharedPreferences 读取球队基本数据是否已经存在
         SharedPreferences sharedPreferences = getSharedPreferences("hasData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor = sharedPreferences.edit();
         hasTeamInfo = sharedPreferences.getBoolean(HAS_TEAMINFO,false);
         if (hasTeamInfo){
             startActivity(new Intent(mContext,MainActivity.class));
@@ -41,8 +42,6 @@ public class WelcomeActivity extends AppCompatActivity{
             initService();
             editor.remove(HAS_TEAMINFO);
             editor.putBoolean(HAS_TEAMINFO, true);
-            //取代commit使用
-            editor.apply();
         }
 
 
@@ -73,6 +72,9 @@ public class WelcomeActivity extends AppCompatActivity{
                 public void OnParserComplete(Boolean isScrape) {
                     //如果爬取完成 跳转到MainActivity
                     if (isScrape){
+                        //修改SharedPreferences中的数据 说明已爬取过基本数据
+                        //取代commit使用
+                        editor.apply();
                         startActivity(new Intent(mContext,MainActivity.class));
                         //TODO  WeatherActivity的关闭问题
                         finish();
