@@ -1,21 +1,17 @@
-package com.sora.projectn.Web.webDS.impl;
+package com.sora.projectn.WebService.webDS.impl;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 
-import com.sora.projectn.Web.webDS.TeamWDS;
+import com.sora.projectn.WebService.webDS.TeamWDS;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +31,7 @@ public class TeamData implements TeamWDS {
 
 
     @Override
-    public StringBuffer getTeamListFromWeb() {
+    public StringBuffer getTeamList() {
         StringBuffer result = new StringBuffer();
         try {
             URL url = new URL(MAIN_URL + "teams");
@@ -59,7 +55,7 @@ public class TeamData implements TeamWDS {
     }
 
     @Override
-    public Map<String, Bitmap> getTeamLogoFromWeb(List<String> list) {
+    public Map<String, Bitmap> getTeamLogo(List<String> list) {
         Map<String,Bitmap> map = new HashMap<String,Bitmap>();
         for (String abbr : list) {
             try {
@@ -91,7 +87,7 @@ public class TeamData implements TeamWDS {
     }
 
     @Override
-    public StringBuffer getTeamInfoFromWeb(String abbr) {
+    public StringBuffer getTeamInfo(String abbr) {
         StringBuffer result = new StringBuffer();
         try {
             URL url = new URL(MAIN_URL+ "teams/"+abbr);
@@ -116,10 +112,35 @@ public class TeamData implements TeamWDS {
     }
 
     @Override
-    public StringBuffer getTeamLeagueFromWeb() {
+    public StringBuffer getTeamLeague() {
         StringBuffer result = new StringBuffer();
         try {
             URL url = new URL(LEAGUE_PATH);
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            InputStream in = conn.getInputStream();
+            //Reader
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line = null;
+            while ((line = reader.readLine()) != null){
+                //必须在一行中 否则用正则表达式取值时会出错
+                result.append(new String(line.getBytes(),"utf-8"));
+            }
+            reader.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    @Override
+    public StringBuffer getTeamSeasonGame(String abbr) {
+        StringBuffer result = new StringBuffer();
+        try {
+            URL url = new URL(MAIN_URL+ "teams/"+abbr+"/stats_totals.html");
             URLConnection conn = url.openConnection();
             conn.connect();
             InputStream in = conn.getInputStream();

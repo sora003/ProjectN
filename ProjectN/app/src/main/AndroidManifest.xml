@@ -38,12 +38,12 @@
         </activity>
 
         <activity
-            android:name=".TeamActivity">
+            android:name=".TeamListActivity">
 
         </activity>
 
         <activity
-            android:name=".TeamInfoActivity">
+            android:name=".TeamActivity">
 
         </activity>
 

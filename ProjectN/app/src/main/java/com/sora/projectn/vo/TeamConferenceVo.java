@@ -7,6 +7,14 @@ import java.util.Map;
 
 /**
  * Created by Sora on 2016/1/25.
+ *
+ *
+ * TeamListActivity调用数据
+ * 一个分区的球队信息
+ *
+ * conference   球队分区
+ * sNameList    球队缩略名列表
+ * logoList     球队图标列表
  */
 public class TeamConferenceVo {
 

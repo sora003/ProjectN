@@ -110,19 +110,19 @@ public class ScrapeService extends Service {
     Thread getTeamLogo = new Thread(new Runnable() {
         @Override
         public void run() {
-            //判断SD卡是否存在 若不存在 发送错误报告
-            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                handler.sendEmptyMessage(IO_ERROR);
-                return;
-            }
-            //等待球队Abbr等信息爬取完成
-            try {
-                countDownLatch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            teamDS.setTeamLogo(getApplicationContext());
+//            //判断SD卡是否存在 若不存在 发送错误报告
+//            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+//                handler.sendEmptyMessage(IO_ERROR);
+//                return;
+//            }
+//            //等待球队Abbr等信息爬取完成
+//            try {
+//                countDownLatch.await();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//            teamDS.setTeamLogo(getApplicationContext());
 
             handlerCountDownLatch.countDown();
 

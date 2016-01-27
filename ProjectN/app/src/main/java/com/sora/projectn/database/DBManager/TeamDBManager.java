@@ -4,19 +4,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.sora.projectn.database.DBHelper;
 import com.sora.projectn.po.TeamPo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Sora on 2016/1/19.
+ *
+ * 对team表进行操作
  */
 public class TeamDBManager {
 
@@ -34,7 +34,7 @@ public class TeamDBManager {
     private static final String KEY_LEAGUE = "league";
     private static final String KEY_CONFERENCE = "conference";
     private static final String KEY_SNAME = "sName" ;
-//    private static final String KEY = ;
+
 
 
     public TeamDBManager(Context context) {
@@ -83,7 +83,7 @@ public class TeamDBManager {
      */
     public List<String> queryTeamAbbr(){
         List<String> list = new ArrayList<String>();
-        Cursor c = queryTheCursor_team();
+        Cursor c = queryTheCursor();
 
         while (c.moveToNext()){
             String abbr = null;
@@ -106,7 +106,7 @@ public class TeamDBManager {
         //由于conference可能相同 将sName作为key存储 虽然在取出的时候会产生一些麻烦
         Map<String,String> map = new HashMap<>();
 
-        Cursor c = queryTheCursor_team();
+        Cursor c = queryTheCursor();
 
         while (c.moveToNext()){
             String value = c.getString(c.getColumnIndex(KEY_CONFERENCE));
@@ -128,7 +128,7 @@ public class TeamDBManager {
     public Map<String,String> queryTeamSNameAndAbbr(){
         Map<String,String> map = new HashMap<String,String>();
 
-        Cursor c = queryTheCursor_team();
+        Cursor c = queryTheCursor();
 
         while (c.moveToNext()){
             String key = c.getString(c.getColumnIndex(KEY_SNAME));
@@ -147,7 +147,7 @@ public class TeamDBManager {
      */
     public List<TeamPo> queryTeamList(){
         List<TeamPo> list = new ArrayList<TeamPo>();
-        Cursor c = queryTheCursor_team();
+        Cursor c = queryTheCursor();
 
         while (c.moveToNext()){
             TeamPo teamPo = new TeamPo();
@@ -169,7 +169,7 @@ public class TeamDBManager {
      * 查找 球队基本数据 返回带游标的数据集
      * @return Cursor
      */
-    public Cursor queryTheCursor_team(){
+    public Cursor queryTheCursor(){
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_TEAM,null);
         return c;
     }

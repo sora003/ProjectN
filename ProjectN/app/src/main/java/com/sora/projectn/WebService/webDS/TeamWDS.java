@@ -1,4 +1,4 @@
-package com.sora.projectn.Web.webDS;
+package com.sora.projectn.WebService.webDS;
 
 import android.graphics.Bitmap;
 
@@ -14,7 +14,7 @@ public interface TeamWDS {
      *
      * @return 球队基本数据.html
      */
-    public StringBuffer getTeamListFromWeb();
+    public StringBuffer getTeamList();
 
 
     /**
@@ -25,18 +25,24 @@ public interface TeamWDS {
      *     key      -   abbr 球队缩写
      *     value    -   Bitmap 球队Logo
      */
-    public Map<String, Bitmap> getTeamLogoFromWeb(List<String> list);
+    public Map<String, Bitmap> getTeamLogo(List<String> list);
 
     /**
      *
      * @param abbr 球队缩写
      * @return 球队具体数据.html
      */
-    public StringBuffer getTeamInfoFromWeb(String abbr);
+    public StringBuffer getTeamInfo(String abbr);
 
     /**
      *
      * @return  球队联盟数据.html
      */
-    public StringBuffer getTeamLeagueFromWeb();
+    public StringBuffer getTeamLeague();
+
+    /**
+     *
+     * @return  球队赛季总计数据.html
+     */
+    public StringBuffer getTeamSeasonGame(String abbr);
 }

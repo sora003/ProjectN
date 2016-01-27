@@ -4,15 +4,16 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.util.Log;
 
-import com.sora.projectn.Web.parser.TeamParser;
-import com.sora.projectn.Web.parser.impl.TeamParserImpl;
-import com.sora.projectn.Web.webDS.TeamWDS;
-import com.sora.projectn.Web.webDS.impl.TeamData;
+import com.sora.projectn.WebService.parser.TeamParser;
+import com.sora.projectn.WebService.parser.impl.TeamParserImpl;
+import com.sora.projectn.WebService.webDS.TeamWDS;
+import com.sora.projectn.WebService.webDS.impl.TeamData;
 import com.sora.projectn.database.DBManager.TeamDBManager;
+import com.sora.projectn.database.DBManager.TeamSeasonGameDBManager;
 import com.sora.projectn.dataservice.TeamDS;
 import com.sora.projectn.po.TeamPo;
+import com.sora.projectn.po.TeamSeasonGamePo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -80,11 +81,31 @@ public class TeamDSImpl implements TeamDS{
     }
 
     @Override
+    public int getTeamSeasonGameHasData(Context context, String abbr) {
+        return new TeamSeasonGameDBManager(context).queryHasData(abbr);
+    }
+
+    @Override
+    public int getTeamSeasonGameSetTime(Context context, String abbr) {
+        return new TeamSeasonGameDBManager(context).querySetTime(abbr);
+    }
+
+    @Override
+    public int getTeamSeasonGameYear(Context context, String abbr) {
+        return new TeamSeasonGameDBManager(context).queryYear(abbr);
+    }
+
+    @Override
+    public TeamSeasonGamePo getTeamSeasonGameInfo(Context context, String abbr) {
+        return new TeamSeasonGameDBManager(context).queryTeamSeasonGameInfo(abbr);
+    }
+
+    @Override
     public void setTeamList(Context context) {
 
         //调用TeamWDS接口 获取爬取数据
         TeamWDS teamWDS = new TeamData();
-        StringBuffer result = teamWDS.getTeamListFromWeb();
+        StringBuffer result = teamWDS.getTeamList();
 
 
         //调用TeamParser接口 获取球队基本数据 List
@@ -102,7 +123,7 @@ public class TeamDSImpl implements TeamDS{
 
         //调用TeamWDS接口 获取爬取数据
         TeamWDS teamWDS = new TeamData();
-        StringBuffer result = teamWDS.getTeamLeagueFromWeb();
+        StringBuffer result = teamWDS.getTeamLeague();
 
         //调用TeamParser接口 获取球队基本数据 List
         TeamParser teamParser = new TeamParserImpl();
@@ -112,7 +133,7 @@ public class TeamDSImpl implements TeamDS{
         for (TeamPo teamPo : list) {
             //调用TeamWDS接口 获取爬取数据
             TeamWDS teamWDS1 = new TeamData();
-            StringBuffer result1 = teamWDS1.getTeamInfoFromWeb(teamPo.getAbbr());
+            StringBuffer result1 = teamWDS1.getTeamInfo(teamPo.getAbbr());
 
             //调用TeamParser接口 获取球队基本数据 List
             TeamParser teamParser1 = new TeamParserImpl();
@@ -140,7 +161,7 @@ public class TeamDSImpl implements TeamDS{
 
         //调用TeamWDS接口 获取(k,v)=(球队缩写,球队logo)的Map
         TeamWDS teamWDS = new TeamData();
-        Map<String,Bitmap> map = teamWDS.getTeamLogoFromWeb(list);
+        Map<String,Bitmap> map = teamWDS.getTeamLogo(list);
 
 
 
@@ -201,6 +222,29 @@ public class TeamDSImpl implements TeamDS{
         }
 
 
+    }
+
+    @Override
+    public void setTeamSeasonGameAbbr(Context context) {
+        new TeamSeasonGameDBManager(context).add(this.getTeamAbbr(context));
+    }
+
+    @Override
+    public void setTeamSeasonGame(Context context ,String abbr) {
+        //调用TeamWDS接口 获取爬取数据
+        TeamWDS teamWDS = new TeamData();
+        StringBuffer result = teamWDS.getTeamSeasonGame(abbr);
+
+
+        //调用TeamParser接口 获取球队最新赛季比赛数据
+        TeamParser teamParser = new TeamParserImpl();
+        TeamSeasonGamePo po = teamParser.parseTeamSeasonGame(result);
+
+        //设置abbr值
+        po.setAbbr(abbr);
+
+
+        new TeamSeasonGameDBManager(context).update(po);
     }
 }
 

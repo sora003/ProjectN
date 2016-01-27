@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        startActivity(new Intent(mContext,TeamActivity.class));
+                        startActivity(new Intent(mContext,TeamListActivity.class));
                         break;
                 }
             }
