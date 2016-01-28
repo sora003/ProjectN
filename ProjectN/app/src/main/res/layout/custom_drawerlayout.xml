@@ -24,7 +24,6 @@
             android:id="@+id/lv_left_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
-            android:text="DrawerLayout" />
+            android:divider="@null" />
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

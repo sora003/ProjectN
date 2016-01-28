@@ -11,4 +11,17 @@
     <dimen name="conference_vertical_margin">5dp</dimen>
     <dimen name="teamLogo_maxWidth">30dp</dimen>
     <dimen name="titleSize">25sp</dimen>
+
+    <!--activity_team-->
+    <!--球队Logo占用的最大宽度-->
+    <dimen name="teamLogo_maxWidthForInfo">80dp</dimen>
+    <!--球队基本信息字号-->
+    <dimen name="teamInfoSize">14sp</dimen>
+    <!--球队名字字号-->
+    <dimen name="teamTitleSize">22sp</dimen>
+    <!--球队基本信息间的距离-->
+    <dimen name="teamInfo_vertical_margin">5dp</dimen>
+    <dimen name="teamInfo_horizontal_margin">10dp</dimen>
+    <dimen name="teamGuideSize">18sp</dimen>
+    <dimen name="guide_vertical_margin">5dp</dimen>
 </resources>

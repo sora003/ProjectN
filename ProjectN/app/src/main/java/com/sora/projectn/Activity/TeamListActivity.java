@@ -1,4 +1,4 @@
-package com.sora.projectn;
+package com.sora.projectn.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sora.projectn.R;
 import com.sora.projectn.businesslogic.TeamBL;
 import com.sora.projectn.businesslogicservice.TeamBLS;
 import com.sora.projectn.dataservice.TeamDS;
@@ -31,6 +32,7 @@ public class TeamListActivity extends AppCompatActivity {
     private static final int GET_DATA = 0x001;
     private static final int GET_SNAME = 0x002;
     private static final int GET_ABBR = 0x003;
+    private static final String TITLE = "   球队列表";
 
     private List<TeamConferenceVo> list;
     private Context mContext;
@@ -221,14 +223,10 @@ public class TeamListActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         //设置Toolbar标题
-        toolbar.setTitle("球队列表");
+        toolbar.setTitle(TITLE);
         //设置标题颜色
         toolbar.setTitleTextColor(getResources().getColor(R.color.color_white));
         setSupportActionBar(toolbar);
-        //设置返回键可用
-        getSupportActionBar().setHomeButtonEnabled(true);
-        //决定左上角的图标是否可以点击
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mContext = this;
 

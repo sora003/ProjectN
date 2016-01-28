@@ -13,4 +13,5 @@ public class TeamInfoVo {
     private int year;
     private int win;
     private int lose;
+    private int rank;
 }

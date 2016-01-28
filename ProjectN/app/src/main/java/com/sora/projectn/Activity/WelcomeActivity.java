@@ -1,4 +1,4 @@
-package com.sora.projectn;
+package com.sora.projectn.Activity;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 
+import com.sora.projectn.R;
 import com.sora.projectn.Service.ScrapeService;
 
 /**
