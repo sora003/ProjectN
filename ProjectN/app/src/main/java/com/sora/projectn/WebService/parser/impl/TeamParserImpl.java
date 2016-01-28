@@ -1,5 +1,7 @@
 package com.sora.projectn.WebService.parser.impl;
 
+import android.util.Log;
+
 import com.sora.projectn.WebService.parser.TeamParser;
 import com.sora.projectn.po.TeamPo;
 import com.sora.projectn.po.TeamSeasonGamePo;
@@ -268,6 +270,10 @@ public class TeamParserImpl implements TeamParser{
                     int tov = Integer.parseInt(matcher.group(59));
                     int pf = Integer.parseInt(matcher.group(61));
                     int pts = Integer.parseInt(matcher.group(63));
+
+
+                    Log.i("当前爬取球队",alist.get(a));
+
 
                     //为po对象添加值
                     po.setYear(year);

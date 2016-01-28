@@ -12,11 +12,11 @@ import java.util.List;
 public interface TeamBLS {
 
     /**
-     * 获取TeamActivity显示内容
+     * 获取TeamListActivity显示内容
      * @param context
      * @return
      */
     public List<TeamConferenceVo> getTeamConferenceInfo(Context context);
 
-
+//    public
 }

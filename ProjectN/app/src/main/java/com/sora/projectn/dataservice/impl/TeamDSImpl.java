@@ -169,9 +169,8 @@ public class TeamDSImpl implements TeamDS{
     @Override
     public void setTeamLogo(Context context) {
 
-        //调用TeamDS接口 获取球队缩写列表
-        TeamDS teamDS = new TeamDSImpl();
-        List list = teamDS.getTeamAbbr(context);
+        //获取球队缩写列表
+        List<String> list = this.getTeamAbbr(context);
 
         //调用TeamWDS接口 获取(k,v)=(球队缩写,球队logo)的Map
         TeamWDS teamWDS = new TeamWDSImpl();

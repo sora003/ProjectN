@@ -34,7 +34,7 @@ public class ScrapeService extends Service {
     //球队基本数据 子线程
     private CountDownLatch countDownLatch = new CountDownLatch(1);
     //球队logo爬取和球队联盟等信息爬取子线程
-    private CountDownLatch handlerCountDownLatch = new CountDownLatch(2);
+    private CountDownLatch handlerCountDownLatch = new CountDownLatch(3);
 
     //获取TeamDS接口
     TeamDS teamDS = new TeamDSImpl();
@@ -88,6 +88,8 @@ public class ScrapeService extends Service {
         getTeamLogo.start();
 
         getTeamListInfo.start();
+
+        getTeamSeasonGameInfo.start();
 
 
     }
@@ -150,6 +152,28 @@ public class ScrapeService extends Service {
             }
             teamDS.setTeamListInfo(getApplicationContext());
 //            Log.i("Service","setTeamListInfo");
+            handlerCountDownLatch.countDown();
+        }
+    });
+
+    /**
+     * 获取球队最新赛季的数据
+     */
+    Thread getTeamSeasonGameInfo = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            //等待球队Abbr等信息爬取完成
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //新建 teamSeasonGame表
+            teamDS.setTeamSeasonGameAbbr(getApplicationContext());
+
+            //更新teamSeasonGame表数据
+            teamDS.setTeamSeasonGame(getApplicationContext());
+
             handlerCountDownLatch.countDown();
         }
     });
