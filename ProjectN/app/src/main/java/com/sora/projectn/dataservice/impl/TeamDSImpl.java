@@ -8,7 +8,7 @@ import android.os.Environment;
 import com.sora.projectn.WebService.parser.TeamParser;
 import com.sora.projectn.WebService.parser.impl.TeamParserImpl;
 import com.sora.projectn.WebService.webDS.TeamWDS;
-import com.sora.projectn.WebService.webDS.impl.TeamData;
+import com.sora.projectn.WebService.webDS.impl.TeamWDSImpl;
 import com.sora.projectn.database.DBManager.TeamDBManager;
 import com.sora.projectn.database.DBManager.TeamSeasonGameDBManager;
 import com.sora.projectn.dataservice.TeamDS;
@@ -31,22 +31,34 @@ public class TeamDSImpl implements TeamDS{
 
     @Override
     public List<String> getTeamAbbr(Context context) {
-        return new TeamDBManager(context).queryTeamAbbr();
+        TeamDBManager db = new TeamDBManager(context);
+        List<String> list = db.queryTeamAbbr();
+        db.closeDB();
+        return list;
     }
 
     @Override
     public List<TeamPo> getTeamList(Context context) {
-        return new TeamDBManager(context).queryTeamList();
+        TeamDBManager db = new TeamDBManager(context);
+        List<TeamPo> list = db.queryTeamList();
+        db.closeDB();
+        return list;
     }
 
     @Override
     public Map<String, String> getTeamSNameAndConference(Context context) {
-        return new TeamDBManager(context).queryTeamSNameAndConference();
+        TeamDBManager db = new TeamDBManager(context);
+        Map<String, String> map = db.queryTeamSNameAndConference();
+        db.closeDB();
+        return map;
     }
 
     @Override
     public Map<String, String> getTeamSNameAndAbbr(Context context) {
-        return new TeamDBManager(context).queryTeamSNameAndAbbr();
+        TeamDBManager db = new TeamDBManager(context);
+        Map<String, String> map = db.queryTeamSNameAndAbbr();
+        db.closeDB();
+        return map;
     }
 
     @Override
@@ -77,34 +89,33 @@ public class TeamDSImpl implements TeamDS{
 
         bmp = BitmapFactory.decodeFile(filePath);
 
+
         return bmp;
     }
 
-    @Override
-    public int getTeamSeasonGameHasData(Context context, String abbr) {
-        return new TeamSeasonGameDBManager(context).queryHasData(abbr);
-    }
 
-    @Override
-    public int getTeamSeasonGameSetTime(Context context, String abbr) {
-        return new TeamSeasonGameDBManager(context).querySetTime(abbr);
-    }
 
     @Override
     public int getTeamSeasonGameYear(Context context, String abbr) {
-        return new TeamSeasonGameDBManager(context).queryYear(abbr);
+        TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
+        int year = db.queryYear(abbr);
+        db.closeDB();
+        return year;
     }
 
     @Override
     public TeamSeasonGamePo getTeamSeasonGameInfo(Context context, String abbr) {
-        return new TeamSeasonGameDBManager(context).queryTeamSeasonGameInfo(abbr);
+        TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
+        TeamSeasonGamePo po = db.queryTeamSeasonGameInfo(abbr);
+        db.closeDB();
+        return po;
     }
 
     @Override
     public void setTeamList(Context context) {
 
         //调用TeamWDS接口 获取爬取数据
-        TeamWDS teamWDS = new TeamData();
+        TeamWDS teamWDS = new TeamWDSImpl();
         StringBuffer result = teamWDS.getTeamList();
 
 
@@ -113,7 +124,9 @@ public class TeamDSImpl implements TeamDS{
         List<TeamPo> list = teamParser.parseTeamList(result);
 
 
-        new TeamDBManager(context).add(list);
+        TeamDBManager db = new TeamDBManager(context);
+        db.add(list);
+        db.closeDB();
     }
 
 
@@ -122,7 +135,7 @@ public class TeamDSImpl implements TeamDS{
     public void setTeamListInfo(Context context) {
 
         //调用TeamWDS接口 获取爬取数据
-        TeamWDS teamWDS = new TeamData();
+        TeamWDS teamWDS = new TeamWDSImpl();
         StringBuffer result = teamWDS.getTeamLeague();
 
         //调用TeamParser接口 获取球队基本数据 List
@@ -132,7 +145,7 @@ public class TeamDSImpl implements TeamDS{
         //添加城市信息
         for (TeamPo teamPo : list) {
             //调用TeamWDS接口 获取爬取数据
-            TeamWDS teamWDS1 = new TeamData();
+            TeamWDS teamWDS1 = new TeamWDSImpl();
             StringBuffer result1 = teamWDS1.getTeamInfo(teamPo.getAbbr());
 
             //调用TeamParser接口 获取球队基本数据 List
@@ -145,8 +158,9 @@ public class TeamDSImpl implements TeamDS{
         }
 
 
-        new TeamDBManager(context).update(list);
-
+        TeamDBManager db = new TeamDBManager(context);
+        db.update(list);
+        db.closeDB();
 
 
     }
@@ -160,7 +174,7 @@ public class TeamDSImpl implements TeamDS{
         List list = teamDS.getTeamAbbr(context);
 
         //调用TeamWDS接口 获取(k,v)=(球队缩写,球队logo)的Map
-        TeamWDS teamWDS = new TeamData();
+        TeamWDS teamWDS = new TeamWDSImpl();
         Map<String,Bitmap> map = teamWDS.getTeamLogo(list);
 
 
@@ -226,25 +240,30 @@ public class TeamDSImpl implements TeamDS{
 
     @Override
     public void setTeamSeasonGameAbbr(Context context) {
-        new TeamSeasonGameDBManager(context).add(this.getTeamAbbr(context));
+        TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
+        db.add(this.getTeamAbbr(context));
+        db.closeDB();
     }
 
     @Override
-    public void setTeamSeasonGame(Context context ,String abbr) {
+    public void setTeamSeasonGame(Context context) {
+
+        //获取球队缩写列表
+        List<String> alist = this.getTeamAbbr(context);
+
         //调用TeamWDS接口 获取爬取数据
-        TeamWDS teamWDS = new TeamData();
-        StringBuffer result = teamWDS.getTeamSeasonGame(abbr);
+        TeamWDS teamWDS = new TeamWDSImpl();
+        List<StringBuffer> rlist = teamWDS.getTeamSeasonGame(alist);
 
 
         //调用TeamParser接口 获取球队最新赛季比赛数据
         TeamParser teamParser = new TeamParserImpl();
-        TeamSeasonGamePo po = teamParser.parseTeamSeasonGame(result);
-
-        //设置abbr值
-        po.setAbbr(abbr);
+        List<TeamSeasonGamePo> plist = teamParser.parseTeamSeasonGame(rlist,alist);
 
 
-        new TeamSeasonGameDBManager(context).update(po);
+        TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
+        db.update(plist);
+        db.closeDB();
     }
 }
 

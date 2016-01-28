@@ -70,23 +70,23 @@ public interface TeamDS {
      */
     public Bitmap getTeamLogo(Context context,String abbr);
 
-    /**
-     * 根据球队缩略名获取最新赛季球队数据是否存储
-     *
-     * @param context
-     * @param abbr  球队缩写
-     * @return int 新赛季球队数据是否存取
-     */
-    public int getTeamSeasonGameHasData(Context context,String abbr);
-
-    /**
-     * 根据球队缩略名获取最新赛季球队数据的存储时间
-     *
-     * @param context
-     * @param abbr  球队缩写
-     * @return 最新赛季球队数据的存储时间
-     */
-    public int getTeamSeasonGameSetTime(Context context,String abbr);
+//    /**
+//     * 根据球队缩略名获取最新赛季球队数据是否存储
+//     *
+//     * @param context
+//     * @param abbr  球队缩写
+//     * @return int 新赛季球队数据是否存取
+//     */
+//    public int getTeamSeasonGameHasData(Context context,String abbr);
+//
+//    /**
+//     * 根据球队缩略名获取最新赛季球队数据的存储时间
+//     *
+//     * @param context
+//     * @param abbr  球队缩写
+//     * @return 最新赛季球队数据的存储时间
+//     */
+//    public int getTeamSeasonGameSetTime(Context context,String abbr);
 
 
     /**
@@ -149,8 +149,7 @@ public interface TeamDS {
      * 获取从网页爬取并分析得到的球队最新赛季比赛数据 存储在SQL
      *
      * @param context
-     * @param abbr      球队缩写
      */
-    public void setTeamSeasonGame(Context context , String abbr);
+    public void setTeamSeasonGame(Context context);
 
 }

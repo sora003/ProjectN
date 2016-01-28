@@ -12,6 +12,7 @@ public interface TeamParser {
 
     /**
      * 读取 球队基本数据.html有效部分
+     *
      * @param result 球队基本数据.html
      * @return List<TeamPo>
      *  List<TeamPo> ：
@@ -25,6 +26,7 @@ public interface TeamParser {
 
     /**
      * 读取 球队详细数据.html有效部分
+     *
      * @param result  球队详细数据.html
      * @return String city 球队所在城市
      */
@@ -33,6 +35,7 @@ public interface TeamParser {
 
     /**
      * 读取 球队联盟数据.html有效部分
+     *
      * @param result 球队联盟数据.html
      * @return List<TeamPo>
      *  List<TeamPo> ：
@@ -45,8 +48,11 @@ public interface TeamParser {
 
     /**
      * 读取 球队最新赛季比赛数据.html有效部分
+     *
      * @param result  球队最新赛季比赛数据.html
-     * @return TeamSeasonGamePo  (不包含abbr参数)
+     * @param list 球队缩写列表
+     * @return List<TeamSeasonGamePo>
+     *      TeamSeasonGamePo.abbr
      *      TeamSeasonGamePo.year
      *      TeamSeasonGamePo.win;
      *      TeamSeasonGamePo.lose;
@@ -68,10 +74,8 @@ public interface TeamParser {
      *      TeamSeasonGamePo.tov;
      *      TeamSeasonGamePo.pf;
      *      TeamSeasonGamePo.pts;
-     *      TeamSeasonGamePo.hasData;
-     *      TeamSeasonGamePo.setTime;
      */
-    public TeamSeasonGamePo parseTeamSeasonGame(StringBuffer result);
+    public List<TeamSeasonGamePo> parseTeamSeasonGame(List<StringBuffer> result , List<String> list);
 
 
 }

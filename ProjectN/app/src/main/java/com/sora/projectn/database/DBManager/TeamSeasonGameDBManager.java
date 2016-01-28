@@ -63,6 +63,7 @@ public class TeamSeasonGameDBManager {
 
     /**
      * 用list中存储的值 初始化该表的abbr列
+     *
      * @param list
      */
     public void add(List<String> list) {
@@ -75,88 +76,47 @@ public class TeamSeasonGameDBManager {
 
     /**
      * 更新 球队最新赛季比赛数据
-     * @param po  用TeamSeasonGamePo封装的数据对象
+     *
+     * @param list  用List<TeamSeasonGamePo>封装的数据对象
      */
-    public  void update(TeamSeasonGamePo po){
-        ContentValues cv = new ContentValues();
+    public  void update(List<TeamSeasonGamePo> list){
 
-        cv.put(KEY_YEAR, po.getYear());
-        cv.put(KEY_WIN, po.getWin());
-        cv.put(KEY_LOSE, po.getLose());
-        cv.put(KEY_MP, po.getMp());
-        cv.put(KEY_FG, po.getFg());
-        cv.put(KEY_FGA, po.getFga());
-        cv.put(KEY_P3, po.getP3());
-        cv.put(KEY_P3A, po.getP3a());
-        cv.put(KEY_P2, po.getP2());
-        cv.put(KEY_P2A, po.getP2a());
-        cv.put(KEY_FT, po.getFt());
-        cv.put(KEY_FTA, po.getFta());
-        cv.put(KEY_ORB, po.getOrb());
-        cv.put(KEY_DRB, po.getDrb());
-        cv.put(KEY_TRB, po.getTrb());
-        cv.put(KEY_AST, po.getAst());
-        cv.put(KEY_STL, po.getStl());
-        cv.put(KEY_BLK, po.getBlk());
-        cv.put(KEY_TOV, po.getTov());
-        cv.put(KEY_PF, po.getPf());
-        cv.put(KEY_PTS,  po.getPts());
-        cv.put(KEY_HASDATA,  po.getHasData());
-        cv.put(KEY_SETTIME,  po.getSetTime());
+        for (TeamSeasonGamePo po : list){
+            ContentValues cv = new ContentValues();
 
-        String[] whereArgs = {po.getAbbr()};
-        db.update(TABLE_TEAM, cv, "abbr=?", whereArgs);
+            cv.put(KEY_YEAR, po.getYear());
+            cv.put(KEY_WIN, po.getWin());
+            cv.put(KEY_LOSE, po.getLose());
+            cv.put(KEY_MP, po.getMp());
+            cv.put(KEY_FG, po.getFg());
+            cv.put(KEY_FGA, po.getFga());
+            cv.put(KEY_P3, po.getP3());
+            cv.put(KEY_P3A, po.getP3a());
+            cv.put(KEY_P2, po.getP2());
+            cv.put(KEY_P2A, po.getP2a());
+            cv.put(KEY_FT, po.getFt());
+            cv.put(KEY_FTA, po.getFta());
+            cv.put(KEY_ORB, po.getOrb());
+            cv.put(KEY_DRB, po.getDrb());
+            cv.put(KEY_TRB, po.getTrb());
+            cv.put(KEY_AST, po.getAst());
+            cv.put(KEY_STL, po.getStl());
+            cv.put(KEY_BLK, po.getBlk());
+            cv.put(KEY_TOV, po.getTov());
+            cv.put(KEY_PF, po.getPf());
+            cv.put(KEY_PTS,  po.getPts());
 
-    }
-
-
-
-    /**
-     * 根据提供的球队缩写 查找该球队信息是否存在
-     * @param abbr 球队缩写
-     * @return  int 是否存储数据
-     */
-    public int queryHasData(String abbr){
-        int hasData = 0;
-        Cursor c = queryTheCursor();
-
-        while (c.moveToNext()){
-            String cAbbr = c.getString(c.getColumnIndex(KEY_ABBR));
-            if (cAbbr.equals(abbr)){
-                hasData = c.getInt(c.getColumnIndex(KEY_HASDATA));
-                break;
-            }
+            String[] whereArgs = {po.getAbbr()};
+            db.update(TABLE_TEAM, cv, "abbr=?", whereArgs);
         }
 
-        c.close();
-        return hasData;
-    }
 
-
-    /**
-     * 根据提供的球队缩写 查找该条数据的保存时间
-     * @param abbr 球队缩写
-     * @return  int 该条数据保存时间
-     */
-    public int querySetTime(String abbr){
-        int setTime = 0;
-        Cursor c = queryTheCursor();
-
-        while (c.moveToNext()){
-            String cAbbr = c.getString(c.getColumnIndex(KEY_ABBR));
-            if (cAbbr.equals(abbr)){
-                setTime = c.getInt(c.getColumnIndex(KEY_SETTIME));
-                break;
-            }
-        }
-
-        c.close();
-        return setTime;
     }
 
 
     /**
      * 根据提供的球队缩写 查找最新赛季年份信息
+     *
      * @param abbr 球队缩写
      * @return  int 最新赛季年份信息
      */
@@ -181,6 +141,7 @@ public class TeamSeasonGameDBManager {
 
     /**
      * 根据提供的球队缩写 查找球队最新赛季数据
+     *
      * @param abbr 球队缩写
      * @return  TeamSeasonGamePo
      */
@@ -222,6 +183,7 @@ public class TeamSeasonGameDBManager {
 
     /**
      * 查找 球队最新赛季数据 返回带游标的数据集
+     *
      * @return Cursor
      */
     public Cursor queryTheCursor(){

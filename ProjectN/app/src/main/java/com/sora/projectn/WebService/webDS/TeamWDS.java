@@ -11,6 +11,7 @@ import java.util.Map;
 public interface TeamWDS {
 
     /**
+     * 爬取球队基本数据
      *
      * @return 球队基本数据.html
      */
@@ -42,7 +43,8 @@ public interface TeamWDS {
 
     /**
      *
-     * @return  球队赛季总计数据.html
+     * @param list 球队缩写表
+     * @return 球队赛季总计数据.html表
      */
-    public StringBuffer getTeamSeasonGame(String abbr);
+    public List<StringBuffer> getTeamSeasonGame(List<String> list);
 }

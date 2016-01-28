@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Map;
 /**
  * Created by Sora on 2016/1/16.
  */
-public class TeamData implements TeamWDS {
+public class TeamWDSImpl implements TeamWDS {
 
 
     //爬取网页最外层路径
@@ -137,28 +138,35 @@ public class TeamData implements TeamWDS {
     }
 
     @Override
-    public StringBuffer getTeamSeasonGame(String abbr) {
-        StringBuffer result = new StringBuffer();
-        try {
-            URL url = new URL(MAIN_URL+ "teams/"+abbr+"/stats_totals.html");
-            URLConnection conn = url.openConnection();
-            conn.connect();
-            InputStream in = conn.getInputStream();
-            //Reader
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String line = null;
-            while ((line = reader.readLine()) != null){
-                //必须在一行中 否则用正则表达式取值时会出错
-                result.append(new String(line.getBytes(),"utf-8"));
+    public List<StringBuffer> getTeamSeasonGame(List<String> list) {
+        List<StringBuffer> rlist = new ArrayList<>();
+
+        for (String abbr : list){
+
+            StringBuffer result = new StringBuffer();
+            try {
+                URL url = new URL(MAIN_URL+ "teams/"+abbr+"/stats_totals.html");
+                URLConnection conn = url.openConnection();
+                conn.connect();
+                InputStream in = conn.getInputStream();
+                //Reader
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String line = null;
+                while ((line = reader.readLine()) != null){
+                    //必须在一行中 否则用正则表达式取值时会出错
+                    result.append(new String(line.getBytes(),"utf-8"));
+                }
+                reader.close();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            reader.close();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            rlist.add(result);
         }
 
-        return result;
+
+        return rlist;
     }
 
 

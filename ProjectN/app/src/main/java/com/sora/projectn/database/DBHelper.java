@@ -62,10 +62,41 @@ public class DBHelper extends SQLiteOpenHelper {
                 "blk integer , " +                                              //盖帽
                 "tov integer , " +                                              //失误
                 "pf integer , " +                                               //犯规
-                "pts integer ," +                                               //得分
-                "hasData integer ," +                                           //是否存储数据
-                "setTime integer)");                                         //存储数据时间
+                "pts integer)");                                             //得分
 
+
+        //创建table player
+        db.execSQL("CREATE TABLE IF NOT EXISTS " +
+                "player " +                                                     //表名
+                "(id integer primary key autoincrement ," +                     //主键
+                "no integer , " +                                               //球衣号码
+                "name varchar(60) ," +                                          //球员姓名
+                "pos varchar(60) , " +                                          //球场担任位置
+                "ht varchar(60) ," +                                            //球员身高
+                "wt integer , " +                                               //球员体重
+                "birth integer , " +                                               //球员生日
+                "exp integer , " +                                              //球员的NBA职业生涯时间
+                "collage varchar(60) , " +                                       //球员毕业大学
+                "g integer , " +                                               //比赛场数
+                "gs integer , " +                                               //首发场数
+                "mp integer , " +                                               //比赛时长
+                "fg integer , " +                                               //命中
+                "fga integer , " +                                              //出手
+                "p3 integer , " +                                               //3分命中
+                "p3a integer , " +                                              //3分出手
+                "p2 integer , " +                                               //2分命中
+                "p2a integer , " +                                              //2分出手
+                "ft integer , " +                                               //罚球命中
+                "fta integer , " +                                              //罚球出手
+                "orb integer , " +                                              //进攻
+                "drb integer , " +                                              //防守
+                "trb integer , " +                                              //篮板
+                "ast integer , " +                                              //助攻
+                "stl integer , " +                                              //抢断
+                "blk integer , " +                                              //盖帽
+                "tov integer , " +                                              //失误
+                "pf integer , " +                                               //犯规
+                "pts integer)");                                             //得分
     }
 
     //TODO 如果DATABASE_VERSION 的值被改为2  系统发现数据库版本更新 将调用OnUpgrade

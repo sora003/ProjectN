@@ -28,8 +28,6 @@ package com.sora.projectn.po;
  * tov          失误
  * pf           犯规
  * pts          得分
- * hasData      是否存储数据
- * setTime      存储数据时间
  */
 public class TeamSeasonGamePo {
 
@@ -55,8 +53,6 @@ public class TeamSeasonGamePo {
     private int tov;
     private int pf;
     private int pts;
-    private int hasData;
-    private int setTime;
 
     public String getAbbr() {
         return abbr;
@@ -120,14 +116,6 @@ public class TeamSeasonGamePo {
 
     public void setFta(int fta) {
         this.fta = fta;
-    }
-
-    public int getHasData() {
-        return hasData;
-    }
-
-    public void setHasData(int hasData) {
-        this.hasData = hasData;
     }
 
     public int getLose() {
@@ -200,14 +188,6 @@ public class TeamSeasonGamePo {
 
     public void setPts(int pts) {
         this.pts = pts;
-    }
-
-    public int getSetTime() {
-        return setTime;
-    }
-
-    public void setSetTime(int setTime) {
-        this.setTime = setTime;
     }
 
     public int getStl() {

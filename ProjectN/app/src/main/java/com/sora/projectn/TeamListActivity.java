@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -149,6 +150,9 @@ public class TeamListActivity extends AppCompatActivity {
     private RelativeLayout eC3T4;
     private RelativeLayout eC3T5;
 
+    //Toolbar
+    private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +216,19 @@ public class TeamListActivity extends AppCompatActivity {
      * 初始化View
      */
     private void initView() {
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        //设置Toolbar标题
+        toolbar.setTitle("球队列表");
+        //设置标题颜色
+        toolbar.setTitleTextColor(getResources().getColor(R.color.color_white));
+        setSupportActionBar(toolbar);
+        //设置返回键可用
+        getSupportActionBar().setHomeButtonEnabled(true);
+        //决定左上角的图标是否可以点击
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mContext = this;
 
