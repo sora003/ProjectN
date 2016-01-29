@@ -3,6 +3,7 @@ package com.sora.projectn.businesslogicservice;
 import android.content.Context;
 
 import com.sora.projectn.vo.TeamConferenceVo;
+import com.sora.projectn.vo.TeamInfoVo;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface TeamBLS {
      */
     public List<TeamConferenceVo> getTeamConferenceInfo(Context context);
 
-//    public
+    public TeamInfoVo getTeamInfo(Context context,String abbr);
 }

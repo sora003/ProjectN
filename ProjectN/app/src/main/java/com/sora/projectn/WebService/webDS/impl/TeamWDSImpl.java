@@ -2,6 +2,7 @@ package com.sora.projectn.WebService.webDS.impl;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.sora.projectn.WebService.webDS.TeamWDS;
 
@@ -138,35 +139,43 @@ public class TeamWDSImpl implements TeamWDS {
     }
 
     @Override
-    public List<StringBuffer> getTeamSeasonGame(List<String> list) {
-        List<StringBuffer> rlist = new ArrayList<>();
+    public StringBuffer getTeamSeasonGame(String abbr , int year) {
 
-        for (String abbr : list){
-
-            StringBuffer result = new StringBuffer();
-            try {
-                URL url = new URL(MAIN_URL+ "teams/"+abbr+"/stats_totals.html");
-                URLConnection conn = url.openConnection();
-                conn.connect();
-                InputStream in = conn.getInputStream();
-                //Reader
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = null;
-                while ((line = reader.readLine()) != null){
-                    //必须在一行中 否则用正则表达式取值时会出错
-                    result.append(new String(line.getBytes(),"utf-8"));
-                }
-                reader.close();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            rlist.add(result);
+        //特殊情况
+        switch (abbr){
+            case "CHA":
+                abbr = "CHO";
+                break;
+            case "NOH":
+                abbr = "NOP";
+                break;
+            case "NJN":
+                abbr = "BRK";
+                break;
         }
 
+        StringBuffer result = new StringBuffer();
+        try {
+            URL url = new URL(MAIN_URL+ "teams/"+abbr+"/"+year +".html");
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            InputStream in = conn.getInputStream();
+            //Reader
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line = null;
+            while ((line = reader.readLine()) != null){
+                //必须在一行中 否则用正则表达式取值时会出错
+                result.append(new String(line.getBytes(),"utf-8"));
+            }
+            reader.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        return rlist;
+        Log.i("爬取网页保存为html",abbr);
+        return result;
     }
 
 

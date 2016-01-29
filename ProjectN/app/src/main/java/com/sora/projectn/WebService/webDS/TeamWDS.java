@@ -43,8 +43,9 @@ public interface TeamWDS {
 
     /**
      *
-     * @param list 球队缩写表
-     * @return 球队赛季总计数据.html表
+     * @param abbr 球队缩写
+     * @param year  最新赛季年
+     * @return 球队最新赛季数据.html
      */
-    public List<StringBuffer> getTeamSeasonGame(List<String> list);
+    public StringBuffer  getTeamSeasonGame(String abbr , int year);
 }

@@ -549,7 +549,7 @@ public class TeamListActivity extends AppCompatActivity {
         wC3T1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T1.getText();
+                sName = (String) tv_wC3T1.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });
@@ -557,7 +557,7 @@ public class TeamListActivity extends AppCompatActivity {
         wC3T2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T2.getText();
+                sName = (String) tv_wC3T2.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });
@@ -565,7 +565,7 @@ public class TeamListActivity extends AppCompatActivity {
         wC3T3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T3.getText();
+                sName = (String) tv_wC3T3.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });
@@ -573,7 +573,7 @@ public class TeamListActivity extends AppCompatActivity {
         wC3T4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T4.getText();
+                sName = (String) tv_wC3T4.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });
@@ -581,7 +581,7 @@ public class TeamListActivity extends AppCompatActivity {
         wC3T5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T5.getText();
+                sName = (String) tv_wC3T5.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });
@@ -677,7 +677,7 @@ public class TeamListActivity extends AppCompatActivity {
         eC3T1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T1.getText();
+                sName = (String) tv_eC3T1.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });
@@ -685,7 +685,7 @@ public class TeamListActivity extends AppCompatActivity {
         eC3T2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T2.getText();
+                sName = (String) tv_eC3T2.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });
@@ -693,7 +693,7 @@ public class TeamListActivity extends AppCompatActivity {
         eC3T3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T3.getText();
+                sName = (String) tv_eC3T3.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });
@@ -701,7 +701,7 @@ public class TeamListActivity extends AppCompatActivity {
         eC3T4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T4.getText();
+                sName = (String) tv_eC3T4.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });
@@ -709,7 +709,7 @@ public class TeamListActivity extends AppCompatActivity {
         eC3T5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T5.getText();
+                sName = (String) tv_eC3T5.getText();
                 handler.sendEmptyMessage(GET_SNAME);
             }
         });

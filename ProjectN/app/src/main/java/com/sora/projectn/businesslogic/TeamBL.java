@@ -6,7 +6,10 @@ import android.graphics.Bitmap;
 import com.sora.projectn.businesslogicservice.TeamBLS;
 import com.sora.projectn.dataservice.TeamDS;
 import com.sora.projectn.dataservice.impl.TeamDSImpl;
+import com.sora.projectn.po.TeamPo;
+import com.sora.projectn.po.TeamSeasonGamePo;
 import com.sora.projectn.vo.TeamConferenceVo;
+import com.sora.projectn.vo.TeamInfoVo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -160,7 +163,35 @@ public class TeamBL implements TeamBLS {
         return list;
     }
 
+    @Override
+    public TeamInfoVo getTeamInfo(Context context,String abbr) {
 
+        TeamInfoVo vo = new TeamInfoVo();
+
+        //调用TeamDS接口 获取相关数据
+        TeamDS teamDS = new TeamDSImpl();
+        TeamPo teamPo = teamDS.getTeamInfo(context,abbr);
+        TeamSeasonGamePo teamSeasonGamePo = teamDS.getTeamSeasonGameInfo(context,abbr);
+
+        //取值
+        Bitmap bmp = teamDS.getTeamLogo(context, abbr);
+        String name = teamPo.getName();
+        int year = teamDS.getTeamSeasonGameYear(context,abbr);
+        int win = teamSeasonGamePo.getWin();
+        int lose = teamSeasonGamePo.getLose();
+        int rank = teamSeasonGamePo.getRank();
+
+
+        //设置vo
+        vo.setAbbr(abbr);
+        vo.setBmp(bmp);
+        vo.setName(name);
+        vo.setSeason(String.valueOf(year - 1) + "-" + String.valueOf(year) + "赛季");
+        vo.setWin_lose(String.valueOf(win)+"胜"+String.valueOf(lose)+"负");
+        vo.setRank("联盟第"+rank+"名");
+
+        return vo;
+    }
 
 
 }

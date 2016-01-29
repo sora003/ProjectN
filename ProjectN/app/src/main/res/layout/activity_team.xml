@@ -9,8 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/colorPrimary">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,7 +24,6 @@
                 android:id="@+id/iv_teamLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/western_logo"
                 android:adjustViewBounds="true"
                 android:maxWidth="@dimen/teamLogo_maxWidthForInfo"
                 android:layout_alignTop="@+id/teamInfo_layout"

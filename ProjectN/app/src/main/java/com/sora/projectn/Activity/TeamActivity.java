@@ -4,6 +4,8 @@ package com.sora.projectn.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -20,7 +22,10 @@ import com.sora.projectn.Fragment.TeamPlayerFragment;
 import com.sora.projectn.Fragment.TeamScheduleFragment;
 import com.sora.projectn.Fragment.TeamSeasonFragment;
 import com.sora.projectn.R;
+import com.sora.projectn.businesslogic.TeamBL;
+import com.sora.projectn.businesslogicservice.TeamBLS;
 import com.sora.projectn.utils.FragAdapter;
+import com.sora.projectn.vo.TeamInfoVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +35,12 @@ import java.util.List;
  */
 public class TeamActivity extends FragmentActivity {
 
+    private static final int GET_DATA = 0x001;
     private String abbr;
     private Context mContext;
+    private TeamBLS BLS = new TeamBL();
+    private TeamInfoVo teamInfoVo = new TeamInfoVo();
+
 
     //ViewPager
     private ViewPager viewPager;
@@ -42,9 +51,14 @@ public class TeamActivity extends FragmentActivity {
     private TextView tv_teamGuide2;
     private TextView tv_teamGuide3;
     private TextView tv_teamGuide4;
+    private TextView tv_teamName;
+    private TextView tv_season;
+    private TextView tv_winlose;
+    private TextView tv_rank;
 
     //ImageView
     private ImageView cursor;
+    private ImageView iv_teamLogo;
 
     private List<Fragment> fragments;
 
@@ -52,7 +66,7 @@ public class TeamActivity extends FragmentActivity {
 
     //游标宽度
     private int bmpw = 0;
-    //动画图片偏移量
+    //动画图片偏移量 滑块占据一个标签栏 offset设置为0
     private int offset = 0;
     //当前页卡编号  初始编号为0
     private int currIndex = 0;
@@ -66,9 +80,39 @@ public class TeamActivity extends FragmentActivity {
         initView();
         initViewPager();
         initListener();
+
+        //获取球队基本信息
+        getData.start();
     }
 
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case GET_DATA:
+                    setTopView();
+                    break;
+            }
+        }
+    };
 
+    //设置顶层视图
+    private void setTopView() {
+        iv_teamLogo.setImageBitmap(teamInfoVo.getBmp());
+        tv_teamName.setText(teamInfoVo.getName());
+        tv_season.setText(teamInfoVo.getSeason());
+        tv_winlose.setText(teamInfoVo.getWin_lose());
+        tv_rank.setText(teamInfoVo.getRank());
+    }
+
+    //获取球队基本信息
+    Thread getData = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            teamInfoVo = BLS.getTeamInfo(mContext,abbr);
+            handler.sendEmptyMessage(GET_DATA);
+        }
+    });
 
     /**
      * 获取Intent传递来的abbr值
@@ -91,10 +135,15 @@ public class TeamActivity extends FragmentActivity {
         tv_teamGuide2 = (TextView) findViewById(R.id.tv_teamGuide2);
         tv_teamGuide3 = (TextView) findViewById(R.id.tv_teamGuide3);
         tv_teamGuide4 = (TextView) findViewById(R.id.tv_teamGuide4);
+        tv_teamName = (TextView) findViewById(R.id.tv_teamName);
+        tv_season = (TextView) findViewById(R.id.tv_season);
+        tv_winlose = (TextView) findViewById(R.id.tv_winlose);
+        tv_rank = (TextView) findViewById(R.id.tv_rank);
+
 
         //ImageView
         cursor = (ImageView) findViewById(R.id.iv_teamCursor);
-
+        iv_teamLogo = (ImageView) findViewById(R.id.iv_teamLogo);
     }
 
     /**
@@ -109,7 +158,7 @@ public class TeamActivity extends FragmentActivity {
         fragments.add(new TeamPlayerFragment());
         fragments.add(new TeamScheduleFragment());
 
-        //新建支配器对象
+        //新建适配器对象
         adapter = new FragAdapter(getSupportFragmentManager(),fragments);
 
 
@@ -216,7 +265,7 @@ public class TeamActivity extends FragmentActivity {
         //即将显示的页卡的index
         @Override
         public void onPageSelected(int position) {
-//初始化移动的动画 (从当前位置 平移到即将摇到的位置)
+            //初始化移动的动画 (从当前位置 平移到即将摇到的位置)
             Animation animation = new TranslateAnimation(currIndex * one , position * one , 0 , 0);
             //动画终止时停留在最后一帧  不然会回到没有执行前的状态
             animation.setFillAfter(true);

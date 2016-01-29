@@ -143,26 +143,27 @@ public class TeamDBManager {
 
     /**
      * 查找球队基本数据
-     * @return List<TeamPo>
+     * @param abbr
+     * @return TeamPo
      */
-    public List<TeamPo> queryTeamList(){
-        List<TeamPo> list = new ArrayList<TeamPo>();
+    public TeamPo queryTeamInfo(String abbr){
+        TeamPo po = new TeamPo();
         Cursor c = queryTheCursor();
 
         while (c.moveToNext()){
-            TeamPo teamPo = new TeamPo();
-            teamPo.setName(c.getString(c.getColumnIndex(KEY_NAME)));
-            teamPo.setAbbr(c.getString(c.getColumnIndex(KEY_ABBR)));
-            teamPo.setCity(c.getString(c.getColumnIndex(KEY_CITY)));
-            teamPo.setLeague(c.getString(c.getColumnIndex(KEY_LEAGUE)));
-            teamPo.setConference(c.getString(c.getColumnIndex(KEY_CONFERENCE)));
-            teamPo.setFounded(c.getInt(c.getColumnIndex(KEY_FOUNDED)));
-            teamPo.setsName(c.getString(c.getColumnIndex(KEY_SNAME)));
-            list.add(teamPo);
+            if (c.getString(c.getColumnIndex(KEY_ABBR)).equals(abbr)){
+                po.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+                po.setAbbr(c.getString(c.getColumnIndex(KEY_ABBR)));
+                po.setCity(c.getString(c.getColumnIndex(KEY_CITY)));
+                po.setLeague(c.getString(c.getColumnIndex(KEY_LEAGUE)));
+                po.setConference(c.getString(c.getColumnIndex(KEY_CONFERENCE)));
+                po.setFounded(c.getInt(c.getColumnIndex(KEY_FOUNDED)));
+                po.setsName(c.getString(c.getColumnIndex(KEY_SNAME)));
+                break;
+            }
         }
-
         c.close();
-        return list;
+        return po;
     }
 
     /**

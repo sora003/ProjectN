@@ -43,10 +43,10 @@
     <string name="text_eC3T3"> </string>
     <string name="text_eC3T4"> </string>
     <string name="text_eC3T5"> </string>
-    <string name="text_teamName">Los Angeles Lakers</string>
-    <string name="text_season">2015-2016赛季</string>
-    <string name="text_winlose">9胜37负</string>
-    <string name="text_rank">联盟第29名</string>
+    <string name="text_teamName"> </string>
+    <string name="text_season"> </string>
+    <string name="text_winlose"> </string>
+    <string name="text_rank"> </string>
     <string name="text_teamGuide1">资料</string>
     <string name="text_teamGuide2">数据</string>
     <string name="text_teamGuide3">阵容</string>
@@ -84,7 +84,10 @@
     <!--<string name="text_eC3T4">76人</string>-->
     <!--<string name="text_eC3T5">猛龙</string>-->
 
-    <!--activity_team-->
-
+    <!--Test For activity_team-->
+    <!--<string name="text_teamName">Los Angeles Lakers</string>-->
+    <!--<string name="text_season">2015-2016赛季</string>-->
+    <!--<string name="text_winlose">9胜37负</string>-->
+    <!--<string name="text_rank">联盟第29名</string>-->
 
 </resources>

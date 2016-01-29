@@ -62,7 +62,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "blk integer , " +                                              //盖帽
                 "tov integer , " +                                              //失误
                 "pf integer , " +                                               //犯规
-                "pts integer)");                                             //得分
+                "pts integer ," +                                             //得分
+                "rank integer)");                                               //排名
 
 
         //创建table player
@@ -96,7 +97,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "blk integer , " +                                              //盖帽
                 "tov integer , " +                                              //失误
                 "pf integer , " +                                               //犯规
-                "pts integer)");                                             //得分
+                "pts integer)");                                                //得分
+
     }
 
     //TODO 如果DATABASE_VERSION 的值被改为2  系统发现数据库版本更新 将调用OnUpgrade

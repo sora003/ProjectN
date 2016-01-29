@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 
 import com.sora.projectn.WebService.parser.TeamParser;
 import com.sora.projectn.WebService.parser.impl.TeamParserImpl;
@@ -38,11 +39,11 @@ public class TeamDSImpl implements TeamDS{
     }
 
     @Override
-    public List<TeamPo> getTeamList(Context context) {
+    public TeamPo getTeamInfo(Context context,String abbr) {
         TeamDBManager db = new TeamDBManager(context);
-        List<TeamPo> list = db.queryTeamList();
+        TeamPo po = db.queryTeamInfo(abbr);
         db.closeDB();
-        return list;
+        return po;
     }
 
     @Override
@@ -239,30 +240,41 @@ public class TeamDSImpl implements TeamDS{
 
     @Override
     public void setTeamSeasonGameAbbr(Context context) {
+        //获取球队缩写列表
+        TeamDS teamDS = new TeamDSImpl();
+        List<String> alist = teamDS.getTeamAbbr(context);
+
         TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
-        db.add(this.getTeamAbbr(context));
+        db.add(alist);
         db.closeDB();
     }
 
     @Override
-    public void setTeamSeasonGame(Context context) {
+    public void setTeamSeasonGame(Context context,int year) {
+
+
 
         //获取球队缩写列表
-        List<String> alist = this.getTeamAbbr(context);
-
-        //调用TeamWDS接口 获取爬取数据
-        TeamWDS teamWDS = new TeamWDSImpl();
-        List<StringBuffer> rlist = teamWDS.getTeamSeasonGame(alist);
+        TeamDS teamDS = new TeamDSImpl();
+        List<String> alist = teamDS.getTeamAbbr(context);
 
 
-        //调用TeamParser接口 获取球队最新赛季比赛数据
-        TeamParser teamParser = new TeamParserImpl();
-        List<TeamSeasonGamePo> plist = teamParser.parseTeamSeasonGame(rlist,alist);
+        for (String abbr : alist){
+            //调用TeamWDS接口 获取爬取数据
+            TeamWDS teamWDS = new TeamWDSImpl();
+            StringBuffer result = teamWDS.getTeamSeasonGame(abbr,year);
 
+            //调用TeamParser接口 解析球队最新赛季比赛数据
+            TeamParser teamParser = new TeamParserImpl();
+            TeamSeasonGamePo po = teamParser.parseTeamSeasonGame(result,abbr, year);
 
-        TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
-        db.update(plist);
-        db.closeDB();
+            TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
+
+            db.update(po);
+
+            db.closeDB();
+        }
+
     }
 }
 

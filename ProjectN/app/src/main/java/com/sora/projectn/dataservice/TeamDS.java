@@ -28,12 +28,13 @@ public interface TeamDS {
 
 
     /**
-     * 读取存储在SQL的球队基本数据 返回List<TeamPo>
+     * 根据球队缩写 读取存储在SQL的球队基本数据 返回TeamPo
      *
      * @param context
-     * @return List<TeamPo>
+     * @param abbr
+     * @return TeamPo
      */
-    public List<TeamPo> getTeamList(Context context);
+    public TeamPo getTeamInfo(Context context,String abbr);
 
     /**
      * 读取存储在SQL的球队所在分区和缩略名信息 返回Map<String,String>
@@ -149,7 +150,8 @@ public interface TeamDS {
      * 获取从网页爬取并分析得到的球队最新赛季比赛数据 存储在SQL
      *
      * @param context
+     * @param year 最新赛季年
      */
-    public void setTeamSeasonGame(Context context);
+    public void setTeamSeasonGame(Context context,int year);
 
 }

@@ -15,7 +15,10 @@ import android.widget.Toast;
 import com.sora.projectn.dataservice.TeamDS;
 import com.sora.projectn.dataservice.impl.TeamDSImpl;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+
 
 /**
  * Created by Sora on 2016/1/11.
@@ -30,6 +33,10 @@ public class ScrapeService extends Service {
     private final int SCRAPE_SUCCESS = 0x02;
     private final int SCRAPE_ERROR = 0x03;
     private final int IO_ERROR = 0x04;
+
+    //最新赛季年
+    //TODO 该设置后续考虑 切换成用户输入或自动获取
+    private final int CURR_YEAR = 2016;
 
     //球队基本数据 子线程
     private CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -168,11 +175,13 @@ public class ScrapeService extends Service {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            List<String > list = teamDS.getTeamAbbr(getApplicationContext());
+
             //新建 teamSeasonGame表
             teamDS.setTeamSeasonGameAbbr(getApplicationContext());
 
             //更新teamSeasonGame表数据
-            teamDS.setTeamSeasonGame(getApplicationContext());
+            teamDS.setTeamSeasonGame(getApplicationContext(),CURR_YEAR);
 
             handlerCountDownLatch.countDown();
         }

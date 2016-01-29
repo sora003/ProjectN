@@ -28,6 +28,7 @@ package com.sora.projectn.po;
  * tov          失误
  * pf           犯规
  * pts          得分
+ * rank         排名
  */
 public class TeamSeasonGamePo {
 
@@ -53,6 +54,8 @@ public class TeamSeasonGamePo {
     private int tov;
     private int pf;
     private int pts;
+    private int rank;
+
 
     public String getAbbr() {
         return abbr;
@@ -228,5 +231,13 @@ public class TeamSeasonGamePo {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 }

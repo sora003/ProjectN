@@ -5,16 +5,22 @@ import android.graphics.Bitmap;
 /**
  * Created by Sora on 2016/1/28.
  *
+ * 球队基本数据
+ *
+ * abbr         球队缩写
+ * bmp          球队Logo
+ * name         球队全名
+ * season       当前赛季年
+ * win_lose     球队最新赛季胜负情况
+ * rank         球队排名
  */
 public class TeamInfoVo {
     private String abbr;
     private Bitmap bmp;
     private String name;
-    private int year;
-    private int win;
-    private int lose;
-    private int rank;
-
+    private String season;
+    private String win_lose;
+    private String rank;
 
 
     public String getAbbr() {
@@ -33,14 +39,6 @@ public class TeamInfoVo {
         this.bmp = bmp;
     }
 
-    public int getLose() {
-        return lose;
-    }
-
-    public void setLose(int lose) {
-        this.lose = lose;
-    }
-
     public String getName() {
         return name;
     }
@@ -49,27 +47,27 @@ public class TeamInfoVo {
         this.name = name;
     }
 
-    public int getRank() {
+    public String getRank() {
         return rank;
     }
 
-    public void setRank(int rank) {
+    public void setRank(String rank) {
         this.rank = rank;
     }
 
-    public int getWin() {
-        return win;
+    public String getSeason() {
+        return season;
     }
 
-    public void setWin(int win) {
-        this.win = win;
+    public void setSeason(String season) {
+        this.season = season;
     }
 
-    public int getYear() {
-        return year;
+    public String getWin_lose() {
+        return win_lose;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setWin_lose(String win_lose) {
+        this.win_lose = win_lose;
     }
 }

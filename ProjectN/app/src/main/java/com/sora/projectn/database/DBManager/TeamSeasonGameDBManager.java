@@ -6,10 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.sora.projectn.database.DBHelper;
-import com.sora.projectn.po.TeamPo;
 import com.sora.projectn.po.TeamSeasonGamePo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,10 +16,11 @@ import java.util.List;
  * 对teamSeasonGame表进行操作
  */
 public class TeamSeasonGameDBManager {
+
     private DBHelper helper;
     private SQLiteDatabase db;
 
-    private static final String TABLE_TEAM = "teamSeasonGame";
+    private static final String TABLE = "teamSeasonGame";
 
 
 
@@ -47,8 +46,7 @@ public class TeamSeasonGameDBManager {
     private static final String KEY_TOV = "tov";
     private static final String KEY_PF = "pf";
     private static final String KEY_PTS = "pts";
-    private static final String KEY_HASDATA = "hasData";
-    private static final String KEY_SETTIME = "setTime";
+    private static final String KEY_RANK = "rank";
 
 
 
@@ -70,47 +68,44 @@ public class TeamSeasonGameDBManager {
         for (String string : list) {
             ContentValues cv = new ContentValues();
             cv.put(KEY_ABBR, string);
-            db.insert(TABLE_TEAM,null,cv);
+            db.insert(TABLE,null,cv);
         }
     }
 
     /**
      * 更新 球队最新赛季比赛数据
      *
-     * @param list  用List<TeamSeasonGamePo>封装的数据对象
+     * @param po  用TeamSeasonGamePo封装的数据对象
      */
-    public  void update(List<TeamSeasonGamePo> list){
+    public  void update(TeamSeasonGamePo po){
 
-        for (TeamSeasonGamePo po : list){
-            ContentValues cv = new ContentValues();
+        ContentValues cv = new ContentValues();
 
-            cv.put(KEY_YEAR, po.getYear());
-            cv.put(KEY_WIN, po.getWin());
-            cv.put(KEY_LOSE, po.getLose());
-            cv.put(KEY_MP, po.getMp());
-            cv.put(KEY_FG, po.getFg());
-            cv.put(KEY_FGA, po.getFga());
-            cv.put(KEY_P3, po.getP3());
-            cv.put(KEY_P3A, po.getP3a());
-            cv.put(KEY_P2, po.getP2());
-            cv.put(KEY_P2A, po.getP2a());
-            cv.put(KEY_FT, po.getFt());
-            cv.put(KEY_FTA, po.getFta());
-            cv.put(KEY_ORB, po.getOrb());
-            cv.put(KEY_DRB, po.getDrb());
-            cv.put(KEY_TRB, po.getTrb());
-            cv.put(KEY_AST, po.getAst());
-            cv.put(KEY_STL, po.getStl());
-            cv.put(KEY_BLK, po.getBlk());
-            cv.put(KEY_TOV, po.getTov());
-            cv.put(KEY_PF, po.getPf());
-            cv.put(KEY_PTS,  po.getPts());
+        cv.put(KEY_YEAR, po.getYear());
+        cv.put(KEY_WIN, po.getWin());
+        cv.put(KEY_LOSE, po.getLose());
+        cv.put(KEY_MP, po.getMp());
+        cv.put(KEY_FG, po.getFg());
+        cv.put(KEY_FGA, po.getFga());
+        cv.put(KEY_P3, po.getP3());
+        cv.put(KEY_P3A, po.getP3a());
+        cv.put(KEY_P2, po.getP2());
+        cv.put(KEY_P2A, po.getP2a());
+        cv.put(KEY_FT, po.getFt());
+        cv.put(KEY_FTA, po.getFta());
+        cv.put(KEY_ORB, po.getOrb());
+        cv.put(KEY_DRB, po.getDrb());
+        cv.put(KEY_TRB, po.getTrb());
+        cv.put(KEY_AST, po.getAst());
+        cv.put(KEY_STL, po.getStl());
+        cv.put(KEY_BLK, po.getBlk());
+        cv.put(KEY_TOV, po.getTov());
+        cv.put(KEY_PF, po.getPf());
+        cv.put(KEY_PTS,  po.getPts());
+        cv.put(KEY_RANK,  po.getRank());
 
-            String[] whereArgs = {po.getAbbr()};
-            db.update(TABLE_TEAM, cv, "abbr=?", whereArgs);
-        }
-
-
+        String[] whereArgs = {po.getAbbr()};
+        db.update(TABLE, cv, "abbr=?", whereArgs);
     }
 
 
@@ -173,6 +168,7 @@ public class TeamSeasonGameDBManager {
                 po.setTov(c.getInt(c.getColumnIndex(KEY_TOV)));
                 po.setPf(c.getInt(c.getColumnIndex(KEY_PF)));
                 po.setPts(c.getInt(c.getColumnIndex(KEY_PTS)));
+                po.setRank(c.getInt(c.getColumnIndex(KEY_RANK)));
                 break;
             }
         }
@@ -187,7 +183,7 @@ public class TeamSeasonGameDBManager {
      * @return Cursor
      */
     public Cursor queryTheCursor(){
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_TEAM,null);
+        Cursor c = db.rawQuery("SELECT * FROM "+ TABLE,null);
         return c;
     }
 

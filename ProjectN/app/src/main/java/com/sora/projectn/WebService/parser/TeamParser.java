@@ -4,6 +4,7 @@ import com.sora.projectn.po.TeamPo;
 import com.sora.projectn.po.TeamSeasonGamePo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sora on 2016/1/16.
@@ -50,32 +51,33 @@ public interface TeamParser {
      * 读取 球队最新赛季比赛数据.html有效部分
      *
      * @param result  球队最新赛季比赛数据.html
-     * @param list 球队缩写列表
+     * @param year  最新赛季年
      * @return List<TeamSeasonGamePo>
      *      TeamSeasonGamePo.abbr
      *      TeamSeasonGamePo.year
-     *      TeamSeasonGamePo.win;
-     *      TeamSeasonGamePo.lose;
-     *      TeamSeasonGamePo.mp;
-     *      TeamSeasonGamePo.fg;
-     *      TeamSeasonGamePo.fga;
-     *      TeamSeasonGamePo.p3;
-     *      TeamSeasonGamePo.p3a;
-     *      TeamSeasonGamePo.p2;
-     *      TeamSeasonGamePo.p2a;
-     *      TeamSeasonGamePo.ft;
-     *      TeamSeasonGamePo.fta;
-     *      TeamSeasonGamePo.orb;
-     *      TeamSeasonGamePo.drb;
-     *      TeamSeasonGamePo.trb;
-     *      TeamSeasonGamePo.ast;
-     *      TeamSeasonGamePo.stl;
-     *      TeamSeasonGamePo.blk;
-     *      TeamSeasonGamePo.tov;
-     *      TeamSeasonGamePo.pf;
-     *      TeamSeasonGamePo.pts;
+     *      TeamSeasonGamePo.win
+     *      TeamSeasonGamePo.lose
+     *      TeamSeasonGamePo.mp
+     *      TeamSeasonGamePo.fg
+     *      TeamSeasonGamePo.fga
+     *      TeamSeasonGamePo.p3
+     *      TeamSeasonGamePo.p3a
+     *      TeamSeasonGamePo.p2
+     *      TeamSeasonGamePo.p2a
+     *      TeamSeasonGamePo.ft
+     *      TeamSeasonGamePo.fta
+     *      TeamSeasonGamePo.orb
+     *      TeamSeasonGamePo.drb
+     *      TeamSeasonGamePo.trb
+     *      TeamSeasonGamePo.ast
+     *      TeamSeasonGamePo.stl
+     *      TeamSeasonGamePo.blk
+     *      TeamSeasonGamePo.tov
+     *      TeamSeasonGamePo.pf
+     *      TeamSeasonGamePo.pts
+     *      TeamSeasonGamePo.rank
      */
-    public List<TeamSeasonGamePo> parseTeamSeasonGame(List<StringBuffer> result , List<String> list);
+    public TeamSeasonGamePo parseTeamSeasonGame(StringBuffer result,String abbr,int year);
 
 
 }
