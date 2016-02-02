@@ -1,5 +1,7 @@
 package com.sora.projectn.WebService.parser;
 
+import android.graphics.Bitmap;
+
 import com.sora.projectn.po.PlayerPo;
 
 import java.util.List;
@@ -9,5 +11,7 @@ import java.util.List;
  */
 public interface PlayerParser {
 
-    public List<PlayerPo> parsePlayerInfo(List<StringBuffer> result);
+    public List<PlayerPo> parsePlayerInfo(StringBuffer result,String abbr);
+
+    public Bitmap parsePlayerImg(StringBuffer result);
 }

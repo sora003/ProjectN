@@ -22,38 +22,34 @@ public class PlayerWDSImpl implements PlayerWDS {
     private static String MAIN_URL = "http://www.basketball-reference.com";
 
     @Override
-    public List<StringBuffer> getPlayerInfo(List<String> list, int year) {
-        List<StringBuffer> slist = new ArrayList<>();
+    public StringBuffer  getPlayerInfo(String abbr,int year) {
 
-        for (String abbr : list){
-            StringBuffer result = new StringBuffer();
-            try {
-                URL url = new URL(MAIN_URL + "/teams/" + abbr + "/" + year + ".html");
-                URLConnection conn = url.openConnection();
-                conn.connect();
-                InputStream in = conn.getInputStream();
-                //Reader
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = null;
-                while ((line = reader.readLine()) != null){
-                    //必须在一行中 否则用正则表达式取值时会出错
-                    result.append(new String(line.getBytes(),"utf-8"));
-                }
-                reader.close();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+        StringBuffer result = new StringBuffer();
+        try {
+            URL url = new URL(MAIN_URL + "/teams/" + abbr + "/" + year + ".html");
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            InputStream in = conn.getInputStream();
+            //Reader
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line = null;
+            while ((line = reader.readLine()) != null){
+                //必须在一行中 否则用正则表达式取值时会出错
+                result.append(new String(line.getBytes(),"utf-8"));
             }
-
-            slist.add(result);
+            reader.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return slist;
+        return result;
+
     }
 
     @Override
-    public StringBuffer getPlayerCareerInfo(String path) {
+    public StringBuffer getPlayerImg(String path) {
         StringBuffer result = new StringBuffer();
         try {
             URL url = new URL(MAIN_URL + path);

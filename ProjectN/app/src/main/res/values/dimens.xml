@@ -24,4 +24,7 @@
     <dimen name="teamInfo_horizontal_margin">10dp</dimen>
     <dimen name="teamGuideSize">18sp</dimen>
     <dimen name="guide_vertical_margin">5dp</dimen>
+    <dimen name="content_horizontal_margin">10dp</dimen>
+    <dimen name="item_teamSeasonSize">16sp</dimen>
+
 </resources>

@@ -51,6 +51,7 @@
     <string name="text_teamGuide2">数据</string>
     <string name="text_teamGuide3">阵容</string>
     <string name="text_teamGuide4">赛程</string>
+    <string name="text_fragment_teamseason">本赛季数据分析</string>
 
     <!--Test For activity_teamlist-->
     <!--<string name="text_wC1T1">小牛</string>-->

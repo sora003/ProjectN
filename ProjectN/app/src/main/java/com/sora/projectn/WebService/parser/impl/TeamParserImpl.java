@@ -211,6 +211,7 @@ public class TeamParserImpl implements TeamParser{
         TeamSeasonGamePo po = new TeamSeasonGamePo();
 
 
+        po.setAbbr(abbr);
 
         po.setYear(year);
 
@@ -244,7 +245,7 @@ public class TeamParserImpl implements TeamParser{
 
 
         /**
-         *  group(2) city 球队最新赛季比赛数据信息
+         *  group(2) city 球队最新赛季比赛数据信息  Team
          *
          *  查询符合该正则表达式的第1串数据
          */
@@ -321,6 +322,89 @@ public class TeamParserImpl implements TeamParser{
                 po.setPf(pf);
                 po.setPts(pts);
                 po.setAbbr(abbr);
+            }
+
+        }
+
+
+
+        /**
+         *  group(2) city 球队最新赛季比赛数据信息  Opponent
+         *
+         *  查询符合该正则表达式的第1串数据
+         */
+        pattern = Pattern.compile("(<tr  class=\"\">   <td align=\"left\" >Opponent</td>)(.*?)(</tr>)");
+        matcher = pattern.matcher(result);
+        if (matcher.find()){
+            String str2 = matcher.group(2);
+            /**
+             * group(4) 比赛时长
+             * group(6) 命中
+             * group(8) 出手
+             * group(12) 3分命中
+             * group(14) 3分出手
+             * group(18) 2分命中
+             * group(20) 2分出手
+             * group(24) 罚球命中
+             * group(26) 罚球出手
+             * group(30) 进攻
+             * group(32) 防守
+             * group(34) 篮板
+             * group(36) 助攻
+             * group(38) 抢断
+             * group(40) 盖帽
+             * group(42) 失误
+             * group(44) 犯规
+             * group(46) 得分
+             */
+            pattern = Pattern.compile("(   <td align=\"right\" >)(.*)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)" +
+                    "(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)" +
+                    "(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)" +
+                    "(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)" +
+                    "(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>)");
+            matcher = pattern.matcher(str2);
+            if (matcher.matches()){
+                //取对应参数
+                int mp = Integer.parseInt(matcher.group(4));
+                int fg = Integer.parseInt(matcher.group(6));
+                int fga = Integer.parseInt(matcher.group(8));
+                int p3 = Integer.parseInt(matcher.group(12));
+                int p3a = Integer.parseInt(matcher.group(14));
+                int p2 = Integer.parseInt(matcher.group(18));
+                int p2a = Integer.parseInt(matcher.group(20));
+                int ft = Integer.parseInt(matcher.group(24));
+                int fta = Integer.parseInt(matcher.group(26));
+                int orb = Integer.parseInt(matcher.group(30));
+                int drb = Integer.parseInt(matcher.group(32));
+                int trb = Integer.parseInt(matcher.group(34));
+                int ast = Integer.parseInt(matcher.group(36));
+                int stl = Integer.parseInt(matcher.group(38));
+                int blk = Integer.parseInt(matcher.group(40));
+                int tov = Integer.parseInt(matcher.group(42));
+                int pf = Integer.parseInt(matcher.group(44));
+                int pts = Integer.parseInt(matcher.group(46));
+
+
+
+                //为po对象添加值
+                po.setOpMp(mp);
+                po.setOpFg(fg);
+                po.setOpFga(fga);
+                po.setOpP3(p3);
+                po.setOpP3a(p3a);
+                po.setOpP2(p2);
+                po.setOpP2a(p2a);
+                po.setOpFt(ft);
+                po.setOpFta(fta);
+                po.setOpOrb(orb);
+                po.setOpDrb(drb);
+                po.setOpTrb(trb);
+                po.setOpAst(ast);
+                po.setOpStl(stl);
+                po.setOpBlk(blk);
+                po.setOpTov(tov);
+                po.setOpPf(pf);
+                po.setOpPts(pts);
             }
 
         }

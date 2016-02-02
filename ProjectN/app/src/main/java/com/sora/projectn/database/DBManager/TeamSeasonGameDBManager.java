@@ -28,6 +28,8 @@ public class TeamSeasonGameDBManager {
     private static final String KEY_YEAR = "year";
     private static final String KEY_WIN = "win";
     private static final String KEY_LOSE = "lose";
+    private static final String KEY_RANK = "rank";
+    //Team
     private static final String KEY_MP = "mp";
     private static final String KEY_FG = "fg";
     private static final String KEY_FGA = "fga";
@@ -46,7 +48,26 @@ public class TeamSeasonGameDBManager {
     private static final String KEY_TOV = "tov";
     private static final String KEY_PF = "pf";
     private static final String KEY_PTS = "pts";
-    private static final String KEY_RANK = "rank";
+    //Opponent
+    private static final String KEY_OPMP = "opMp";
+    private static final String KEY_OPFG = "opFg";
+    private static final String KEY_OPFGA = "opFga";
+    private static final String KEY_OPP3 = "opP3";
+    private static final String KEY_OPP3A = "opP3a";
+    private static final String KEY_OPP2 = "opP2";
+    private static final String KEY_OPP2A = "opP2a";
+    private static final String KEY_OPFT = "opFt";
+    private static final String KEY_OPFTA = "opFta";
+    private static final String KEY_OPORB = "opOrb";
+    private static final String KEY_OPDRB = "opDrb";
+    private static final String KEY_OPTRB = "opTrb";
+    private static final String KEY_OPAST = "opAst";
+    private static final String KEY_OPSTL = "opStl";
+    private static final String KEY_OPBLK = "opBlk";
+    private static final String KEY_OPTOV = "opTov";
+    private static final String KEY_OPPF = "opPf";
+    private static final String KEY_OPPTS = "opPts";
+
 
 
 
@@ -84,6 +105,8 @@ public class TeamSeasonGameDBManager {
         cv.put(KEY_YEAR, po.getYear());
         cv.put(KEY_WIN, po.getWin());
         cv.put(KEY_LOSE, po.getLose());
+        cv.put(KEY_RANK,  po.getRank());
+
         cv.put(KEY_MP, po.getMp());
         cv.put(KEY_FG, po.getFg());
         cv.put(KEY_FGA, po.getFga());
@@ -102,7 +125,25 @@ public class TeamSeasonGameDBManager {
         cv.put(KEY_TOV, po.getTov());
         cv.put(KEY_PF, po.getPf());
         cv.put(KEY_PTS,  po.getPts());
-        cv.put(KEY_RANK,  po.getRank());
+
+        cv.put(KEY_OPMP, po.getOpMp());
+        cv.put(KEY_OPFG, po.getOpFg());
+        cv.put(KEY_OPFGA, po.getOpFga());
+        cv.put(KEY_OPP3, po.getOpP3());
+        cv.put(KEY_OPP3A, po.getOpP3a());
+        cv.put(KEY_OPP2, po.getOpP2());
+        cv.put(KEY_OPP2A, po.getOpP2a());
+        cv.put(KEY_OPFT, po.getOpFt());
+        cv.put(KEY_OPFTA, po.getOpFta());
+        cv.put(KEY_OPORB, po.getOpOrb());
+        cv.put(KEY_OPDRB, po.getOpDrb());
+        cv.put(KEY_OPTRB, po.getOpTrb());
+        cv.put(KEY_OPAST, po.getOpAst());
+        cv.put(KEY_OPSTL, po.getOpStl());
+        cv.put(KEY_OPBLK, po.getOpBlk());
+        cv.put(KEY_OPTOV, po.getOpTov());
+        cv.put(KEY_OPPF, po.getOpPf());
+        cv.put(KEY_OPPTS,  po.getOpPts());
 
         String[] whereArgs = {po.getAbbr()};
         db.update(TABLE, cv, "abbr=?", whereArgs);
@@ -150,6 +191,8 @@ public class TeamSeasonGameDBManager {
                 po.setYear(c.getInt(c.getColumnIndex(KEY_YEAR)));
                 po.setWin(c.getInt(c.getColumnIndex(KEY_WIN)));
                 po.setLose(c.getInt(c.getColumnIndex(KEY_LOSE)));
+                po.setRank(c.getInt(c.getColumnIndex(KEY_RANK)));
+
                 po.setMp(c.getInt(c.getColumnIndex(KEY_MP)));
                 po.setFg(c.getInt(c.getColumnIndex(KEY_FG)));
                 po.setFga(c.getInt(c.getColumnIndex(KEY_FGA)));
@@ -168,7 +211,26 @@ public class TeamSeasonGameDBManager {
                 po.setTov(c.getInt(c.getColumnIndex(KEY_TOV)));
                 po.setPf(c.getInt(c.getColumnIndex(KEY_PF)));
                 po.setPts(c.getInt(c.getColumnIndex(KEY_PTS)));
-                po.setRank(c.getInt(c.getColumnIndex(KEY_RANK)));
+
+                po.setOpMp(c.getInt(c.getColumnIndex(KEY_OPMP)));
+                po.setOpFg(c.getInt(c.getColumnIndex(KEY_OPFG)));
+                po.setOpFga(c.getInt(c.getColumnIndex(KEY_OPFGA)));
+                po.setOpP3(c.getInt(c.getColumnIndex(KEY_OPP3)));
+                po.setOpP3a(c.getInt(c.getColumnIndex(KEY_OPP3A)));
+                po.setOpP2(c.getInt(c.getColumnIndex(KEY_OPP2)));
+                po.setOpP2a(c.getInt(c.getColumnIndex(KEY_OPP2A)));
+                po.setOpFt(c.getInt(c.getColumnIndex(KEY_OPFT)));
+                po.setOpFta(c.getInt(c.getColumnIndex(KEY_OPFTA)));
+                po.setOpOrb(c.getInt(c.getColumnIndex(KEY_OPORB)));
+                po.setOpDrb(c.getInt(c.getColumnIndex(KEY_OPDRB)));
+                po.setOpTrb(c.getInt(c.getColumnIndex(KEY_OPTRB)));
+                po.setOpAst(c.getInt(c.getColumnIndex(KEY_OPAST)));
+                po.setOpStl(c.getInt(c.getColumnIndex(KEY_OPSTL)));
+                po.setOpBlk(c.getInt(c.getColumnIndex(KEY_OPBLK)));
+                po.setOpTov(c.getInt(c.getColumnIndex(KEY_OPTOV)));
+                po.setOpPf(c.getInt(c.getColumnIndex(KEY_OPPF)));
+                po.setOpPts(c.getInt(c.getColumnIndex(KEY_OPPTS)));
+
                 break;
             }
         }

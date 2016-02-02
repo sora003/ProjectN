@@ -50,32 +50,10 @@ public interface TeamParser {
     /**
      * 读取 球队最新赛季比赛数据.html有效部分
      *
-     * @param result  球队最新赛季比赛数据.html
-     * @param year  最新赛季年
-     * @return List<TeamSeasonGamePo>
-     *      TeamSeasonGamePo.abbr
-     *      TeamSeasonGamePo.year
-     *      TeamSeasonGamePo.win
-     *      TeamSeasonGamePo.lose
-     *      TeamSeasonGamePo.mp
-     *      TeamSeasonGamePo.fg
-     *      TeamSeasonGamePo.fga
-     *      TeamSeasonGamePo.p3
-     *      TeamSeasonGamePo.p3a
-     *      TeamSeasonGamePo.p2
-     *      TeamSeasonGamePo.p2a
-     *      TeamSeasonGamePo.ft
-     *      TeamSeasonGamePo.fta
-     *      TeamSeasonGamePo.orb
-     *      TeamSeasonGamePo.drb
-     *      TeamSeasonGamePo.trb
-     *      TeamSeasonGamePo.ast
-     *      TeamSeasonGamePo.stl
-     *      TeamSeasonGamePo.blk
-     *      TeamSeasonGamePo.tov
-     *      TeamSeasonGamePo.pf
-     *      TeamSeasonGamePo.pts
-     *      TeamSeasonGamePo.rank
+     * @param result
+     * @param abbr
+     * @param year
+     * @return TeamSeasonGamePo
      */
     public TeamSeasonGamePo parseTeamSeasonGame(StringBuffer result,String abbr,int year);
 

@@ -41,6 +41,11 @@ public class TeamActivity extends FragmentActivity {
     private TeamBLS BLS = new TeamBL();
     private TeamInfoVo teamInfoVo = new TeamInfoVo();
 
+    //Fragment
+    private TeamDataFragment teamDataFragment;
+    private TeamSeasonFragment teamSeasonFragment;
+    private TeamPlayerFragment teamPlayerFragment;
+    private TeamScheduleFragment teamScheduleFragment;
 
     //ViewPager
     private ViewPager viewPager;
@@ -76,8 +81,11 @@ public class TeamActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team);
-        parseIntent();
+
         initView();
+
+        parseIntent();
+
         initViewPager();
         initListener();
 
@@ -121,6 +129,13 @@ public class TeamActivity extends FragmentActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         abbr = bundle.getString("abbr");
+
+        //需要统一Fragment实例化对象 采用全局变量定义
+        bundle = new Bundle();
+        bundle.putString("abbr",abbr);
+        teamSeasonFragment.setArguments(bundle);
+
+
     }
 
     /**
@@ -144,6 +159,14 @@ public class TeamActivity extends FragmentActivity {
         //ImageView
         cursor = (ImageView) findViewById(R.id.iv_teamCursor);
         iv_teamLogo = (ImageView) findViewById(R.id.iv_teamLogo);
+
+
+        //Fragment
+        teamDataFragment = new TeamDataFragment();
+        teamSeasonFragment = new TeamSeasonFragment();
+        teamPlayerFragment = new TeamPlayerFragment();
+        teamScheduleFragment = new TeamScheduleFragment();
+
     }
 
     /**
@@ -153,10 +176,10 @@ public class TeamActivity extends FragmentActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         fragments = new ArrayList<Fragment>();
-        fragments.add(new TeamDataFragment());
-        fragments.add(new TeamSeasonFragment());
-        fragments.add(new TeamPlayerFragment());
-        fragments.add(new TeamScheduleFragment());
+        fragments.add(teamDataFragment);
+        fragments.add(teamSeasonFragment);
+        fragments.add(teamPlayerFragment);
+        fragments.add(teamScheduleFragment);
 
         //新建适配器对象
         adapter = new FragAdapter(getSupportFragmentManager(),fragments);
@@ -232,7 +255,6 @@ public class TeamActivity extends FragmentActivity {
     private class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            int current = viewPager.getCurrentItem();
             //跳转到新的fragment
             switch (v.getId()){
                 case R.id.tv_teamGuide1:

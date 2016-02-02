@@ -23,7 +23,7 @@ public class TeamDBManager {
     private DBHelper helper;
     private SQLiteDatabase db;
 
-    private static final String TABLE_TEAM = "team";
+    private static final String TABLE = "team";
 
 
 
@@ -55,7 +55,7 @@ public class TeamDBManager {
             cv.put(KEY_ABBR, teamPo.getAbbr());
             cv.put(KEY_FOUNDED, teamPo.getFounded());
             cv.put(KEY_SNAME, teamPo.getsName());
-            db.insert(TABLE_TEAM,null,cv);
+            db.insert(TABLE,null,cv);
         }
     }
 
@@ -73,7 +73,7 @@ public class TeamDBManager {
 
 //            Log.i("db_Conference",teamPo.getConference());
 
-            db.update(TABLE_TEAM, cv, "abbr=?", whereArgs);
+            db.update(TABLE, cv, "abbr=?", whereArgs);
         }
     }
 
@@ -171,7 +171,7 @@ public class TeamDBManager {
      * @return Cursor
      */
     public Cursor queryTheCursor(){
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_TEAM,null);
+        Cursor c = db.rawQuery("SELECT * FROM "+ TABLE,null);
         return c;
     }
 

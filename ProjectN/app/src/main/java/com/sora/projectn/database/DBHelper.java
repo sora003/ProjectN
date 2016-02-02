@@ -45,6 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "year integer ," +                                             //最新赛季
                 "win integer , " +                                              //球队胜场
                 "lose integer ," +                                             //球队负场
+                "rank integer ," +                                                //排名
                 "mp integer , " +                                               //比赛时长
                 "fg integer , " +                                               //命中
                 "fga integer , " +                                              //出手
@@ -63,13 +64,31 @@ public class DBHelper extends SQLiteOpenHelper {
                 "tov integer , " +                                              //失误
                 "pf integer , " +                                               //犯规
                 "pts integer ," +                                             //得分
-                "rank integer)");                                               //排名
+                "opMp integer , " +                                               //对手比赛时长
+                "opFg integer , " +                                               //对手命中
+                "opFga integer , " +                                              //对手出手
+                "opP3 integer , " +                                               //对手3分命中
+                "opP3a integer , " +                                              //对手3分出手
+                "opP2 integer , " +                                               //对手2分命中
+                "opP2a integer , " +                                              //对手2分出手
+                "opFt integer , " +                                               //对手罚球命中
+                "opFta integer , " +                                              //对手罚球出手
+                "opOrb integer , " +                                              //对手进攻
+                "opDrb integer , " +                                              //对手防守
+                "opTrb integer , " +                                              //对手篮板
+                "opAst integer , " +                                              //对手助攻
+                "opStl integer , " +                                              //对手抢断
+                "opBlk integer , " +                                              //对手盖帽
+                "opTov integer , " +                                              //对手失误
+                "opPf integer , " +                                               //对手犯规
+                "opPts integer)");                                                //对手得分
 
 
         //创建table player
         db.execSQL("CREATE TABLE IF NOT EXISTS " +
                 "player " +                                                     //表名
                 "(id integer primary key autoincrement ," +                     //主键
+                "abbr varchar(60) , " +                                         //球员效力球队
                 "no integer , " +                                               //球衣号码
                 "name varchar(60) ," +                                          //球员姓名
                 "pos varchar(60) , " +                                          //球场担任位置
@@ -78,26 +97,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "birth integer , " +                                               //球员生日
                 "exp integer , " +                                              //球员的NBA职业生涯时间
                 "collage varchar(60) , " +                                       //球员毕业大学
-                "g integer , " +                                               //比赛场数
-                "gs integer , " +                                               //首发场数
-                "mp integer , " +                                               //比赛时长
-                "fg integer , " +                                               //命中
-                "fga integer , " +                                              //出手
-                "p3 integer , " +                                               //3分命中
-                "p3a integer , " +                                              //3分出手
-                "p2 integer , " +                                               //2分命中
-                "p2a integer , " +                                              //2分出手
-                "ft integer , " +                                               //罚球命中
-                "fta integer , " +                                              //罚球出手
-                "orb integer , " +                                              //进攻
-                "drb integer , " +                                              //防守
-                "trb integer , " +                                              //篮板
-                "ast integer , " +                                              //助攻
-                "stl integer , " +                                              //抢断
-                "blk integer , " +                                              //盖帽
-                "tov integer , " +                                              //失误
-                "pf integer , " +                                               //犯规
-                "pts integer)");                                                //得分
+                "img varchar(60)");                                                //球员照片网络路径
 
     }
 

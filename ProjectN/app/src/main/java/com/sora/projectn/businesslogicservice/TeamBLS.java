@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.sora.projectn.vo.TeamConferenceVo;
 import com.sora.projectn.vo.TeamInfoVo;
+import com.sora.projectn.vo.TeamSeasonInfoVo;
 
 import java.util.List;
 
@@ -14,10 +15,20 @@ public interface TeamBLS {
 
     /**
      * 获取TeamListActivity显示内容
+     *
      * @param context
      * @return
      */
-    public List<TeamConferenceVo> getTeamConferenceInfo(Context context);
+    public List<TeamConferenceVo> getTeamConference(Context context);
 
+    /**
+     * 获取TeamActivity的顶层显示内容
+     *
+     * @param context
+     * @param abbr
+     * @return
+     */
     public TeamInfoVo getTeamInfo(Context context,String abbr);
+
+    public List<TeamSeasonInfoVo> getTeamSeasonTotal(Context context,String abbr);
 }

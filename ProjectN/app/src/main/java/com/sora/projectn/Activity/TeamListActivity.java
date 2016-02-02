@@ -207,7 +207,7 @@ public class TeamListActivity extends AppCompatActivity {
         @Override
         public void run() {
             //调用TeamBLS接口 获取球队缩略名信息
-            list = BLS.getTeamConferenceInfo(mContext);
+            list = BLS.getTeamConference(mContext);
 
             handler.sendEmptyMessage(GET_DATA);
         }
