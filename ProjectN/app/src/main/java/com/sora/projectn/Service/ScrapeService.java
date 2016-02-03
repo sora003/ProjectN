@@ -46,7 +46,7 @@ public class ScrapeService extends Service {
     //球队基本数据 子线程
     private CountDownLatch countDownLatch = new CountDownLatch(1);
     //球队logo爬取和球队联盟等信息爬取子线程
-    private CountDownLatch handlerCountDownLatch = new CountDownLatch(6);
+    private CountDownLatch handlerCountDownLatch = new CountDownLatch(4);
     //球队赛季数据 子线程
     private CountDownLatch seasonInfoCountDownLatch = new CountDownLatch(1);
     //球员基本数据 子线程
@@ -202,7 +202,6 @@ public class ScrapeService extends Service {
 
             seasonInfoCountDownLatch.countDown();
 
-            handlerCountDownLatch.countDown();
         }
     });
 
@@ -222,7 +221,6 @@ public class ScrapeService extends Service {
 
             playerCountDownLatch.countDown();
 
-            handlerCountDownLatch.countDown();
         }
     });
 
