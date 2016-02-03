@@ -16,6 +16,8 @@ import java.util.Map;
 
 /**
  * Created by Sora on 2016/2/2.
+ *
+ * 对player表进行操作
  */
 public class PlayerDBManager {
 

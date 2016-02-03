@@ -11,8 +11,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-
+import com.sora.projectn.dataservice.MatchDS;
+import com.sora.projectn.dataservice.PlayerDS;
 import com.sora.projectn.dataservice.TeamDS;
+import com.sora.projectn.dataservice.impl.MatchDSImpl;
+import com.sora.projectn.dataservice.impl.PlayerDSImpl;
 import com.sora.projectn.dataservice.impl.TeamDSImpl;
 
 import java.util.List;
@@ -37,14 +40,24 @@ public class ScrapeService extends Service {
     //最新赛季年
     //TODO 该设置后续考虑 切换成用户输入或自动获取
     private final int CURR_YEAR = 2016;
+    private final String startDay = "20150101";
+    private final String endDay = "20160201";
 
     //球队基本数据 子线程
     private CountDownLatch countDownLatch = new CountDownLatch(1);
     //球队logo爬取和球队联盟等信息爬取子线程
-    private CountDownLatch handlerCountDownLatch = new CountDownLatch(3);
+    private CountDownLatch handlerCountDownLatch = new CountDownLatch(6);
+    //球队赛季数据 子线程
+    private CountDownLatch seasonInfoCountDownLatch = new CountDownLatch(1);
+    //球员基本数据 子线程
+    private CountDownLatch playerCountDownLatch = new CountDownLatch(1);
 
     //获取TeamDS接口
     TeamDS teamDS = new TeamDSImpl();
+    //获取Player接口
+    PlayerDS playerDS = new PlayerDSImpl();
+    //获取MatchDS接口
+    MatchDS matchDS = new MatchDSImpl();
 
 
     //返回binder 使得Service的引用可以通过返回的IBinder对象得到
@@ -98,6 +111,12 @@ public class ScrapeService extends Service {
 
         getTeamSeasonGameInfo.start();
 
+        getPlayerInfo.start();
+
+        getPlayerImg.start();
+
+        getMatchInfo.start();
+
 
     }
 
@@ -119,19 +138,19 @@ public class ScrapeService extends Service {
     Thread getTeamLogo = new Thread(new Runnable() {
         @Override
         public void run() {
-//            //判断SD卡是否存在 若不存在 发送错误报告
-//            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-//                handler.sendEmptyMessage(IO_ERROR);
-//                return;
-//            }
-//            //等待球队Abbr等信息爬取完成
-//            try {
-//                countDownLatch.await();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//
-//            teamDS.setTeamLogo(getApplicationContext());
+            //判断SD卡是否存在 若不存在 发送错误报告
+            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                handler.sendEmptyMessage(IO_ERROR);
+                return;
+            }
+            //等待球队Abbr等信息爬取完成
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            teamDS.setTeamLogo(getApplicationContext());
 
             handlerCountDownLatch.countDown();
 
@@ -158,7 +177,6 @@ public class ScrapeService extends Service {
                 e.printStackTrace();
             }
             teamDS.setTeamListInfo(getApplicationContext());
-//            Log.i("Service","setTeamListInfo");
             handlerCountDownLatch.countDown();
         }
     });
@@ -175,13 +193,70 @@ public class ScrapeService extends Service {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            List<String > list = teamDS.getTeamAbbr(getApplicationContext());
 
             //新建 teamSeasonGame表
             teamDS.setTeamSeasonGameAbbr(getApplicationContext());
 
             //更新teamSeasonGame表数据
             teamDS.setTeamSeasonGame(getApplicationContext(),CURR_YEAR);
+
+            seasonInfoCountDownLatch.countDown();
+
+            handlerCountDownLatch.countDown();
+        }
+    });
+
+    /**
+     * 获取球员基本数据
+     */
+    Thread getPlayerInfo = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            //等待球队赛季数据信息爬取完成
+            try {
+                seasonInfoCountDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            playerDS.setPlayInfo(getApplicationContext());
+
+            playerCountDownLatch.countDown();
+
+            handlerCountDownLatch.countDown();
+        }
+    });
+
+    /**
+     * 获取球员照片
+     */
+    Thread getPlayerImg = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            //判断SD卡是否存在 若不存在 发送错误报告
+            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                handler.sendEmptyMessage(IO_ERROR);
+                return;
+            }
+            //等待球员基本数据爬取完成
+            try {
+                playerCountDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            playerDS.setPlayerImg(getApplicationContext());
+            handlerCountDownLatch.countDown();
+        }
+    });
+
+    /**
+     * 获取比赛数据
+     */
+    Thread getMatchInfo = new Thread(new Runnable() {
+        @Override
+        public void run() {
+
+            matchDS.setMatchInfo(getApplicationContext(),startDay,endDay);
 
             handlerCountDownLatch.countDown();
         }

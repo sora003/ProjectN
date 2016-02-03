@@ -3,6 +3,7 @@ package com.sora.projectn.dataservice.impl;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.util.Log;
 
 import com.sora.projectn.WebService.parser.PlayerParser;
 import com.sora.projectn.WebService.parser.impl.PlayerParserImpl;
@@ -53,6 +54,8 @@ public class PlayerDSImpl implements PlayerDS{
         PlayerDBManager db = new PlayerDBManager(context);
 
         for (String abbr : abbrList){
+
+            Log.i("爬取球队球员数据",abbr);
 
             int year = teamDS.getTeamSeasonGameYear(context,abbr);
 

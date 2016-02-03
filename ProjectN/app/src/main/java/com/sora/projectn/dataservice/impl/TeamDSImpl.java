@@ -258,6 +258,7 @@ public class TeamDSImpl implements TeamDS{
         TeamDS teamDS = new TeamDSImpl();
         List<String> alist = teamDS.getTeamAbbr(context);
 
+        TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
 
         for (String abbr : alist){
             //调用TeamWDS接口 获取爬取数据
@@ -268,13 +269,10 @@ public class TeamDSImpl implements TeamDS{
             TeamParser teamParser = new TeamParserImpl();
             TeamSeasonGamePo po = teamParser.parseTeamSeasonGame(result,abbr, year);
 
-            TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
-
             db.update(po);
-
-            db.closeDB();
         }
 
+        db.closeDB();
     }
 }
 

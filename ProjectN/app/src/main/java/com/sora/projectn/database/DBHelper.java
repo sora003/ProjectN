@@ -97,9 +97,97 @@ public class DBHelper extends SQLiteOpenHelper {
                 "birth integer , " +                                               //球员生日
                 "exp integer , " +                                              //球员的NBA职业生涯时间
                 "collage varchar(60) , " +                                       //球员毕业大学
-                "img varchar(60)");                                                //球员照片网络路径
+                "img varchar(60))");                                                //球员照片网络路径
 
+
+        //创建table match
+        db.execSQL("CREATE TABLE IF NOT EXISTS " +
+                "match " +                                                     //表名
+                "(id integer primary key autoincrement ," +                     //主键
+                "date varchar(20) , " +                                         //比赛日期
+                "abbr1 varchar(20) , " +                                        //第一支球队球队缩写
+                "scoring1 varchar(60) ," +                                      //第一支球队球队小节得分
+                "player1 varchar(255) , " +                                     //第一支球队球员
+                "mp1 varchar(80) ," +                                           //第一支球队在场时间
+                "fg1 varchar(80) , " +                                          //第一支球队命中
+                "fga1 varchar(80) , " +                                         //第一支球队出手
+                "p31 varchar(80) , " +                                          //第一支球队3分命中
+                "p3a1 varchar(80) , " +                                         //第一支球队3分出手
+                "ft1 varchar(80) , " +                                          //第一支球队罚球命中
+                "fta1 varchar(80) , " +                                         //第一支球队罚球出手
+                "orb1 varchar(80) , " +                                         //第一支球队进攻
+                "drb1 varchar(80) , " +                                         //第一支球队防守
+                "trb1 varchar(80) , " +                                         //第一支球队篮板
+                "ast1 varchar(80) , " +                                         //第一支球队助攻
+                "stl1 varchar(80) , " +                                         //第一支球队抢断
+                "blk1 varchar(80) , " +                                         //第一支球队盖帽
+                "tov1 varchar(80) , " +                                         //第一支球队失误
+                "pf1 varchar(80) , " +                                          //第一支球队犯规
+                "pts1 varchar(80) , " +                                         //第一支球队得分
+                "abbr2 varchar(20) , " +                                        //第二支球队球队缩写
+                "scoring2 varchar(60) ," +                                      //第二支球队球队小节得分
+                "player2 varchar(255) , " +                                     //第二支球队球员
+                "mp2 varchar(80) ," +                                           //第二支球队在场时间
+                "fg2 varchar(80) , " +                                          //第二支球队命中
+                "fga2 varchar(80) , " +                                         //第二支球队出手
+                "p32 varchar(80) , " +                                          //第二支球队3分命中
+                "p3a2 varchar(80) , " +                                         //第二支球队3分出手
+                "ft2 varchar(80) , " +                                          //第二支球队罚球命中
+                "fta2 varchar(80) , " +                                         //第二支球队罚球出手
+                "orb2 varchar(80) , " +                                         //第二支球队进攻
+                "drb2 varchar(80) , " +                                         //第二支球队防守
+                "trb2 varchar(80) , " +                                         //第二支球队篮板
+                "ast2 varchar(80) , " +                                         //第二支球队助攻
+                "stl2 varchar(80) , " +                                         //第二支球队抢断
+                "blk2 varchar(80) , " +                                         //第二支球队盖帽
+                "tov2 varchar(80) , " +                                         //第二支球队失误
+                "pf2 varchar(80) , " +                                          //第二支球队犯规
+                "pts2 varchar(80))");                                            //第二支球队得分
     }
+
+
+
+    private String date;
+
+    private String abbr1;
+    private String scoring1;
+    private String player1;
+    private String mp1;
+    private String fg1;
+    private String fga1;
+    private String p31;
+    private String p3a1;
+    private String ft1;
+    private String fta1;
+    private String orb1;
+    private String drb1;
+    private String trb1;
+    private String ast1;
+    private String stl1;
+    private String blk1;
+    private String tov1;
+    private String pf1;
+    private String pts1;
+
+    private String abbr2;
+    private String scoring2;
+    private String player2;
+    private String mp2;
+    private String fg2;
+    private String fga2;
+    private String p32;
+    private String p3a2;
+    private String ft2;
+    private String fta2;
+    private String orb2;
+    private String drb2;
+    private String trb2;
+    private String ast2;
+    private String stl2;
+    private String blk2;
+    private String tov2;
+    private String pf2;
+    private String pts2;
 
     //TODO 如果DATABASE_VERSION 的值被改为2  系统发现数据库版本更新 将调用OnUpgrade
     @Override
