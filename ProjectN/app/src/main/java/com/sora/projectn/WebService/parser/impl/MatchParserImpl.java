@@ -1,7 +1,7 @@
 package com.sora.projectn.WebService.parser.impl;
 
 import com.sora.projectn.WebService.parser.MatchParser;
-import com.sora.projectn.po.MatchPo;
+import com.sora.projectn.po.MatchInfoPo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +36,9 @@ public class MatchParserImpl implements MatchParser {
     }
 
     @Override
-    public MatchPo parMatchInfo(StringBuffer result) {
+    public MatchInfoPo parseMatchInfo(StringBuffer result) {
 
-        MatchPo po = new MatchPo();
+        MatchInfoPo po = new MatchInfoPo();
 
         /**
          * group(2) scoring信息

@@ -9,12 +9,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.businesslogic.TeamBL;
 import com.sora.projectn.businesslogicservice.TeamBLS;
-import com.sora.projectn.utils.TeamAdapter;
+import com.sora.projectn.utils.TeamSeasonAdapter;
 import com.sora.projectn.vo.TeamSeasonInfoVo;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class TeamSeasonFragment extends Fragment {
     private Context mContext;
 
 
-    private ListView listView;
+    private GridView gridView;
 
     @Nullable
     @Override
@@ -46,7 +47,7 @@ public class TeamSeasonFragment extends Fragment {
         //获取上下文环境
         mContext = this.getActivity();
 
-        listView = (ListView) view.findViewById(R.id.lv_teamSeason);
+        gridView = (GridView) view.findViewById(R.id.gv_teamSeason);
 
         parseIntent();
 
@@ -95,8 +96,8 @@ public class TeamSeasonFragment extends Fragment {
      * 更新界面
      */
     private void setView() {
-        TeamAdapter adapter = new TeamAdapter(mContext,list);
+        TeamSeasonAdapter adapter = new TeamSeasonAdapter(mContext,list);
 
-        listView.setAdapter(adapter);
+        gridView.setAdapter(adapter);
     }
 }

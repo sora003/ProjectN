@@ -2,8 +2,10 @@ package com.sora.projectn.po;
 
 /**
  * Created by Sora on 2016/2/3.
+ *
+ * Match存入进SQL的原始类
  */
-public class MatchPo {
+public class MatchInfoPo {
     private String date;
 
     private String abbr1;

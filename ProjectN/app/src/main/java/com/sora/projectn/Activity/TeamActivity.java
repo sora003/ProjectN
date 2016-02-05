@@ -133,8 +133,10 @@ public class TeamActivity extends FragmentActivity {
         //需要统一Fragment实例化对象 采用全局变量定义
         bundle = new Bundle();
         bundle.putString("abbr",abbr);
+
         teamSeasonFragment.setArguments(bundle);
 
+        teamPlayerFragment.setArguments(bundle);
 
     }
 

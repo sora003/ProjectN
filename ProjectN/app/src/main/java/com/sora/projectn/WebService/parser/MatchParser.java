@@ -1,8 +1,6 @@
 package com.sora.projectn.WebService.parser;
 
-import android.content.Context;
-
-import com.sora.projectn.po.MatchPo;
+import com.sora.projectn.po.MatchInfoPo;
 
 import java.util.List;
 
@@ -25,5 +23,5 @@ public interface MatchParser {
      * @param result 比赛的具体信息.html
      * @return 某场比赛的比赛数据
      */
-    public MatchPo parMatchInfo(StringBuffer result);
+    public MatchInfoPo parseMatchInfo(StringBuffer result);
 }

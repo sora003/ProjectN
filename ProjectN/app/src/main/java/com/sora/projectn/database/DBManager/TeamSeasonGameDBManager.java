@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.sora.projectn.database.DBHelper;
 import com.sora.projectn.po.TeamSeasonGamePo;
 
-import java.util.List;
-
 /**
  * Created by Sora on 2016/1/27.
  *
@@ -81,24 +79,11 @@ public class TeamSeasonGameDBManager {
 
 
     /**
-     * 用list中存储的值 初始化该表的abbr列
-     *
-     * @param list
-     */
-    public void add(List<String> list) {
-        for (String string : list) {
-            ContentValues cv = new ContentValues();
-            cv.put(KEY_ABBR, string);
-            db.insert(TABLE,null,cv);
-        }
-    }
-
-    /**
-     * 更新 球队最新赛季比赛数据
+     * 添加球队赛季比赛数据
      *
      * @param po  用TeamSeasonGamePo封装的数据对象
      */
-    public  void update(TeamSeasonGamePo po){
+    public void add(TeamSeasonGamePo po) {
 
         ContentValues cv = new ContentValues();
 
@@ -145,9 +130,10 @@ public class TeamSeasonGameDBManager {
         cv.put(KEY_OPPF, po.getOpPf());
         cv.put(KEY_OPPTS,  po.getOpPts());
 
-        String[] whereArgs = {po.getAbbr()};
-        db.update(TABLE, cv, "abbr=?", whereArgs);
+        db.insert(TABLE, null, cv);
+
     }
+
 
 
     /**

@@ -15,12 +15,12 @@ import java.util.List;
 /**
  * Created by Sora on 2016/1/31.
  */
-public class TeamAdapter extends BaseAdapter{
+public class TeamSeasonAdapter extends BaseAdapter{
 
     private List<TeamSeasonInfoVo> list;
     LayoutInflater inflater;
 
-    public TeamAdapter(Context context,List<TeamSeasonInfoVo> list) {
+    public TeamSeasonAdapter(Context context, List<TeamSeasonInfoVo> list) {
         inflater = LayoutInflater.from(context);
         this.list = list;
     }

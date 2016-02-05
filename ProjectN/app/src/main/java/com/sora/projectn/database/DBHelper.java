@@ -146,49 +146,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-
-    private String date;
-
-    private String abbr1;
-    private String scoring1;
-    private String player1;
-    private String mp1;
-    private String fg1;
-    private String fga1;
-    private String p31;
-    private String p3a1;
-    private String ft1;
-    private String fta1;
-    private String orb1;
-    private String drb1;
-    private String trb1;
-    private String ast1;
-    private String stl1;
-    private String blk1;
-    private String tov1;
-    private String pf1;
-    private String pts1;
-
-    private String abbr2;
-    private String scoring2;
-    private String player2;
-    private String mp2;
-    private String fg2;
-    private String fga2;
-    private String p32;
-    private String p3a2;
-    private String ft2;
-    private String fta2;
-    private String orb2;
-    private String drb2;
-    private String trb2;
-    private String ast2;
-    private String stl2;
-    private String blk2;
-    private String tov2;
-    private String pf2;
-    private String pts2;
-
     //TODO 如果DATABASE_VERSION 的值被改为2  系统发现数据库版本更新 将调用OnUpgrade
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

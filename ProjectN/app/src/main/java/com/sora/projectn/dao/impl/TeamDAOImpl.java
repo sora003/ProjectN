@@ -1,4 +1,4 @@
-package com.sora.projectn.dataservice.impl;
+package com.sora.projectn.dao.impl;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,9 +9,9 @@ import com.sora.projectn.WebService.parser.TeamParser;
 import com.sora.projectn.WebService.parser.impl.TeamParserImpl;
 import com.sora.projectn.WebService.webDS.TeamWDS;
 import com.sora.projectn.WebService.webDS.impl.TeamWDSImpl;
+import com.sora.projectn.dao.TeamDAO;
 import com.sora.projectn.database.DBManager.TeamDBManager;
 import com.sora.projectn.database.DBManager.TeamSeasonGameDBManager;
-import com.sora.projectn.dataservice.TeamDS;
 import com.sora.projectn.po.TeamPo;
 import com.sora.projectn.po.TeamSeasonGamePo;
 
@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * Created by Sora on 2016/1/25.
  */
-public class TeamDSImpl implements TeamDS{
+public class TeamDAOImpl implements TeamDAO {
 
 
     @Override
@@ -245,8 +245,8 @@ public class TeamDSImpl implements TeamDS{
 
 
         //获取球队缩写列表
-        TeamDS teamDS = new TeamDSImpl();
-        List<String> abbrList = teamDS.getTeamAbbr(context);
+        TeamDAO teamDAO = new TeamDAOImpl();
+        List<String> abbrList = teamDAO.getTeamAbbr(context);
 
         TeamSeasonGameDBManager db = new TeamSeasonGameDBManager(context);
 

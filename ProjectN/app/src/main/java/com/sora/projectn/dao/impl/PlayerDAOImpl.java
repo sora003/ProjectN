@@ -1,4 +1,4 @@
-package com.sora.projectn.dataservice.impl;
+package com.sora.projectn.dao.impl;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,9 +9,9 @@ import com.sora.projectn.WebService.parser.PlayerParser;
 import com.sora.projectn.WebService.parser.impl.PlayerParserImpl;
 import com.sora.projectn.WebService.webDS.PlayerWDS;
 import com.sora.projectn.WebService.webDS.impl.PlayerWDSImpl;
+import com.sora.projectn.dao.PlayerDAO;
+import com.sora.projectn.dao.TeamDAO;
 import com.sora.projectn.database.DBManager.PlayerDBManager;
-import com.sora.projectn.dataservice.PlayerDS;
-import com.sora.projectn.dataservice.TeamDS;
 import com.sora.projectn.po.PlayerPo;
 
 import java.io.File;
@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Created by Sora on 2016/2/2.
  */
-public class PlayerDSImpl implements PlayerDS{
+public class PlayerDAOImpl implements PlayerDAO {
 
     //爬取网页最外层路径
     private static String MAIN_URL = "http://www.basketball-reference.com";
@@ -58,15 +58,15 @@ public class PlayerDSImpl implements PlayerDS{
     public void setPlayInfo(Context context) {
 
         //调用TeamDS接口 获取球队缩写列表
-        TeamDS teamDS = new TeamDSImpl();
-        List<String> abbrList = teamDS.getTeamAbbr(context);
+        TeamDAO teamDAO = new TeamDAOImpl();
+        List<String> abbrList = teamDAO.getTeamAbbr(context);
         PlayerDBManager db = new PlayerDBManager(context);
 
         for (String abbr : abbrList){
 
             Log.i("爬取球队球员数据",abbr);
 
-            int year = teamDS.getTeamSeasonGameYear(context,abbr);
+            int year = teamDAO.getTeamSeasonGameYear(context,abbr);
 
             //调用PlayerWDS接口 获取球员数据原始网页
             PlayerWDS playerWDS = new PlayerWDSImpl();

@@ -139,10 +139,10 @@ public class ScrapeService extends Service {
         @Override
         public void run() {
             //判断SD卡是否存在 若不存在 发送错误报告
-            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                handler.sendEmptyMessage(IO_ERROR);
-                return;
-            }
+//            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+//                handler.sendEmptyMessage(IO_ERROR);
+//                return;
+//            }
             //等待球队Abbr等信息爬取完成
             try {
                 countDownLatch.await();
@@ -150,7 +150,7 @@ public class ScrapeService extends Service {
                 e.printStackTrace();
             }
 
-            teamDS.setTeamLogo(getApplicationContext());
+//            teamDS.setTeamLogo(getApplicationContext());
 
             handlerCountDownLatch.countDown();
 
@@ -194,10 +194,7 @@ public class ScrapeService extends Service {
                 e.printStackTrace();
             }
 
-            //新建 teamSeasonGame表
-            teamDS.setTeamSeasonGameAbbr(getApplicationContext());
-
-            //更新teamSeasonGame表数据
+            //新建teamSeasonGame表数据
             teamDS.setTeamSeasonGame(getApplicationContext(),CURR_YEAR);
 
             seasonInfoCountDownLatch.countDown();
@@ -217,7 +214,7 @@ public class ScrapeService extends Service {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            playerDS.setPlayInfo(getApplicationContext());
+//            playerDS.setPlayInfo(getApplicationContext());
 
             playerCountDownLatch.countDown();
 
@@ -231,10 +228,10 @@ public class ScrapeService extends Service {
         @Override
         public void run() {
             //判断SD卡是否存在 若不存在 发送错误报告
-            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                handler.sendEmptyMessage(IO_ERROR);
-                return;
-            }
+//            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+//                handler.sendEmptyMessage(IO_ERROR);
+//                return;
+//            }
             //等待球员基本数据爬取完成
             try {
                 playerCountDownLatch.await();
@@ -242,7 +239,9 @@ public class ScrapeService extends Service {
                 e.printStackTrace();
             }
 
-            playerDS.setPlayerImg(getApplicationContext());
+//            playerDS.setPlayerImg(getApplicationContext());
+
+
             handlerCountDownLatch.countDown();
         }
     });
@@ -254,7 +253,7 @@ public class ScrapeService extends Service {
         @Override
         public void run() {
 
-            matchDS.setMatchInfo(getApplicationContext(),startDay,endDay);
+//            matchDS.setMatchInfo(getApplicationContext(),startDay,endDay);
 
             handlerCountDownLatch.countDown();
         }

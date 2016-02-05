@@ -19,12 +19,22 @@
 
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/lv_teamSeason"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--<ListView-->
+        <!--android:id="@+id/lv_teamSeason"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+    <!--</ListView>-->
+
+    <GridView
+    android:id="@+id/gv_teamSeason"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:numColumns="3"
+    android:gravity="center"
+    android:horizontalSpacing="1dp"
+    android:verticalSpacing="1dp">
 
 
+    </GridView>
 
-    </ListView>
 </LinearLayout>

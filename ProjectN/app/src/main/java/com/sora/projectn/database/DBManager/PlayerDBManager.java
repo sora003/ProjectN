@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.sora.projectn.database.DBHelper;
 import com.sora.projectn.po.PlayerPo;
-import com.sora.projectn.po.TeamPo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +89,39 @@ public class PlayerDBManager {
         return map;
     }
 
+    /**
+     * 根据球队缩写 获取对应该球队缩写的所有球员
+     *
+     * @param abbr
+     * @return
+     */
+    public List<PlayerPo> queryPlayerList(String abbr){
+        List<PlayerPo> list = new ArrayList<>();
+
+        Cursor c = queryTheCursor();
+
+        while (c.moveToNext()){
+            String sqlAbbr = c.getString(c.getColumnIndex(KEY_ABBR));
+            if (abbr.equals(sqlAbbr)){
+                String name = c.getString(c.getColumnIndex(KEY_NAME));
+                int no = c.getInt(c.getColumnIndex(KEY_NO));
+                String pos = c.getString(c.getColumnIndex(KEY_POS));
+
+                PlayerPo po = new PlayerPo();
+
+                po.setName(name);
+                po.setPos(pos);
+                po.setNo(no);
+
+                list.add(po);
+            }
+
+
+        }
+
+        c.close();
+        return list;
+    }
 
     /**
      * 查找 球队基本数据 返回带游标的数据集

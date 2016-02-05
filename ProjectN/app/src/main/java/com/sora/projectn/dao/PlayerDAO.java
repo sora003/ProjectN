@@ -1,4 +1,4 @@
-package com.sora.projectn.dataservice;
+package com.sora.projectn.dao;
 
 import android.content.Context;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by Sora on 2016/2/2.
  */
-public interface PlayerDS {
+public interface PlayerDAO {
 
 
     /**
@@ -20,7 +20,7 @@ public interface PlayerDS {
      * @param abbr
      * @return
      */
-    public List<PlayerPo> getPlayerList(Context context,String abbr);
+    public List<PlayerPo> getPlayerList(Context context, String abbr);
 
 
     /**

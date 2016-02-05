@@ -1,4 +1,4 @@
-package com.sora.projectn.dataservice;
+package com.sora.projectn.dao;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Created by Sora on 2016/1/25.
  */
-public interface TeamDS {
+public interface TeamDAO {
 
 
 
@@ -34,7 +34,7 @@ public interface TeamDS {
      * @param abbr
      * @return TeamPo
      */
-    public TeamPo getTeamInfo(Context context,String abbr);
+    public TeamPo getTeamInfo(Context context, String abbr);
 
     /**
      * 读取存储在SQL的球队所在分区和缩略名信息 返回Map<String,String>
@@ -60,7 +60,7 @@ public interface TeamDS {
      * @param sName
      * @return String
      */
-    public String getTeamAbbr(Context context,String sName);
+    public String getTeamAbbr(Context context, String sName);
 
     /**
      * 根据球队缩略名获取球队logo
@@ -69,7 +69,7 @@ public interface TeamDS {
      * @param abbr
      * @return Bitmap
      */
-    public Bitmap getTeamLogo(Context context,String abbr);
+    public Bitmap getTeamLogo(Context context, String abbr);
 
 //    /**
 //     * 根据球队缩略名获取最新赛季球队数据是否存储
@@ -97,7 +97,7 @@ public interface TeamDS {
      * @param abbr  球队缩写
      * @return 最新赛季年份
      */
-    public int getTeamSeasonGameYear(Context context,String abbr);
+    public int getTeamSeasonGameYear(Context context, String abbr);
 
 
     /**
@@ -107,7 +107,7 @@ public interface TeamDS {
      * @param abbr 球队缩写
      * @return 最新赛季球队数据
      */
-    public TeamSeasonGamePo getTeamSeasonGameInfo(Context context,String abbr);
+    public TeamSeasonGamePo getTeamSeasonGameInfo(Context context, String abbr);
 
 
     /**
@@ -147,6 +147,6 @@ public interface TeamDS {
      * @param context
      * @param year 最新赛季年
      */
-    public void setTeamSeasonGame(Context context,int year);
+    public void setTeamSeasonGame(Context context, int year);
 
 }
