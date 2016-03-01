@@ -6,6 +6,12 @@ package com.sora.projectn.po;
  * Match存入进SQL的原始类
  */
 public class MatchInfoPo {
+
+    /**
+     * 比赛序号
+     */
+    private int id;
+
     private String date;
 
     private String abbr1;
@@ -47,6 +53,14 @@ public class MatchInfoPo {
     private String tov2;
     private String pf2;
     private String pts2;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getDate() {
         return date;

@@ -27,6 +27,8 @@ public class MatchDBManager {
 
 
 
+    private static final String KEY_ID = "id";
+
     private static final String KEY_DATE = "date";
 
     private static final String KEY_ABBR1 = "abbr1";
@@ -145,6 +147,8 @@ public class MatchDBManager {
 
             MatchInfoPo po = new MatchInfoPo();
 
+            po.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+
             po.setDate(c.getString(c.getColumnIndex(KEY_DATE)));
 
             po.setAbbr1(c.getString(c.getColumnIndex(KEY_ABBR1)));
@@ -194,6 +198,100 @@ public class MatchDBManager {
         return list;
     }
 
+    /**
+     * 查询 比赛数据
+     *
+     * @param id
+     * @return MatchInfoPo
+     */
+    public MatchInfoPo queryMatchInfo(int id){
+        MatchInfoPo po = new MatchInfoPo();
+        Cursor c = queryTheCursor();
+
+        while (c.moveToNext()){
+
+            if (c.getInt(c.getColumnIndex(KEY_ID)) == id){
+
+
+                po.setDate(c.getString(c.getColumnIndex(KEY_DATE)));
+
+                po.setAbbr1(c.getString(c.getColumnIndex(KEY_ABBR1)));
+                po.setScoring1(c.getString(c.getColumnIndex(KEY_SCORING1)));
+                po.setPlayer1(c.getString(c.getColumnIndex(KEY_PLAYER1)));
+                po.setMp1(c.getString(c.getColumnIndex(KEY_MP1)));
+                po.setFg1(c.getString(c.getColumnIndex(KEY_FG1)));
+                po.setFga1(c.getString(c.getColumnIndex(KEY_FGA1)));
+                po.setP31(c.getString(c.getColumnIndex(KEY_P31)));
+                po.setP3a1(c.getString(c.getColumnIndex(KEY_P3A1)));
+                po.setFt1(c.getString(c.getColumnIndex(KEY_FT1)));
+                po.setFta1(c.getString(c.getColumnIndex(KEY_FTA1)));
+                po.setOrb1(c.getString(c.getColumnIndex(KEY_ORB1)));
+                po.setDrb1(c.getString(c.getColumnIndex(KEY_DRB1)));
+                po.setTrb1(c.getString(c.getColumnIndex(KEY_TRB1)));
+                po.setAst1(c.getString(c.getColumnIndex(KEY_AST1)));
+                po.setStl1(c.getString(c.getColumnIndex(KEY_STL1)));
+                po.setBlk1(c.getString(c.getColumnIndex(KEY_BLK1)));
+                po.setTov1(c.getString(c.getColumnIndex(KEY_TOV1)));
+                po.setPf1(c.getString(c.getColumnIndex(KEY_PF1)));
+                po.setPts1(c.getString(c.getColumnIndex(KEY_PTS1)));
+
+                po.setAbbr2(c.getString(c.getColumnIndex(KEY_ABBR2)));
+                po.setScoring2(c.getString(c.getColumnIndex(KEY_SCORING2)));
+                po.setPlayer2(c.getString(c.getColumnIndex(KEY_PLAYER2)));
+                po.setMp2(c.getString(c.getColumnIndex(KEY_MP2)));
+                po.setFg2(c.getString(c.getColumnIndex(KEY_FG2)));
+                po.setFga2(c.getString(c.getColumnIndex(KEY_FGA2)));
+                po.setP32(c.getString(c.getColumnIndex(KEY_P32)));
+                po.setP3a2(c.getString(c.getColumnIndex(KEY_P3A2)));
+                po.setFt2(c.getString(c.getColumnIndex(KEY_FT2)));
+                po.setFta2(c.getString(c.getColumnIndex(KEY_FTA2)));
+                po.setOrb2(c.getString(c.getColumnIndex(KEY_ORB2)));
+                po.setDrb2(c.getString(c.getColumnIndex(KEY_DRB2)));
+                po.setTrb2(c.getString(c.getColumnIndex(KEY_TRB2)));
+                po.setAst2(c.getString(c.getColumnIndex(KEY_AST2)));
+                po.setStl2(c.getString(c.getColumnIndex(KEY_STL2)));
+                po.setBlk2(c.getString(c.getColumnIndex(KEY_BLK2)));
+                po.setTov2(c.getString(c.getColumnIndex(KEY_TOV2)));
+                po.setPf2(c.getString(c.getColumnIndex(KEY_PF2)));
+                po.setPts2(c.getString(c.getColumnIndex(KEY_PTS2)));
+
+                break;
+            }
+        }
+
+        c.close();
+        return po;
+    }
+
+    /**
+     * 查询 比赛数据
+     * @return List<MatchInfoPo>
+     */
+    public List<MatchInfoPo> queryMatchInfo(String date){
+        List<MatchInfoPo> list = new ArrayList<MatchInfoPo>();
+        Cursor c = queryTheCursor();
+
+        while (c.moveToNext()){
+
+            if (c.getString(c.getColumnIndex(KEY_DATE)).equals(date)){
+                MatchInfoPo po = new MatchInfoPo();
+
+
+                po.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+
+                po.setAbbr1(c.getString(c.getColumnIndex(KEY_ABBR1)));
+                po.setScoring1(c.getString(c.getColumnIndex(KEY_SCORING1)));
+                po.setAbbr2(c.getString(c.getColumnIndex(KEY_ABBR2)));
+                po.setScoring2(c.getString(c.getColumnIndex(KEY_SCORING2)));
+                list.add(po);
+            }
+
+
+        }
+
+        c.close();
+        return list;
+    }
 
     /**
      * 查找 球队基本数据 返回带游标的数据集

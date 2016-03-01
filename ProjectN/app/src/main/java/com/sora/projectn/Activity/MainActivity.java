@@ -43,10 +43,12 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         startActivity(new Intent(mContext,TeamListActivity.class));
                         break;
-//                    case 1:
-//                        break;
-//                    case 2:
-//                        break;
+                    case 1:
+                        startActivity(new Intent(mContext,PlayerListActivity.class));
+                        break;
+                    case 2:
+                        startActivity(new Intent(mContext,MatchListActivity.class));
+                        break;
                 }
             }
         });

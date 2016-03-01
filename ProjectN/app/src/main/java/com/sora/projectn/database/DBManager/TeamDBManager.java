@@ -140,6 +140,49 @@ public class TeamDBManager {
         return map;
     }
 
+    /**
+     * 查找球队缩略名和缩写信息
+     * @return String
+     */
+    public String queryTeamSName(String abbr){
+        String sName = "";
+
+        Cursor c = queryTheCursor();
+
+        while (c.moveToNext()){
+            if (c.getString(c.getColumnIndex(KEY_ABBR)).equals(abbr)){
+                sName = c.getString(c.getColumnIndex(KEY_SNAME));
+                break;
+            }
+        }
+
+        c.close();
+        return sName;
+    }
+
+
+    /**
+     * 查找球队所属分区
+     *
+     * @param abbr
+     * @return
+     */
+    public String queryTeamLeague(String abbr){
+        String league = "";
+
+        Cursor c = queryTheCursor();
+
+        while (c.moveToNext()){
+            if (c.getString(c.getColumnIndex(KEY_ABBR)).equals(abbr)){
+                league = c.getString(c.getColumnIndex(KEY_LEAGUE));
+                break;
+            }
+        }
+
+        c.close();
+        return league;
+    }
+
 
     /**
      * 查找球队基本数据

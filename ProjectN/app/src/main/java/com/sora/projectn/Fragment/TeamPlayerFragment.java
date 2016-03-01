@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class TeamPlayerFragment extends Fragment {
     private void parseIntent(){
         Bundle bundle = this.getArguments();
         abbr = bundle.getString("abbr");
+//        Log.i("abbr",abbr);
     }
 
     /**
@@ -71,6 +73,11 @@ public class TeamPlayerFragment extends Fragment {
         @Override
         public void run() {
             list = BLS.getPlayer(mContext, abbr);
+
+//            for (TeamPlayerVo vo : list){
+//                Log.i("no", String.valueOf(vo.getNo()));
+//            }
+
             handler.sendEmptyMessage(GET_DATA);
         }
     });

@@ -47,6 +47,21 @@
 
         </activity>
 
+        <activity
+            android:name=".Activity.MatchListActivity">
+
+        </activity>
+
+        <activity
+            android:name=".Activity.MatchActivity">
+
+        </activity>
+
+        <activity
+            android:name=".Activity.PlayerListActivity">
+
+        </activity>
+
         <service
             android:name=".Service.ScrapeService"
             >

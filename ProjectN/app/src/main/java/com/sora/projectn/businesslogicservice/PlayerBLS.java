@@ -2,6 +2,8 @@ package com.sora.projectn.businesslogicservice;
 
 import android.content.Context;
 
+import com.sora.projectn.vo.AllPlayerInfoVo;
+import com.sora.projectn.vo.SearchPlayerKeysVo;
 import com.sora.projectn.vo.TeamPlayerVo;
 
 import java.util.List;
@@ -19,5 +21,9 @@ public interface PlayerBLS {
      * @return
      */
     public List<TeamPlayerVo> getPlayer(Context context,String abbr);
+
+    public List<AllPlayerInfoVo> getAllPlayerInfo(SearchPlayerKeysVo searchKeys,Context context);
+
+
 
 }

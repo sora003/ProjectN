@@ -3,6 +3,7 @@ package com.sora.projectn.dao;
 import android.content.Context;
 
 import com.sora.projectn.po.PlayerPo;
+import com.sora.projectn.po.PlayerPrimaryInfoPo;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,15 @@ public interface PlayerDAO {
      */
     public List<PlayerPo> getPlayerList(Context context, String abbr);
 
+
+
+    /**
+     * 获取所有球员信息
+     *
+     * @param context
+     * @return
+     */
+    public List<PlayerPrimaryInfoPo> getPlayerList(Context context);
 
     /**
      * 获取球员照片的网络路径

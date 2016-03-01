@@ -12,12 +12,17 @@ import com.sora.projectn.WebService.webDS.impl.PlayerWDSImpl;
 import com.sora.projectn.dao.PlayerDAO;
 import com.sora.projectn.dao.TeamDAO;
 import com.sora.projectn.database.DBManager.PlayerDBManager;
+import com.sora.projectn.dataservice.TeamDS;
+import com.sora.projectn.dataservice.impl.TeamDSImpl;
 import com.sora.projectn.po.PlayerPo;
+import com.sora.projectn.po.PlayerPrimaryInfoPo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +48,18 @@ public class PlayerDAOImpl implements PlayerDAO {
     }
 
     @Override
+    public List<PlayerPrimaryInfoPo> getPlayerList(Context context) {
+        PlayerDBManager db = new PlayerDBManager(context);
+
+        List<PlayerPo> list = db.queryPlayerList();
+
+        db.closeDB();
+
+        return getPlayerPrimaryInfoPoList(list,context);
+    }
+
+
+    @Override
     public Map<String,String> getPlayerImg(Context context) {
         PlayerDBManager db = new PlayerDBManager(context);
 
@@ -66,7 +83,8 @@ public class PlayerDAOImpl implements PlayerDAO {
 
             Log.i("爬取球队球员数据",abbr);
 
-            int year = teamDAO.getTeamSeasonGameYear(context,abbr);
+            //TODO
+            int year = 2016;
 
             //调用PlayerWDS接口 获取球员数据原始网页
             PlayerWDS playerWDS = new PlayerWDSImpl();
@@ -75,6 +93,10 @@ public class PlayerDAOImpl implements PlayerDAO {
             //PlayerParser 读取球员信息
             PlayerParser playerParser = new PlayerParserImpl();
             List<PlayerPo> playerPoList = playerParser.parsePlayerInfo(result,abbr);
+
+            for (PlayerPo playerPo : playerPoList){
+                Log.i("name",playerPo.getName());
+            }
 
             db.add(playerPoList);
 
@@ -161,6 +183,38 @@ public class PlayerDAOImpl implements PlayerDAO {
         }
 
 
+    }
+
+
+    /**
+     * 分析PlayerPo数据  获取PlayerPrimaryInfoPo
+     *
+     * @param list
+     * @return
+     */
+    private List<PlayerPrimaryInfoPo> getPlayerPrimaryInfoPoList(List<PlayerPo> list,Context context) {
+
+        List<PlayerPrimaryInfoPo> newList = new ArrayList<>();
+
+        //调用TeamDS接口 获取球队的相关信息
+        TeamDS teamDS = new TeamDSImpl();
+
+        for (PlayerPo po : list){
+            PlayerPrimaryInfoPo newPo = new PlayerPrimaryInfoPo();
+
+            newPo.setName(po.getName());
+            newPo.setPosition(po.getPos());
+            newPo.setLeague(teamDS.getTeamLeague(context, po.getAbbr()));
+            newPo.setTeam(teamDS.getTeamSName(context, po.getAbbr()));
+
+            int birthYear = po.getBirth()/10000;
+
+            int age = Calendar.getInstance().get(Calendar.YEAR);
+
+            newPo.setAge((short) age);
+        }
+
+        return newList;
     }
 
 }

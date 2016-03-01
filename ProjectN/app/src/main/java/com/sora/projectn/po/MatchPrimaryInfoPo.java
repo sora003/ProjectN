@@ -6,6 +6,8 @@ import java.util.List;
 /**
  * Created by Sora on 2016/2/5.
  *
+ * 代码复用
+ * id  比赛编号
  * season 赛季
  * time 比赛时间
  * teamAName 比赛队伍A名字
@@ -19,31 +21,40 @@ import java.util.List;
  */
 public class MatchPrimaryInfoPo {
 
+    private int id;
     private String season;
     private String time;
     private String teamAName;
     private String teamBName;
     private short scoreA;
     private short scoreB;
-    private short[] periodScoreA = new short[4];
-    private short[] periodScoreB = new short[4];
+    private List<Short> periodScoreA;
+    private List<Short> periodScoreB;
     private List<PlayerMatchInfoPo> teamAList;
     private List<PlayerMatchInfoPo> teamBList;
 
 
-    public short[] getPeriodScoreA() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Short> getPeriodScoreA() {
         return periodScoreA;
     }
 
-    public void setPeriodScoreA(short[] periodScoreA) {
+    public void setPeriodScoreA(List<Short> periodScoreA) {
         this.periodScoreA = periodScoreA;
     }
 
-    public short[] getPeriodScoreB() {
+    public List<Short> getPeriodScoreB() {
         return periodScoreB;
     }
 
-    public void setPeriodScoreB(short[] periodScoreB) {
+    public void setPeriodScoreB(List<Short> periodScoreB) {
         this.periodScoreB = periodScoreB;
     }
 

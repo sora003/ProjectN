@@ -9,6 +9,7 @@ import com.sora.projectn.WebService.parser.TeamParser;
 import com.sora.projectn.WebService.parser.impl.TeamParserImpl;
 import com.sora.projectn.WebService.webDS.TeamWDS;
 import com.sora.projectn.WebService.webDS.impl.TeamWDSImpl;
+import com.sora.projectn.dao.impl.TeamDAOImpl;
 import com.sora.projectn.database.DBManager.TeamDBManager;
 import com.sora.projectn.database.DBManager.TeamSeasonGameDBManager;
 import com.sora.projectn.dataservice.TeamDS;
@@ -38,6 +39,11 @@ public class TeamDSImpl implements TeamDS{
     }
 
     @Override
+    public String getTeamLeague(Context context, String abbr) {
+        return new TeamDAOImpl().getTeamLeague(context,abbr);
+    }
+
+    @Override
     public TeamPo getTeamInfo(Context context,String abbr) {
         TeamDBManager db = new TeamDBManager(context);
         TeamPo po = db.queryTeamInfo(abbr);
@@ -59,6 +65,14 @@ public class TeamDSImpl implements TeamDS{
         Map<String, String> map = db.queryTeamSNameAndAbbr();
         db.closeDB();
         return map;
+    }
+
+    @Override
+    public String getTeamSName(Context context, String abbr) {
+        TeamDBManager db = new TeamDBManager(context);
+        String sName = db.queryTeamSName(abbr);
+        db.closeDB();
+        return sName;
     }
 
     @Override

@@ -40,7 +40,7 @@ public class ScrapeService extends Service {
     //最新赛季年
     //TODO 该设置后续考虑 切换成用户输入或自动获取
     private final int CURR_YEAR = 2016;
-    private final String startDay = "20150101";
+    private final String startDay = "20151028";
     private final String endDay = "20160201";
 
     //球队基本数据 子线程
@@ -195,7 +195,7 @@ public class ScrapeService extends Service {
             }
 
             //新建teamSeasonGame表数据
-            teamDS.setTeamSeasonGame(getApplicationContext(),CURR_YEAR);
+//            teamDS.setTeamSeasonGame(getApplicationContext(),CURR_YEAR);
 
             seasonInfoCountDownLatch.countDown();
 
@@ -214,7 +214,7 @@ public class ScrapeService extends Service {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            playerDS.setPlayInfo(getApplicationContext());
+            playerDS.setPlayInfo(getApplicationContext());
 
             playerCountDownLatch.countDown();
 
@@ -253,7 +253,7 @@ public class ScrapeService extends Service {
         @Override
         public void run() {
 
-//            matchDS.setMatchInfo(getApplicationContext(),startDay,endDay);
+            matchDS.setMatchInfo(getApplicationContext(),startDay,endDay);
 
             handlerCountDownLatch.countDown();
         }

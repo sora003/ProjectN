@@ -11,10 +11,13 @@ import com.sora.projectn.dao.MatchDAO;
 import com.sora.projectn.database.DBManager.MatchDBManager;
 import com.sora.projectn.po.MatchInfoPo;
 import com.sora.projectn.po.MatchPrimaryInfoPo;
+import com.sora.projectn.po.PlayerMatchInfoPo;
+import com.sora.projectn.po.TeamMatchInfoPo;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -25,23 +28,76 @@ import java.util.List;
  */
 public class MatchDAOImpl implements MatchDAO {
 
+    Context context;
+    MatchDataWatcher w;
+
+
     @Override
     public List<MatchPrimaryInfoPo> getMatchList(Context context) {
-        //调用数据库 获取所有比赛数据原始类
+        this.context = context;
+        w = MatchDataWatcher.getInstance(context);
+        return w.getMatchPrimaryInfoPoList();
+    }
+
+    @Override
+    public List<PlayerMatchInfoPo> getPlayerMatchList(Context context,String name) {
+        this.context = context;
+        w = MatchDataWatcher.getInstance(context);
+        List<PlayerMatchInfoPo> list = w.getPlayerMatchInfoMap().get(name);
+        if (list == null) {
+            //TODO 考虑球员姓名后带.的情况  实际不确定是否有这种情况  后续考虑
+            list = w.getPlayerMatchInfoMap().get(name+".");
+            if(list == null) {
+                Log.e("Data Error","#Can't find this player: " + name);
+                System.out.println();
+                list = new ArrayList<PlayerMatchInfoPo>();
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<TeamMatchInfoPo> getTeamMatchList(Context context,String teamName) {
+        this.context = context;
+        w = MatchDataWatcher.getInstance(context);
+        List<TeamMatchInfoPo> list = w.getTeamMatchInfoMap().get(teamName);
+        if (list == null) {
+            Log.e("Data Error", "#Can't find this team: " + teamName);
+            list = new ArrayList<TeamMatchInfoPo>();
+        }
+        return list;
+    }
+
+    @Override
+    public List<MatchInfoPo> getDateMatchList(Context context, String date) {
+        //调用数据库
         MatchDBManager db = new MatchDBManager(context);
-        List<MatchInfoPo> matchInfoPoList = db.queryMatchInfo();
+        //根据日期获取原始数据类
+        List<MatchInfoPo> list = db.queryMatchInfo(date);
         //关闭数据库
         db.closeDB();
 
 
+        return list;
+    }
+
+    @Override
+    public MatchInfoPo getNoMatch(Context context, int no) {
+        //调用数据库
+        MatchDBManager db = new MatchDBManager(context);
+        //根据比赛编号获取原始数据类
+        MatchInfoPo po = db.queryMatchInfo(no);
+        //关闭数据库
+        db.closeDB();
 
 
-        return null;
+        return po;
     }
 
     @Override
     public void setMatchInfo(Context context, String startDay, String endDay) {
 
+        //调用数据爬取接口
         MatchWDS matchWDS = new MatchWDSImpl();
         MatchParser matchParser = new MatchParserImpl();
         MatchDBManager db = new MatchDBManager(context);

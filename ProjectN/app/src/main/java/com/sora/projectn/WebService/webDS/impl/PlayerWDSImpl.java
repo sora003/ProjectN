@@ -24,6 +24,19 @@ public class PlayerWDSImpl implements PlayerWDS {
     @Override
     public StringBuffer  getPlayerInfo(String abbr,int year) {
 
+        //特殊情况
+        switch (abbr){
+            case "CHA":
+                abbr = "CHO";
+                break;
+            case "NOH":
+                abbr = "NOP";
+                break;
+            case "NJN":
+                abbr = "BRK";
+                break;
+        }
+
         StringBuffer result = new StringBuffer();
         try {
             URL url = new URL(MAIN_URL + "/teams/" + abbr + "/" + year + ".html");

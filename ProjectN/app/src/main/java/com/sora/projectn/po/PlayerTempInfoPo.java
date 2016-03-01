@@ -1,37 +1,22 @@
 package com.sora.projectn.po;
 
 /**
- * Created by Sora on 2016/2/5.
+ * Created by Sora on 2016/2/12.
  *
- * 代码复用
- * 变量名       变量含义      原代码变量名
- * name         球员姓名      name
- * isFirstPlayer是否首发      isFirstPlayer
- * mp           比赛时长      time
- * fg           命中          successOfShot
- * fga          出手          numberOfShot
- * p3           3分命中       successOfThree
- * p3a          3分出手       numberOfThree
- * ft           罚球命中      successOfPenalty
- * fta          罚球出手      numberOfPenalty
- * orb          进攻          numberOfAssault
- * drb          防守          numberOfDefence
- * trb          篮板          backboard
- * ast          助攻          assist
- * stl          抢断          numberOfSteal
- * blk          盖帽          numberOfBlockShot
- * tov          失误          numberOfFault
- * pf           犯规          numberOfBreakRule
- * pts          得分          totalScore
- * hasDouble    是否有两双（特指得分、篮板、助攻、抢断、盖帽中任何两项 ）          hasDouble
- *
- * TODO position 不确定是否会用到 源码存在对该变量的定义
+ * 代码复用 修改了部分变量名
  */
-public class PlayerMatchInfoPo {
+public class PlayerTempInfoPo {
 
     private String name;
-    private boolean isFirstPlayer;
-    private short mp;
+
+    private String position;
+    private String team;
+    private String league;
+    private short age;
+
+    private short match;
+    private short firstPlay;
+    private int mp;
     private short fg;
     private short fga;
     private short p3;
@@ -47,8 +32,16 @@ public class PlayerMatchInfoPo {
     private short tov;
     private short pf;
     private short pts;
-    private boolean hasDouble;
+    private double efficiency;
+    private short hasDouble;
 
+    public short getAge() {
+        return age;
+    }
+
+    public void setAge(short age) {
+        this.age = age;
+    }
 
     public short getAst() {
         return ast;
@@ -74,6 +67,14 @@ public class PlayerMatchInfoPo {
         this.drb = drb;
     }
 
+    public double getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(double efficiency) {
+        this.efficiency = efficiency;
+    }
+
     public short getFg() {
         return fg;
     }
@@ -88,6 +89,14 @@ public class PlayerMatchInfoPo {
 
     public void setFga(short fga) {
         this.fga = fga;
+    }
+
+    public short getFirstPlay() {
+        return firstPlay;
+    }
+
+    public void setFirstPlay(short firstPlay) {
+        this.firstPlay = firstPlay;
     }
 
     public short getFt() {
@@ -106,27 +115,35 @@ public class PlayerMatchInfoPo {
         this.fta = fta;
     }
 
-    public boolean isHasDouble() {
+    public short isHasDouble() {
         return hasDouble;
     }
 
-    public void setHasDouble(boolean hasDouble) {
+    public void setHasDouble(short hasDouble) {
         this.hasDouble = hasDouble;
     }
 
-    public boolean isFirstPlayer() {
-        return isFirstPlayer;
+    public String getLeague() {
+        return league;
     }
 
-    public void setIsFirstPlayer(boolean isFirstPlayer) {
-        this.isFirstPlayer = isFirstPlayer;
+    public void setLeague(String league) {
+        this.league = league;
     }
 
-    public short getMp() {
+    public short getMatch() {
+        return match;
+    }
+
+    public void setMatch(short match) {
+        this.match = match;
+    }
+
+    public int getMp() {
         return mp;
     }
 
-    public void setMp(short mp) {
+    public void setMp(int mp) {
         this.mp = mp;
     }
 
@@ -170,6 +187,14 @@ public class PlayerMatchInfoPo {
         this.pf = pf;
     }
 
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     public short getPts() {
         return pts;
     }
@@ -184,6 +209,14 @@ public class PlayerMatchInfoPo {
 
     public void setStl(short stl) {
         this.stl = stl;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
 
     public short getTov() {

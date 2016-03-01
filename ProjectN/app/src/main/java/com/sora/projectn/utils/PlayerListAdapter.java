@@ -8,19 +8,21 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
-import com.sora.projectn.vo.TeamPlayerVo;
+import com.sora.projectn.vo.AllPlayerInfoVo;
+import com.sora.projectn.vo.MatchInfoVo;
 import com.sora.projectn.vo.TeamSeasonInfoVo;
 
 import java.util.List;
 
 /**
- * Created by Sora on 2016/2/5.
+ * Created by Sora on 2016/2/20.
  */
-public class TeamPlayerAdapter extends BaseAdapter {
-    private List<TeamPlayerVo> list;
+public class PlayerListAdapter extends BaseAdapter {
+
+    private List<AllPlayerInfoVo> list;
     LayoutInflater inflater;
 
-    public TeamPlayerAdapter(Context context, List<TeamPlayerVo> list) {
+    public PlayerListAdapter(Context context, List<AllPlayerInfoVo> list) {
         inflater = LayoutInflater.from(context);
         this.list = list;
     }
@@ -54,13 +56,12 @@ public class TeamPlayerAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        TeamPlayerVo vo = (TeamPlayerVo) getItem(position);
+        AllPlayerInfoVo vo = (AllPlayerInfoVo) getItem(position);
 
-        //Error:android.content.res.Resources$NotFoundException: String resource ID #0x0
-        //把一个int型业务数据的 设置setText（）或者类似的方法中 ,这样Android系统就会主动去资源文件当中寻找, 但是它不是一个资源文件ID, 所以就会报出这个bug  需要将int型业务数据 转换成String类型
-        viewHolder.item_entry.setText(String.valueOf(vo.getNo()));
+
+        viewHolder.item_entry.setText(position + 1);
         viewHolder.item_data1.setText(vo.getName());
-        viewHolder.item_data2.setText(vo.getPos());
+        viewHolder.item_data2.setText(vo.getTeam());
 
         return view;
     }

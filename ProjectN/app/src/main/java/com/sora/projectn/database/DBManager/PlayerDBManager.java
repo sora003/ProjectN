@@ -104,13 +104,18 @@ public class PlayerDBManager {
             String sqlAbbr = c.getString(c.getColumnIndex(KEY_ABBR));
             if (abbr.equals(sqlAbbr)){
                 String name = c.getString(c.getColumnIndex(KEY_NAME));
-                int no = c.getInt(c.getColumnIndex(KEY_NO));
                 String pos = c.getString(c.getColumnIndex(KEY_POS));
+                int birth = c.getInt(c.getColumnIndex(KEY_BIRTH));
+                int no = c.getInt(c.getColumnIndex(KEY_NO));
+
+
 
                 PlayerPo po = new PlayerPo();
 
                 po.setName(name);
                 po.setPos(pos);
+                po.setAbbr(abbr);
+                po.setBirth(birth);
                 po.setNo(no);
 
                 list.add(po);
@@ -122,6 +127,38 @@ public class PlayerDBManager {
         c.close();
         return list;
     }
+
+
+    /**
+     * 获取所有球员基本信息
+     *
+     * @return
+     */
+    public List<PlayerPo> queryPlayerList(){
+        List<PlayerPo> list = new ArrayList<>();
+
+        Cursor c = queryTheCursor();
+
+        while (c.moveToNext()){
+            String abbr = c.getString(c.getColumnIndex(KEY_ABBR));
+            String name = c.getString(c.getColumnIndex(KEY_NAME));
+            int no = c.getInt(c.getColumnIndex(KEY_NO));
+            String pos = c.getString(c.getColumnIndex(KEY_POS));
+
+            PlayerPo po = new PlayerPo();
+
+            po.setName(name);
+            po.setPos(pos);
+            po.setNo(no);
+            po.setAbbr(abbr);
+
+            list.add(po);
+        }
+
+        c.close();
+        return list;
+    }
+
 
     /**
      * 查找 球队基本数据 返回带游标的数据集

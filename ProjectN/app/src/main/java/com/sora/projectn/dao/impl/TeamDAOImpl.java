@@ -38,6 +38,14 @@ public class TeamDAOImpl implements TeamDAO {
     }
 
     @Override
+    public String getTeamLeague(Context context, String abbr) {
+        TeamDBManager db = new TeamDBManager(context);
+        String league = db.queryTeamLeague(abbr);
+        db.closeDB();
+        return league;
+    }
+
+    @Override
     public TeamPo getTeamInfo(Context context,String abbr) {
         TeamDBManager db = new TeamDBManager(context);
         TeamPo po = db.queryTeamInfo(abbr);

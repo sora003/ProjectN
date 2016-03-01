@@ -53,27 +53,60 @@ public class MatchParserImpl implements MatchParser {
              * group(3) 球队缩写
              * group(5) group(7) group(9) group(11) 球队四节比赛的分数
              */
-            Pattern scoringPattern = Pattern.compile("(.*)(html\">)(.*?)(</a></td><td class=\"align_right\">)(.*?)(</td><td class=\"align_right\">)(.*?)(</td><td class=\"align_right\">)(.*?)(</td><td class=\"align_right\">)(.*?)(</td><td class=\"align_right bold_text\">)(.*)");
+            Pattern scoringPattern = Pattern.compile("(.*)(html\">)(.*?)(</a></td><td class=\"align_right\">)(.*)");
             Matcher scoringMatcher = scoringPattern.matcher(matcher.group(2));
 
 
 
             if (scoringMatcher.matches()){
                 String abbr = scoringMatcher.group(3);
-                String scoring = scoringMatcher.group(5) + "-" + scoringMatcher.group(7) + "-" + scoringMatcher.group(9) + "-" + scoringMatcher.group(11);
 
+                //特殊情况
+                switch (abbr){
+                    case "CHO":
+                        abbr = "CHA";
+                        break;
+                    case "NOP":
+                        abbr = "NOH";
+                        break;
+                    case "BRK":
+                        abbr = "NJN";
+                        break;
+                }
 
                 if (scoringCount == 0){
                     po.setAbbr1(abbr);
-                    po.setScoring1(scoring);
                     scoringCount++;
                 }
                 else {
                     po.setAbbr2(abbr);
-                    po.setScoring2(scoring);
                 }
             }
+
+            //考虑到加时赛  采取不定式解析策略
+            scoringPattern = Pattern.compile("(<td class=\"align_right\">)(.*?)(</td>)");
+            scoringMatcher = scoringPattern.matcher(matcher.group(2));
+
+
+
+            String scoring = "";
+
+            while (scoringMatcher.find()){
+                scoring += scoringMatcher.group(2) + "-";
+            }
+
+            if (scoringCount == 1){
+                po.setScoring1(scoring);
+                scoringCount++;
+            }
+            else {
+                po.setScoring2(scoring);
+            }
+
+
         }
+
+
 
         /**
          * group(2) 比赛数据

@@ -2,6 +2,7 @@ package com.sora.projectn.WebService.parser.impl;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.sora.projectn.WebService.parser.PlayerParser;
 import com.sora.projectn.po.PlayerPo;
@@ -34,88 +35,57 @@ public class PlayerParserImpl implements PlayerParser {
 
 
 
-        pattern = Pattern.compile("(<tbody>)(.*?)(</tbody>)(.*)");
+        pattern = Pattern.compile("(<tbody>)(.*?)(</tbody>)");
         matcher = pattern.matcher(result);
-        if (matcher.find()){
-            /**
-             *  group(2) 球队球员信息
-             */
-            String str1 = matcher.group(2);
 
-            pattern = Pattern.compile("(<tr  class=\"\">)(.*?)(</tr>)");
-            matcher = pattern.matcher(str1);
 
-            while (matcher.find()){
+        boolean find = false;
+
+        while (matcher.find() && !find){
                 /**
-                 *  group(2) 球员信息
+                 *  group(2) 球队球员信息
                  */
-                String str2 = matcher.group(2);
+                String str1 = matcher.group(2);
 
-                Pattern p1 = Pattern.compile("(   <td align=\"center\" >)(.*?)(</td>   <td align=\"left\")(.*)(\"><a href=\")(.*?)(\">)(.*?)(</a></td>   <td align=\"center\" >)(.*?)" +
-                        "(</td>   <td align=\"right\"  csk=)(.*)(\">)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"left\"  csk=\")(.*?)(\">)(.*)(<td align=\"right\" >)(.*?)" +
-                        "(</td>   <td align=\"left\" ><a href)(.*)(\">)(.*?)(</a></td>)");
-                Matcher m1 = p1.matcher(str2);
-
-                if (m1.matches()){
-
-                    //取对应参数
-                    int no = Integer.parseInt(m1.group(2));
-                    String name = m1.group(8);
-                    String pos = m1.group(10);
-                    String ht = m1.group(14);
-                    int wt = Integer.parseInt(m1.group(16));
-                    int birth = Integer.parseInt(m1.group(18));
-                    int exp;
-                    if (m1.group(22).equals("R")){
-                        exp = 0;
-                    }
-                    else {
-                        exp = Integer.parseInt(m1.group(22));
-                    }
-                    String collage = m1.group(26);
-
-                    String path = m1.group(6);
-
-                    PlayerPo po = new PlayerPo();
-
-                    po.setNo(no);
-                    po.setName(name);
-                    po.setPos(pos);
-                    po.setHt(ht);
-                    po.setWt(wt);
-                    po.setBirth(birth);
-                    po.setExp(exp);
-                    po.setCollage(collage);
-                    po.setImg(path);
-                    po.setAbbr(abbr);
+                Pattern p0 = Pattern.compile("(<tr  class=\"\">)(.*?)(</tr>)");
+                Matcher m0 = p0.matcher(str1);
 
 
-                    list.add(po);
+                while (m0.find()){
+                    /**
+                     *  group(2) 球员信息
+                     */
+                    String str2 = m0.group(2);
+                    Pattern p1 = Pattern.compile("(   <td align=\"center\" >)(.*?)(</td>   <td align=\"left\")(.*)(\"><a href=\")(.*?)(\">)(.*?)(</a></td>   <td align=\"center\" >)(.*?)" +
+                            "(</td>   <td align=\"right\"  csk=)(.*)(\">)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"left\"  csk=\")(.*?)(\">)(.*)(<td align=\"right\")(.*)" +
+                            "(>)(.*?)(</td>   <td align=\"left\" ><a href)(.*)(\">)(.*?)(</a></td>)");
+                    Matcher m1 = p1.matcher(str2);
 
-                }
-                else{
-                    Pattern p2 = Pattern.compile("(   <td align=\"center\" >)(.*?)(</td>   <td align=\"left\")(.*)(\"><a href=\")(.*?)(\">)(.*?)(</a></td>   <td align=\"center\" >)(.*?)" +
-                            "(</td>   <td align=\"right\"  csk=)(.*)(\">)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"left\"  csk=\")(.*?)(\">)(.*)(<td align=\"right\" >)(.*?)" +
-                            "(</td>   <td align=\"left\" ></td>)");
-                    Matcher m2 = p2.matcher(str2);
-                    if (m2.matches()){
+                    if (m1.matches()){
+                        find = true;
                         //取对应参数
-                        int no = Integer.parseInt(m2.group(2));
-                        String name = m2.group(8);
-                        String pos = m2.group(10);
-                        String ht = m2.group(14);
-                        int wt = Integer.parseInt(m2.group(16));
-                        int birth = Integer.parseInt(m2.group(18));
+                        int no;
+                        if (m1.group(2).equals("")){
+                            no = -1;
+                        }
+                        else {
+                            no = Integer.parseInt(m1.group(2));
+                        }
+                        String name = m1.group(8);
+                        String pos = m1.group(10);
+                        String ht = m1.group(14);
+                        int wt = Integer.parseInt(m1.group(16));
+                        int birth = Integer.parseInt(m1.group(18));
                         int exp;
-                        if (m2.group(22).equals("R")){
+                        if (m1.group(24).equals("R")){
                             exp = 0;
                         }
                         else {
-                            exp = Integer.parseInt(m2.group(22));
+                            exp = Integer.parseInt(m1.group(24));
                         }
-                        String collage = "";
+                        String collage = m1.group(28);
 
-                        String path = m2.group(6);
+                        String path = m1.group(6);
 
                         PlayerPo po = new PlayerPo();
 
@@ -130,12 +100,62 @@ public class PlayerParserImpl implements PlayerParser {
                         po.setImg(path);
                         po.setAbbr(abbr);
 
+                        Log.i("name",name);
 
                         list.add(po);
 
                     }
+                    else{
+                        Pattern p2 = Pattern.compile("(   <td align=\"center\" >)(.*?)(</td>   <td align=\"left\")(.*)(\"><a href=\")(.*?)(\">)(.*?)(</a></td>   <td align=\"center\" >)(.*?)" +
+                                "(</td>   <td align=\"right\"  csk=)(.*)(\">)(.*?)(</td>   <td align=\"right\" >)(.*?)(</td>   <td align=\"left\"  csk=\")(.*?)(\">)(.*)(<td align=\"right\")(.*)" +
+                                "(>)(.*?)(</td>   <td align=\"left\" ></td>)");
+                        Matcher m2 = p2.matcher(str2);
+                        if (m2.matches()){
+                            find = true;
+                            //取对应参数
+                            int no;
+                            if (m2.group(2).equals("")){
+                                no = -1;
+                            }
+                            else {
+                                no = Integer.parseInt(m2.group(2));
+                            }
+                            String name = m2.group(8);
+                            String pos = m2.group(10);
+                            String ht = m2.group(14);
+                            int wt = Integer.parseInt(m2.group(16));
+                            int birth = Integer.parseInt(m2.group(18));
+                            int exp;
+                            if (m2.group(24).equals("R")){
+                                exp = 0;
+                            }
+                            else {
+                                exp = Integer.parseInt(m2.group(24));
+                            }
+                            String collage = "";
+
+                            String path = m2.group(6);
+
+                            PlayerPo po = new PlayerPo();
+
+                            po.setNo(no);
+                            po.setName(name);
+                            po.setPos(pos);
+                            po.setHt(ht);
+                            po.setWt(wt);
+                            po.setBirth(birth);
+                            po.setExp(exp);
+                            po.setCollage(collage);
+                            po.setImg(path);
+                            po.setAbbr(abbr);
+
+
+                            list.add(po);
+
+                        }
+                    }
                 }
-            }
+
         }
 
 

@@ -53,6 +53,11 @@
     <string name="text_teamGuide4">赛程</string>
     <string name="text_fragment_teamseason">本赛季数据分析</string>
     <string name="text_league">West Conference</string>
+    <string name="text_Keys">筛选条件：</string>
+    <string name="text_playerLeague">赛区:</string>
+    <string name="text_playerPosition">位置:</string>
+    <string name="text_playerKey">数据项:</string>
+    <string name="text_playerAge">年龄:</string>
 
     <!--Test For activity_teamlist-->
     <!--<string name="text_wC1T1">小牛</string>-->

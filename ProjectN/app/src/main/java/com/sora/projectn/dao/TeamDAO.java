@@ -26,6 +26,15 @@ public interface TeamDAO {
      */
     public List<String> getTeamAbbr(Context context);
 
+    /**
+     * 查询球队所属分区
+     *
+     * @param context
+     * @param abbr
+     * @return
+     */
+    public String getTeamLeague(Context context,String abbr);
+
 
     /**
      * 根据球队缩写 读取存储在SQL的球队基本数据 返回TeamPo
