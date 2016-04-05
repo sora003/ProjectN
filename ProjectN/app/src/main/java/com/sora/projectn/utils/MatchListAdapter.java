@@ -8,8 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
-import com.sora.projectn.vo.MatchInfoVo;
-import com.sora.projectn.vo.MatchInfoVo;
+import com.sora.projectn.model.vo.MatchInfoVo;
 
 import java.util.List;
 

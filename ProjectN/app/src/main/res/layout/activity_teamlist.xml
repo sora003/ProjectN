@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="@color/color_LLBlue"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context = ".Activity.TeamListActivity">
+    tools:context = ".logic.Activity.TeamListActivity">
 
 
     <!--Toolbar-->
@@ -556,7 +556,7 @@
 
                 <!--东部球队   Eastern Conference-->
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_DBlue"
                     android:paddingTop="5dp"

@@ -8,8 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
-import com.sora.projectn.vo.TeamPlayerVo;
-import com.sora.projectn.vo.TeamSeasonInfoVo;
+import com.sora.projectn.model.vo.TeamPlayerVo;
 
 import java.util.List;
 
