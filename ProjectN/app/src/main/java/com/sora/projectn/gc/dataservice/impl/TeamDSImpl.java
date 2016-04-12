@@ -3,7 +3,7 @@ package com.sora.projectn.gc.dataservice.impl;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.sora.projectn.model.dao.impl.TeamDAOImpl;
+import com.sora.projectn.gc.model.dao.impl.TeamDAOImpl;
 import com.sora.projectn.gc.database.DBManager.TeamDBManager;
 import com.sora.projectn.gc.dataservice.TeamDS;
 import com.sora.projectn.gc.po.TeamPo;

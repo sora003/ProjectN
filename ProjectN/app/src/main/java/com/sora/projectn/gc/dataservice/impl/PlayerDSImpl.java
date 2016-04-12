@@ -2,7 +2,7 @@ package com.sora.projectn.gc.dataservice.impl;
 
 import android.content.Context;
 
-import com.sora.projectn.model.dao.impl.PlayerDAOImpl;
+import com.sora.projectn.gc.model.dao.impl.PlayerDAOImpl;
 import com.sora.projectn.gc.dataservice.PlayerDS;
 import com.sora.projectn.gc.po.PlayerPo;
 import com.sora.projectn.gc.po.PlayerPrimaryInfoPo;

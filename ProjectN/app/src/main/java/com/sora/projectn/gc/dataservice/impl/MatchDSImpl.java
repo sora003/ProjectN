@@ -2,7 +2,7 @@ package com.sora.projectn.gc.dataservice.impl;
 
 import android.content.Context;
 
-import com.sora.projectn.model.dao.impl.MatchDAOImpl;
+import com.sora.projectn.gc.model.dao.impl.MatchDAOImpl;
 import com.sora.projectn.gc.dataservice.MatchDS;
 import com.sora.projectn.gc.po.MatchInfoPo;
 import com.sora.projectn.gc.po.MatchPrimaryInfoPo;
