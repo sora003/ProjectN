@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/color_LLBlue"
+    android:background="@color/color_DBlue"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context = ".model.Activity.TeamListActivity">
 
@@ -69,8 +69,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/text_wC1"
-                        android:background="@color/color_LBlue"
-                        android:textColor="@color/color_grey"
+                        android:background="@color/color_DDBlue"
+                        android:textColor="@color/conferenceColor"
                         android:textSize="@dimen/conferenceSize"
                         android:paddingLeft="@dimen/conference_horizontal_margin"
                         android:paddingTop="@dimen/conference_vertical_margin"
@@ -231,8 +231,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/text_wC2"
-                        android:background="@color/color_LBlue"
-                        android:textColor="@color/color_grey"
+                        android:background="@color/color_DDBlue"
+                        android:textColor="@color/conferenceColor"
                         android:textSize="@dimen/conferenceSize"
                         android:paddingLeft="@dimen/conference_horizontal_margin"
                         android:paddingTop="@dimen/conference_vertical_margin"
@@ -393,8 +393,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/text_wC3"
-                        android:background="@color/color_LBlue"
-                        android:textColor="@color/color_grey"
+                        android:background="@color/color_DDBlue"
+                        android:textColor="@color/conferenceColor"
                         android:textSize="@dimen/conferenceSize"
                         android:paddingLeft="@dimen/conference_horizontal_margin"
                         android:paddingTop="@dimen/conference_vertical_margin"
@@ -546,6 +546,14 @@
 
             </LinearLayout>
 
+
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_DDBlue"/>
+
+
+
             <!--东西部球队对称显示-->
             <!--东部球队   Eastern Conference-->
             <LinearLayout
@@ -588,16 +596,15 @@
                 <!--东南分区   Southeast -->
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/conference_horizontal_margin">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/tv_eC1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/text_eC1"
-                        android:background="@color/color_LBlue"
-                        android:textColor="@color/color_grey"
+                        android:background="@color/color_DDBlue"
+                        android:textColor="@color/conferenceColor"
                         android:textSize="@dimen/conferenceSize"
                         android:paddingLeft="@dimen/conference_horizontal_margin"
                         android:paddingTop="@dimen/conference_vertical_margin"
@@ -608,7 +615,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_eC1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/team_horizontal_margin">
 
                         <RelativeLayout
                             android:id="@+id/eC1T1"
@@ -750,7 +758,6 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/conference_horizontal_margin"
                     android:paddingTop="@dimen/conference_vertical_margin">
 
                     <TextView
@@ -758,8 +765,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/text_eC2"
-                        android:background="@color/color_LBlue"
-                        android:textColor="@color/color_grey"
+                        android:background="@color/color_DDBlue"
+                        android:textColor="@color/conferenceColor"
                         android:textSize="@dimen/conferenceSize"
                         android:paddingLeft="@dimen/conference_horizontal_margin"
                         android:paddingTop="@dimen/conference_vertical_margin"
@@ -770,7 +777,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_eC2"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/team_horizontal_margin">
 
                         <RelativeLayout
                             android:id="@+id/eC2T1"
@@ -912,7 +920,6 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/conference_horizontal_margin"
                     android:paddingTop="@dimen/conference_vertical_margin">
 
                     <TextView
@@ -920,8 +927,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/text_eC3"
-                        android:background="@color/color_LBlue"
-                        android:textColor="@color/color_grey"
+                        android:background="@color/color_DDBlue"
+                        android:textColor="@color/conferenceColor"
                         android:textSize="@dimen/conferenceSize"
                         android:paddingLeft="@dimen/conference_horizontal_margin"
                         android:paddingTop="@dimen/conference_vertical_margin"
@@ -932,7 +939,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_eC3"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/team_horizontal_margin">
 
                         <RelativeLayout
                             android:id="@+id/eC3T1"

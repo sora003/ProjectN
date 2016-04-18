@@ -10,10 +10,12 @@
     <color name="color_black">#000000</color>
     <color name="color_grey">#696969</color>
     <color name="color_LBlue">#a4b5f4</color>
-    <color name="teamColor">#4675FF</color>
+    <color name="teamColor">#9e9d9d</color>
     <color name="color_LLBlue">#ccdbfc</color>
-    <color name="color_DBlue">#7485e4</color>
+    <color name="color_DBlue">#1f202b</color>
     <color name="color_DWhite">#b3b3b3</color>
-    <color name="color_DDBlue">#4b5db9</color>
+    <color name="color_DDBlue">#05081e</color>
+    <color name="color_LLGrey">#cccccc</color>
+    <color name="conferenceColor">#dddddd</color>
 
 </resources>

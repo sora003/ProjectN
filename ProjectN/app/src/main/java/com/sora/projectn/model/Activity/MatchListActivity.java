@@ -156,7 +156,7 @@ public class MatchListActivity extends AppCompatActivity {
             Log.i("id", String.valueOf(vo.getId()));
             Log.i("team", String.valueOf(vo.getTeamAName())+"   "+String.valueOf(vo.getTeamBName()));
             Log.i("score", String.valueOf(vo.getScoreA())+"   "+String.valueOf(vo.getScoreB()));
-
+            
         }
 
 

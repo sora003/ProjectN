@@ -9,10 +9,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sora.projectn.R;
 import com.sora.projectn.gc.model.businesslogic.TeamBL;
@@ -20,6 +22,7 @@ import com.sora.projectn.gc.model.businesslogicservice.TeamBLS;
 import com.sora.projectn.gc.dataservice.TeamDS;
 import com.sora.projectn.gc.dataservice.impl.TeamDSImpl;
 import com.sora.projectn.gc.model.vo.TeamConferenceVo;
+import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.BitmapHelper;
 import com.sora.projectn.utils.GetHttpResponse;
 
@@ -46,10 +49,9 @@ public class TeamListActivity extends AppCompatActivity {
     private static final int GET_ABBR = 0x003;
     private static final String TITLE = "   球队列表";
 
-    private List<TeamConferenceVo> list;
+    Map<String, String> map = new HashMap<>();
     private Context mContext;
     private TeamDS DS = new TeamDSImpl();
-    private TeamBLS BLS = new TeamBL();
     private String sName;
     private String abbr;
 
@@ -225,7 +227,7 @@ public class TeamListActivity extends AppCompatActivity {
         @Override
         public void run() {
             //调用TeamBLS接口 获取球队缩略名信息
-            list = BLS.getTeamConference(mContext);
+            map = getTeamList();
 
             handler.sendEmptyMessage(SET_VIEW);
         }
@@ -366,122 +368,148 @@ public class TeamListActivity extends AppCompatActivity {
      */
     private void setView() {
 
-        //TextView
-        for (int i = 0; i < list.size(); i++) {
-
-            //获取sNameList 球队缩略名表
-            List<String> sNameList = list.get(i).getsNameList();
-
-            List<Integer> logoList = list.get(i).getLogoList();
-
-
-            switch (list.get(i).getConference()){
-                case "Southwest":
-
-                    tv_wC1T1.setText(sNameList.get(0));
-                    tv_wC1T2.setText(sNameList.get(1));
-                    tv_wC1T3.setText(sNameList.get(2));
-                    tv_wC1T4.setText(sNameList.get(3));
-                    tv_wC1T5.setText(sNameList.get(4));
-
-                    iv_wC1T1.setImageBitmap(readBitMap(mContext, logoList.get(0)));
-                    iv_wC1T2.setImageBitmap(readBitMap(mContext, logoList.get(1)));
-                    iv_wC1T3.setImageBitmap(readBitMap(mContext, logoList.get(2)));
-                    iv_wC1T4.setImageBitmap(readBitMap(mContext, logoList.get(3)));
-                    iv_wC1T5.setImageBitmap(readBitMap(mContext, logoList.get(4)));
+        //Southwest
+        List<String> swList =  new ArrayList<String>();
+        //Southeast
+        List<String> seList =  new ArrayList<String>();
+        //Pacific
+        List<String> paList =  new ArrayList<String>();
+        //Central
+        List<String> ceList =  new ArrayList<String>();
+        //Northwest
+        List<String> nwList =  new ArrayList<String>();
+        //Atlantic
+        List<String> atList =  new ArrayList<String>();
 
 
+        //获取map的key 的首个对象
+        Iterator iterator = map.keySet().iterator();
+        
+        while (iterator.hasNext()){
+            Object key = iterator.next();
+            String sName= key.toString();
+            String conference = map.get(key);
+
+
+
+
+            //判断球队所属分区
+            switch (conference){
+                case "西南区":
+                    swList.add(sName);
                     break;
-
-                case "Pacific":
-
-                    tv_wC2T1.setText(sNameList.get(0));
-                    tv_wC2T2.setText(sNameList.get(1));
-                    tv_wC2T3.setText(sNameList.get(2));
-                    tv_wC2T4.setText(sNameList.get(3));
-                    tv_wC2T5.setText(sNameList.get(4));
-
-
-                    iv_wC2T1.setImageBitmap(readBitMap(mContext, logoList.get(0)));
-                    iv_wC2T2.setImageBitmap(readBitMap(mContext, logoList.get(1)));
-                    iv_wC2T3.setImageBitmap(readBitMap(mContext, logoList.get(2)));
-                    iv_wC2T4.setImageBitmap(readBitMap(mContext, logoList.get(3)));
-                    iv_wC2T5.setImageBitmap(readBitMap(mContext, logoList.get(4)));
-
-
+                case "西北区":
+                    nwList.add(sName);
                     break;
-
-                case "Northwest":
-
-                    tv_wC3T1.setText(sNameList.get(0));
-                    tv_wC3T2.setText(sNameList.get(1));
-                    tv_wC3T3.setText(sNameList.get(2));
-                    tv_wC3T4.setText(sNameList.get(3));
-                    tv_wC3T5.setText(sNameList.get(4));
-
-                    iv_wC3T1.setImageBitmap(readBitMap(mContext, logoList.get(0)));
-                    iv_wC3T2.setImageBitmap(readBitMap(mContext, logoList.get(1)));
-                    iv_wC3T3.setImageBitmap(readBitMap(mContext, logoList.get(2)));
-                    iv_wC3T4.setImageBitmap(readBitMap(mContext, logoList.get(3)));
-                    iv_wC3T5.setImageBitmap(readBitMap(mContext, logoList.get(4)));
-
-
+                case "太平洋区":
+                    paList.add(sName);
                     break;
-
-
-                case "Southeast":
-
-                    tv_eC1T1.setText(sNameList.get(0));
-                    tv_eC1T2.setText(sNameList.get(1));
-                    tv_eC1T3.setText(sNameList.get(2));
-                    tv_eC1T4.setText(sNameList.get(3));
-                    tv_eC1T5.setText(sNameList.get(4));
-
-                    iv_eC1T1.setImageBitmap(readBitMap(mContext, logoList.get(0)));
-                    iv_eC1T2.setImageBitmap(readBitMap(mContext, logoList.get(1)));
-                    iv_eC1T3.setImageBitmap(readBitMap(mContext, logoList.get(2)));
-                    iv_eC1T4.setImageBitmap(readBitMap(mContext, logoList.get(3)));
-                    iv_eC1T5.setImageBitmap(readBitMap(mContext, logoList.get(4)));
-
+                case "中区":
+                    ceList.add(sName);
                     break;
-
-                case "Central":
-
-                    tv_eC2T1.setText(sNameList.get(0));
-                    tv_eC2T2.setText(sNameList.get(1));
-                    tv_eC2T3.setText(sNameList.get(2));
-                    tv_eC2T4.setText(sNameList.get(3));
-                    tv_eC2T5.setText(sNameList.get(4));
-
-                    iv_eC2T1.setImageBitmap(readBitMap(mContext, logoList.get(0)));
-                    iv_eC2T2.setImageBitmap(readBitMap(mContext, logoList.get(1)));
-                    iv_eC2T3.setImageBitmap(readBitMap(mContext, logoList.get(2)));
-                    iv_eC2T4.setImageBitmap(readBitMap(mContext, logoList.get(3)));
-                    iv_eC2T5.setImageBitmap(readBitMap(mContext, logoList.get(4)));
-
+                case "东南区":
+                    seList.add(sName);
                     break;
-
-                case "Atlantic":
-
-                    tv_eC3T1.setText(sNameList.get(0));
-                    tv_eC3T2.setText(sNameList.get(1));
-                    tv_eC3T3.setText(sNameList.get(2));
-                    tv_eC3T4.setText(sNameList.get(3));
-                    tv_eC3T5.setText(sNameList.get(4));
-
-                    iv_eC3T1.setImageBitmap(readBitMap(mContext, logoList.get(0)));
-                    iv_eC3T2.setImageBitmap(readBitMap(mContext, logoList.get(1)));
-                    iv_eC3T3.setImageBitmap(readBitMap(mContext, logoList.get(2)));
-                    iv_eC3T4.setImageBitmap(readBitMap(mContext, logoList.get(3)));
-                    iv_eC3T5.setImageBitmap(readBitMap(mContext, logoList.get(4)));
-
+                case "大西洋区":
+                    atList.add(sName);
                     break;
             }
+
         }
 
 
 
+        tv_wC1T1.setText(swList.get(0));
+        tv_wC1T2.setText(swList.get(1));
+        tv_wC1T3.setText(swList.get(2));
+        tv_wC1T4.setText(swList.get(3));
+        tv_wC1T5.setText(swList.get(4));
+
+        iv_wC1T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(0), mContext)));
+        iv_wC1T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(1), mContext)));
+        iv_wC1T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(2), mContext)));
+        iv_wC1T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(3), mContext)));
+        iv_wC1T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(4), mContext)));
+
+
+
+        tv_wC2T1.setText(paList.get(0));
+        tv_wC2T2.setText(paList.get(1));
+        tv_wC2T3.setText(paList.get(2));
+        tv_wC2T4.setText(paList.get(3));
+        tv_wC2T5.setText(paList.get(4));
+
+
+        iv_wC2T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(0), mContext)));
+        iv_wC2T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(1), mContext)));
+        iv_wC2T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(2), mContext)));
+        iv_wC2T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(3), mContext)));
+        iv_wC2T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(4), mContext)));
+
+
+
+        tv_wC3T1.setText(nwList.get(0));
+        tv_wC3T2.setText(nwList.get(1));
+        tv_wC3T3.setText(nwList.get(2));
+        tv_wC3T4.setText(nwList.get(3));
+        tv_wC3T5.setText(nwList.get(4));
+
+        iv_wC3T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(0), mContext)));
+        iv_wC3T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(1), mContext)));
+        iv_wC3T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(2), mContext)));
+        iv_wC3T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(3), mContext)));
+        iv_wC3T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(4), mContext)));
+
+
+
+
+        tv_eC1T1.setText(seList.get(0));
+        tv_eC1T2.setText(seList.get(1));
+        tv_eC1T3.setText(seList.get(2));
+        tv_eC1T4.setText(seList.get(3));
+        tv_eC1T5.setText(seList.get(4));
+
+        iv_eC1T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(0), mContext)));
+        iv_eC1T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(1), mContext)));
+        iv_eC1T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(2), mContext)));
+        iv_eC1T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(3), mContext)));
+        iv_eC1T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(4), mContext)));
+
+
+
+        tv_eC2T1.setText(ceList.get(0));
+        tv_eC2T2.setText(ceList.get(1));
+        tv_eC2T3.setText(ceList.get(2));
+        tv_eC2T4.setText(ceList.get(3));
+        tv_eC2T5.setText(ceList.get(4));
+
+        iv_eC2T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(0), mContext)));
+        iv_eC2T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(1), mContext)));
+        iv_eC2T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(2), mContext)));
+        iv_eC2T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(3), mContext)));
+        iv_eC2T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(4), mContext)));
+
+
+
+        tv_eC3T1.setText(atList.get(0));
+        tv_eC3T2.setText(atList.get(1));
+        tv_eC3T3.setText(atList.get(2));
+        tv_eC3T4.setText(atList.get(3));
+        tv_eC3T5.setText(atList.get(4));
+
+        iv_eC3T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(0), mContext)));
+        iv_eC3T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(1), mContext)));
+        iv_eC3T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(2), mContext)));
+        iv_eC3T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(3), mContext)));
+        iv_eC3T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(4), mContext)));
+
+    
     }
+    
+
+
+
+    
 
 
     /**
@@ -755,152 +783,6 @@ public class TeamListActivity extends AppCompatActivity {
         return BitmapFactory.decodeStream(is,null,opt);
     }
 
-    /**
-     * 获取TeamListActivity显示内容
-     *
-     * @param context
-     * @return
-     */
-    private List<TeamConferenceVo> getTeamConference(Context context) {
-
-
-        //获取数据
-        Map<String,String> map = getTeamList();
-
-
-        //建立6个分区的对应sNameList
-
-        //Southwest
-        List<String> swlist =  new ArrayList<String>();
-        //Southeast
-        List<String> selist =  new ArrayList<String>();
-        //Pacific
-        List<String> palist =  new ArrayList<String>();
-        //Central
-        List<String> celist =  new ArrayList<String>();
-        //Northwest
-        List<String> nwlist =  new ArrayList<String>();
-        //Atlantic
-        List<String> atlist =  new ArrayList<String>();
-
-        //建立6个分区的对应logoList
-
-        //Southwest
-        List<Integer> swlogo =  new ArrayList<>();
-        //Southeast
-        List<Integer> selogo =  new ArrayList<>();
-        //Pacific
-        List<Integer> palogo =  new ArrayList<>();
-        //Central
-        List<Integer> celogo =  new ArrayList<>();
-        //Northwest
-        List<Integer> nwlogo =  new ArrayList<>();
-        //Atlantic
-        List<Integer> atlogo =  new ArrayList<>();
-
-        //建立6个分区的对应vo
-
-        //Southwest
-        TeamConferenceVo swVo = new TeamConferenceVo();
-        //Southeast
-        TeamConferenceVo seVo = new TeamConferenceVo();
-        //Pacific
-        TeamConferenceVo paVo = new TeamConferenceVo();
-        //Central
-        TeamConferenceVo ceVo = new TeamConferenceVo();
-        //Northwest
-        TeamConferenceVo nwVo = new TeamConferenceVo();
-        //Atlantic
-        TeamConferenceVo atVo = new TeamConferenceVo();
-
-
-
-        //获取map的key 的首个对象
-        Iterator iterator = map.keySet().iterator();
-
-
-        //遍历ketSet
-        while (iterator.hasNext()){
-            Object key = iterator.next();
-            String sName= key.toString();
-            String conference = map.get(key);
-
-
-
-
-            //判断球队所属分区
-            switch (conference){
-                case "西南区":
-                    swlist.add(sName);
-                    swlogo.add(BitmapHelper.getBitmap(sName, context));
-                    break;
-                case "西北区":
-                    selist.add(sName);
-                    selogo.add(BitmapHelper.getBitmap(sName, context));
-                    break;
-                case "太平洋区":
-                    palist.add(sName);
-                    palogo.add(BitmapHelper.getBitmap(sName, context));
-                    break;
-                case "中区":
-                    celist.add(sName);
-                    celogo.add(BitmapHelper.getBitmap(sName, context));
-                    break;
-                case "东南区":
-                    nwlist.add(sName);
-                    nwlogo.add(BitmapHelper.getBitmap(sName, context));
-                    break;
-                case "大西洋区":
-                    atlist.add(sName);
-                    atlogo.add(BitmapHelper.getBitmap(sName, context));
-                    break;
-            }
-
-        }
-
-        //为vo赋值
-
-        //conference
-        swVo.setConference("Southwest");
-        seVo.setConference("Southeast");
-        paVo.setConference("Pacific");
-        ceVo.setConference("Central");
-        nwVo.setConference("Northwest");
-        atVo.setConference("Atlantic");
-
-
-
-        //List<sName>
-        swVo.setsNameList(swlist);
-        seVo.setsNameList(selist);
-        paVo.setsNameList(palist);
-        ceVo.setsNameList(celist);
-        nwVo.setsNameList(nwlist);
-        atVo.setsNameList(atlist);
-
-        //logo
-        swVo.setLogoList(swlogo);
-        seVo.setLogoList(selogo);
-        paVo.setLogoList(palogo);
-        ceVo.setLogoList(celogo);
-        nwVo.setLogoList(nwlogo);
-        atVo.setLogoList(atlogo);
-
-
-        //新建List<TeamConferenceVo>对象
-        List<TeamConferenceVo> list = new ArrayList<TeamConferenceVo>();
-
-        //向list添加值
-        //添加顺序为纵向向添加!!
-        list.add(swVo);
-        list.add(paVo);
-        list.add(nwVo);
-        list.add(seVo);
-        list.add(ceVo);
-        list.add(atVo);
-
-        return list;
-    }
 
     /**
      * 从server获取球队表
@@ -909,10 +791,20 @@ public class TeamListActivity extends AppCompatActivity {
     private Map<String,String> getTeamList() {
         Map<String,String> map = new HashMap<>();
 
-        //从server获取数据
-//        String jsonString = "[{\"id\":1,\"name\":\"圣安东尼奥马刺队\",\"abbr\":\"sas\",\"city\":\"圣安东尼奥\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"马刺\",\"founded\":1976},{\"id\":2,\"name\":\"孟菲斯灰熊队\",\"abbr\":\"mem\",\"city\":\"孟菲斯\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"灰熊\",\"founded\":1995},{\"id\":3,\"name\":\"达拉斯小牛队\",\"abbr\":\"dal\",\"city\":\"达拉斯\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"小牛\",\"founded\":1980},{\"id\":4,\"name\":\"休斯顿火箭队\",\"abbr\":\"hou\",\"city\":\"休斯顿\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"火箭\",\"founded\":1967},{\"id\":5,\"name\":\"新奥尔良鹈鹕队\",\"abbr\":\"noh\",\"city\":\"新奥尔良\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"鹈鹕\",\"founded\":1988},{\"id\":6,\"name\":\"明尼苏达森林狼队\",\"abbr\":\"min\",\"city\":\"明尼苏达\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"森林狼\",\"founded\":1989},{\"id\":7,\"name\":\"丹佛掘金队\",\"abbr\":\"den\",\"city\":\"丹佛\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"掘金\",\"founded\":1976},{\"id\":8,\"name\":\"犹他爵士队\",\"abbr\":\"UTAH\",\"city\":\"犹他\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"爵士\",\"founded\":1974},{\"id\":9,\"name\":\"波特兰开拓者队\",\"abbr\":\"por\",\"city\":\"波特兰\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"开拓者\",\"founded\":1970},{\"id\":10,\"name\":\"俄克拉荷马雷霆队\",\"abbr\":\"okc\",\"city\":\"俄克拉荷马城\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"雷霆\",\"founded\":1967},{\"id\":11,\"name\":\"萨克拉门托国王队\",\"abbr\":\"sac\",\"city\":\"萨克拉门托\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"国王\",\"founded\":1948},{\"id\":12,\"name\":\"菲尼克斯太阳队\",\"abbr\":\"pho\",\"city\":\"菲尼克斯\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"太阳\",\"founded\":1968},{\"id\":13,\"name\":\"洛杉矶湖人队\",\"abbr\":\"lal\",\"city\":\"洛杉矶\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"湖人\",\"founded\":1948},{\"id\":14,\"name\":\"洛杉矶快船队\",\"abbr\":\"lac\",\"city\":\"洛杉矶\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"快船\",\"founded\":1970},{\"id\":15,\"name\":\"金州勇士队\",\"abbr\":\"GS\",\"city\":\"金州\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"勇士\",\"founded\":1946},{\"id\":16,\"name\":\"迈阿密热队\",\"abbr\":\"mia\",\"city\":\"迈阿密\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"热火\",\"founded\":1988},{\"id\":17,\"name\":\"奥兰多魔术队\",\"abbr\":\"orl\",\"city\":\"奥兰多\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"魔术\",\"founded\":1989},{\"id\":18,\"name\":\"亚特兰大老鹰队\",\"abbr\":\"atl\",\"city\":\"亚特兰大\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"老鹰\",\"founded\":1949},{\"id\":19,\"name\":\"华盛顿奇才队\",\"abbr\":\"was\",\"city\":\"华盛顿\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"奇才\",\"founded\":1961},{\"id\":20,\"name\":\"夏洛特黄蜂队\",\"abbr\":\"cha\",\"city\":\"夏洛特\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"黄蜂\",\"founded\":2004},{\"id\":21,\"name\":\"底特律活塞队\",\"abbr\":\"det\",\"city\":\"底特律\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"活塞\",\"founded\":1948},{\"id\":22,\"name\":\"印第安纳步行者队\",\"abbr\":\"ind\",\"city\":\"印第安纳\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"步行者\",\"founded\":1976},{\"id\":23,\"name\":\"克利夫兰骑士队\",\"abbr\":\"cle\",\"city\":\"克利夫兰\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"骑士\",\"founded\":1970},{\"id\":24,\"name\":\"芝加哥公牛队\",\"abbr\":\"chi\",\"city\":\"芝加哥\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"公牛\",\"founded\":1966},{\"id\":25,\"name\":\"密尔沃基雄鹿队\",\"abbr\":\"mil\",\"city\":\"密尔沃基\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"雄鹿\",\"founded\":1968},{\"id\":26,\"name\":\"波士顿凯尔特人队\",\"abbr\":\"bos\",\"city\":\"波士顿\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"凯尔特人\",\"founded\":1946},{\"id\":27,\"name\":\"费城76人队\",\"abbr\":\"phi\",\"city\":\"费城\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"76人\",\"founded\":1947},{\"id\":28,\"name\":\"纽约尼克斯队\",\"abbr\":\"nyk\",\"city\":\"纽约\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"尼克斯\",\"founded\":1946},{\"id\":29,\"name\":\"布鲁克林篮网队\",\"abbr\":\"BKN\",\"city\":\"布鲁克林\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"篮网\",\"founded\":1967},{\"id\":30,\"name\":\"多伦多猛龙队\",\"abbr\":\"tor\",\"city\":\"多伦多\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"猛龙\",\"founded\":1995}]";
+        String jsonString = ACache.get(mContext).getAsString("getTeams");
 
-        String jsonString= GetHttpResponse.getHttpResponse("http://192.168.2.122:8080/NBADataSystem/getTeams.do");
+
+
+        if (jsonString == null){
+            //从server获取数据
+            jsonString = "[{\"id\":1,\"name\":\"圣安东尼奥马刺队\",\"abbr\":\"sas\",\"city\":\"圣安东尼奥\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"马刺\",\"founded\":1976},{\"id\":2,\"name\":\"孟菲斯灰熊队\",\"abbr\":\"mem\",\"city\":\"孟菲斯\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"灰熊\",\"founded\":1995},{\"id\":3,\"name\":\"达拉斯小牛队\",\"abbr\":\"dal\",\"city\":\"达拉斯\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"小牛\",\"founded\":1980},{\"id\":4,\"name\":\"休斯顿火箭队\",\"abbr\":\"hou\",\"city\":\"休斯顿\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"火箭\",\"founded\":1967},{\"id\":5,\"name\":\"新奥尔良鹈鹕队\",\"abbr\":\"noh\",\"city\":\"新奥尔良\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"鹈鹕\",\"founded\":1988},{\"id\":6,\"name\":\"明尼苏达森林狼队\",\"abbr\":\"min\",\"city\":\"明尼苏达\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"森林狼\",\"founded\":1989},{\"id\":7,\"name\":\"丹佛掘金队\",\"abbr\":\"den\",\"city\":\"丹佛\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"掘金\",\"founded\":1976},{\"id\":8,\"name\":\"犹他爵士队\",\"abbr\":\"UTAH\",\"city\":\"犹他\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"爵士\",\"founded\":1974},{\"id\":9,\"name\":\"波特兰开拓者队\",\"abbr\":\"por\",\"city\":\"波特兰\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"开拓者\",\"founded\":1970},{\"id\":10,\"name\":\"俄克拉荷马雷霆队\",\"abbr\":\"okc\",\"city\":\"俄克拉荷马城\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"雷霆\",\"founded\":1967},{\"id\":11,\"name\":\"萨克拉门托国王队\",\"abbr\":\"sac\",\"city\":\"萨克拉门托\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"国王\",\"founded\":1948},{\"id\":12,\"name\":\"菲尼克斯太阳队\",\"abbr\":\"pho\",\"city\":\"菲尼克斯\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"太阳\",\"founded\":1968},{\"id\":13,\"name\":\"洛杉矶湖人队\",\"abbr\":\"lal\",\"city\":\"洛杉矶\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"湖人\",\"founded\":1948},{\"id\":14,\"name\":\"洛杉矶快船队\",\"abbr\":\"lac\",\"city\":\"洛杉矶\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"快船\",\"founded\":1970},{\"id\":15,\"name\":\"金州勇士队\",\"abbr\":\"GS\",\"city\":\"金州\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"勇士\",\"founded\":1946},{\"id\":16,\"name\":\"迈阿密热队\",\"abbr\":\"mia\",\"city\":\"迈阿密\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"热火\",\"founded\":1988},{\"id\":17,\"name\":\"奥兰多魔术队\",\"abbr\":\"orl\",\"city\":\"奥兰多\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"魔术\",\"founded\":1989},{\"id\":18,\"name\":\"亚特兰大老鹰队\",\"abbr\":\"atl\",\"city\":\"亚特兰大\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"老鹰\",\"founded\":1949},{\"id\":19,\"name\":\"华盛顿奇才队\",\"abbr\":\"was\",\"city\":\"华盛顿\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"奇才\",\"founded\":1961},{\"id\":20,\"name\":\"夏洛特黄蜂队\",\"abbr\":\"cha\",\"city\":\"夏洛特\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"黄蜂\",\"founded\":2004},{\"id\":21,\"name\":\"底特律活塞队\",\"abbr\":\"det\",\"city\":\"底特律\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"活塞\",\"founded\":1948},{\"id\":22,\"name\":\"印第安纳步行者队\",\"abbr\":\"ind\",\"city\":\"印第安纳\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"步行者\",\"founded\":1976},{\"id\":23,\"name\":\"克利夫兰骑士队\",\"abbr\":\"cle\",\"city\":\"克利夫兰\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"骑士\",\"founded\":1970},{\"id\":24,\"name\":\"芝加哥公牛队\",\"abbr\":\"chi\",\"city\":\"芝加哥\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"公牛\",\"founded\":1966},{\"id\":25,\"name\":\"密尔沃基雄鹿队\",\"abbr\":\"mil\",\"city\":\"密尔沃基\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"雄鹿\",\"founded\":1968},{\"id\":26,\"name\":\"波士顿凯尔特人队\",\"abbr\":\"bos\",\"city\":\"波士顿\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"凯尔特人\",\"founded\":1946},{\"id\":27,\"name\":\"费城76人队\",\"abbr\":\"phi\",\"city\":\"费城\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"76人\",\"founded\":1947},{\"id\":28,\"name\":\"纽约尼克斯队\",\"abbr\":\"nyk\",\"city\":\"纽约\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"尼克斯\",\"founded\":1946},{\"id\":29,\"name\":\"布鲁克林篮网队\",\"abbr\":\"BKN\",\"city\":\"布鲁克林\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"篮网\",\"founded\":1967},{\"id\":30,\"name\":\"多伦多猛龙队\",\"abbr\":\"tor\",\"city\":\"多伦多\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"猛龙\",\"founded\":1995}]";
+
+//        String jsonString= GetHttpResponse.getHttpResponse("http://192.168.2.122:8080/NBADataSystem/getTeams.do");
+
+            ACache.get(mContext).put("getTeams",jsonString);
+            Log.i("数据源","网络");
+        }
+        else Log.i("数据源","缓存");
 
         //解析jsonString 构造Map
         try {
