@@ -270,6 +270,9 @@ public class TeamActivity extends FragmentActivity {
         String jsonString = ACache.get(mContext).getAsString("getTeams");
 
 
+        /**
+         * 
+         */
 
         if (jsonString == null){
             //从server获取数据
