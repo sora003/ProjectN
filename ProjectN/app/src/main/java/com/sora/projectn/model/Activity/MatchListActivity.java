@@ -20,7 +20,7 @@ import com.sora.projectn.gc.dataservice.MatchDS;
 import com.sora.projectn.gc.dataservice.impl.MatchDSImpl;
 import com.sora.projectn.gc.po.MatchInfoPo;
 import com.sora.projectn.utils.MatchListAdapter;
-import com.sora.projectn.gc.model.vo.MatchInfoVo;
+import com.sora.projectn.utils.beans.MatchInfoVo;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

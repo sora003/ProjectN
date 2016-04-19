@@ -2,8 +2,6 @@ package com.sora.projectn.model.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,14 +12,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sora.projectn.R;
-import com.sora.projectn.gc.model.businesslogic.TeamBL;
-import com.sora.projectn.gc.model.businesslogicservice.TeamBLS;
-import com.sora.projectn.gc.dataservice.TeamDS;
-import com.sora.projectn.gc.dataservice.impl.TeamDSImpl;
-import com.sora.projectn.gc.model.vo.TeamConferenceVo;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.BitmapHelper;
 import com.sora.projectn.utils.GetHttpResponse;
@@ -30,7 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,15 +36,22 @@ public class TeamListActivity extends AppCompatActivity {
 
 
     private static final int SET_VIEW = 0x001;
-    private static final int GET_SNAME = 0x002;
+    private static final int GET_name = 0x002;
     private static final int GET_ABBR = 0x003;
     private static final String TITLE = "   球队列表";
 
-    Map<String, String> map = new HashMap<>();
+    /**
+     * 记录分区和球队名称
+     */
+    Map<String, String> confMap = new HashMap<>();
+    /**
+     * 记录id和球队名称
+     */
+    Map<String, Integer> idMap = new HashMap<>();
+
     private Context mContext;
-    private TeamDS DS = new TeamDSImpl();
-    private String sName;
-    private String abbr;
+    private String name;
+    private int id;
 
 
 
@@ -194,22 +192,23 @@ public class TeamListActivity extends AppCompatActivity {
                     //设置View
                     setView();
                     break;
-                case GET_SNAME:
+                case GET_name:
                     //根据球队缩略名获取球队缩写信息
                     //该子线程会重复调用  不可以直接定义  必须每次新建
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            abbr = DS.getTeamAbbr(mContext,sName);
+                            id = getTeamID().get(name);
                             handler.sendEmptyMessage(GET_ABBR);
                         }
                     }).start();
                     break;
                 case GET_ABBR:
-                    //绑定abbr参数 启动TeamInfoActivity
+                    //绑定id参数 启动TeamActivity
                     Intent intent = new Intent(mContext,TeamActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("abbr", abbr);
+                    bundle.putInt("id", id);
+                    bundle.putString("name" , name);
                     intent.putExtras(bundle);
                     startActivity(intent);
                     break;
@@ -227,11 +226,15 @@ public class TeamListActivity extends AppCompatActivity {
         @Override
         public void run() {
             //调用TeamBLS接口 获取球队缩略名信息
-            map = getTeamList();
+            confMap = getTeamList();
+
+            idMap = getTeamID();
 
             handler.sendEmptyMessage(SET_VIEW);
         }
     });
+
+
 
 
     /**
@@ -383,12 +386,12 @@ public class TeamListActivity extends AppCompatActivity {
 
 
         //获取map的key 的首个对象
-        Iterator iterator = map.keySet().iterator();
+        Iterator iterator = confMap.keySet().iterator();
         
         while (iterator.hasNext()){
             Object key = iterator.next();
-            String sName= key.toString();
-            String conference = map.get(key);
+            String name= key.toString();
+            String conference = confMap.get(key);
 
 
 
@@ -396,22 +399,22 @@ public class TeamListActivity extends AppCompatActivity {
             //判断球队所属分区
             switch (conference){
                 case "西南区":
-                    swList.add(sName);
+                    swList.add(name);
                     break;
                 case "西北区":
-                    nwList.add(sName);
+                    nwList.add(name);
                     break;
                 case "太平洋区":
-                    paList.add(sName);
+                    paList.add(name);
                     break;
-                case "中区":
-                    ceList.add(sName);
+                case "中部区":
+                    ceList.add(name);
                     break;
                 case "东南区":
-                    seList.add(sName);
+                    seList.add(name);
                     break;
                 case "大西洋区":
-                    atList.add(sName);
+                    atList.add(name);
                     break;
             }
 
@@ -425,11 +428,11 @@ public class TeamListActivity extends AppCompatActivity {
         tv_wC1T4.setText(swList.get(3));
         tv_wC1T5.setText(swList.get(4));
 
-        iv_wC1T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(0), mContext)));
-        iv_wC1T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(1), mContext)));
-        iv_wC1T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(2), mContext)));
-        iv_wC1T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(3), mContext)));
-        iv_wC1T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(swList.get(4), mContext)));
+        iv_wC1T1.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(swList.get(0), mContext)));
+        iv_wC1T2.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(swList.get(1), mContext)));
+        iv_wC1T3.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(swList.get(2), mContext)));
+        iv_wC1T4.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(swList.get(3), mContext)));
+        iv_wC1T5.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(swList.get(4), mContext)));
 
 
 
@@ -440,11 +443,11 @@ public class TeamListActivity extends AppCompatActivity {
         tv_wC2T5.setText(paList.get(4));
 
 
-        iv_wC2T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(0), mContext)));
-        iv_wC2T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(1), mContext)));
-        iv_wC2T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(2), mContext)));
-        iv_wC2T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(3), mContext)));
-        iv_wC2T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(paList.get(4), mContext)));
+        iv_wC2T1.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(paList.get(0), mContext)));
+        iv_wC2T2.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(paList.get(1), mContext)));
+        iv_wC2T3.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(paList.get(2), mContext)));
+        iv_wC2T4.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(paList.get(3), mContext)));
+        iv_wC2T5.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(paList.get(4), mContext)));
 
 
 
@@ -454,11 +457,11 @@ public class TeamListActivity extends AppCompatActivity {
         tv_wC3T4.setText(nwList.get(3));
         tv_wC3T5.setText(nwList.get(4));
 
-        iv_wC3T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(0), mContext)));
-        iv_wC3T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(1), mContext)));
-        iv_wC3T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(2), mContext)));
-        iv_wC3T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(3), mContext)));
-        iv_wC3T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(nwList.get(4), mContext)));
+        iv_wC3T1.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(nwList.get(0), mContext)));
+        iv_wC3T2.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(nwList.get(1), mContext)));
+        iv_wC3T3.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(nwList.get(2), mContext)));
+        iv_wC3T4.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(nwList.get(3), mContext)));
+        iv_wC3T5.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(nwList.get(4), mContext)));
 
 
 
@@ -469,11 +472,11 @@ public class TeamListActivity extends AppCompatActivity {
         tv_eC1T4.setText(seList.get(3));
         tv_eC1T5.setText(seList.get(4));
 
-        iv_eC1T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(0), mContext)));
-        iv_eC1T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(1), mContext)));
-        iv_eC1T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(2), mContext)));
-        iv_eC1T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(3), mContext)));
-        iv_eC1T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(seList.get(4), mContext)));
+        iv_eC1T1.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(seList.get(0), mContext)));
+        iv_eC1T2.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(seList.get(1), mContext)));
+        iv_eC1T3.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(seList.get(2), mContext)));
+        iv_eC1T4.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(seList.get(3), mContext)));
+        iv_eC1T5.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(seList.get(4), mContext)));
 
 
 
@@ -483,11 +486,11 @@ public class TeamListActivity extends AppCompatActivity {
         tv_eC2T4.setText(ceList.get(3));
         tv_eC2T5.setText(ceList.get(4));
 
-        iv_eC2T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(0), mContext)));
-        iv_eC2T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(1), mContext)));
-        iv_eC2T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(2), mContext)));
-        iv_eC2T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(3), mContext)));
-        iv_eC2T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(ceList.get(4), mContext)));
+        iv_eC2T1.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(ceList.get(0), mContext)));
+        iv_eC2T2.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(ceList.get(1), mContext)));
+        iv_eC2T3.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(ceList.get(2), mContext)));
+        iv_eC2T4.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(ceList.get(3), mContext)));
+        iv_eC2T5.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(ceList.get(4), mContext)));
 
 
 
@@ -497,11 +500,11 @@ public class TeamListActivity extends AppCompatActivity {
         tv_eC3T4.setText(atList.get(3));
         tv_eC3T5.setText(atList.get(4));
 
-        iv_eC3T1.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(0), mContext)));
-        iv_eC3T2.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(1), mContext)));
-        iv_eC3T3.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(2), mContext)));
-        iv_eC3T4.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(3), mContext)));
-        iv_eC3T5.setImageBitmap(readBitMap(mContext, BitmapHelper.getBitmap(atList.get(4), mContext)));
+        iv_eC3T1.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(atList.get(0), mContext)));
+        iv_eC3T2.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(atList.get(1), mContext)));
+        iv_eC3T3.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(atList.get(2), mContext)));
+        iv_eC3T4.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(atList.get(3), mContext)));
+        iv_eC3T5.setImageBitmap(BitmapHelper.loadBitMap(mContext, BitmapHelper.getBitmap(atList.get(4), mContext)));
 
     
     }
@@ -519,40 +522,40 @@ public class TeamListActivity extends AppCompatActivity {
         wC1T1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T1.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC1T1.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC1T2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T2.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC1T2.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC1T3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T3.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC1T3.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC1T4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T4.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC1T4.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC1T5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC1T5.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC1T5.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
@@ -560,40 +563,40 @@ public class TeamListActivity extends AppCompatActivity {
         wC2T1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC2T1.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC2T1.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC2T2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC2T2.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC2T2.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC2T3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC2T3.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC2T3.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC2T4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC2T4.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC2T4.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC2T5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC2T5.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC2T5.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
@@ -601,40 +604,40 @@ public class TeamListActivity extends AppCompatActivity {
         wC3T1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC3T1.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC3T1.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC3T2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC3T2.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC3T2.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC3T3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC3T3.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC3T3.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC3T4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC3T4.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC3T4.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         wC3T5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_wC3T5.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_wC3T5.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
@@ -647,40 +650,40 @@ public class TeamListActivity extends AppCompatActivity {
         eC1T1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T1.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC1T1.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC1T2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T2.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC1T2.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC1T3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T3.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC1T3.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC1T4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T4.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC1T4.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC1T5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC1T5.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC1T5.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
@@ -688,40 +691,40 @@ public class TeamListActivity extends AppCompatActivity {
         eC2T1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC2T1.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC2T1.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC2T2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC2T2.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC2T2.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC2T3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC2T3.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC2T3.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC2T4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC2T4.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC2T4.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC2T5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC2T5.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC2T5.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
@@ -729,59 +732,45 @@ public class TeamListActivity extends AppCompatActivity {
         eC3T1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC3T1.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC3T1.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC3T2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC3T2.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC3T2.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC3T3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC3T3.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC3T3.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC3T4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC3T4.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC3T4.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
 
         eC3T5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sName = (String) tv_eC3T5.getText();
-                handler.sendEmptyMessage(GET_SNAME);
+                name = (String) tv_eC3T5.getText();
+                handler.sendEmptyMessage(GET_name);
             }
         });
     }
 
-    /**
-     * 以最省内存的方式读取本地资源的图片
-     * @param context
-     * @param resId
-     * @return
-     */
-    private Bitmap readBitMap(Context context, int resId){
-        BitmapFactory.Options opt = new BitmapFactory.Options();
-        opt.inPreferredConfig = Bitmap.Config.RGB_565;
-        opt.inPurgeable = true;
-        opt.inInputShareable = true;
-        //获取资源图片
-        InputStream is = context.getResources().openRawResource(resId);
-        return BitmapFactory.decodeStream(is,null,opt);
-    }
+
 
 
     /**
@@ -793,29 +782,38 @@ public class TeamListActivity extends AppCompatActivity {
 
         String jsonString = ACache.get(mContext).getAsString("getTeams");
 
+        /**
+         * Test
+         * Remember to delete
+         */
+        jsonString = null;
 
 
         if (jsonString == null){
             //从server获取数据
-            jsonString = "[{\"id\":1,\"name\":\"圣安东尼奥马刺队\",\"abbr\":\"sas\",\"city\":\"圣安东尼奥\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"马刺\",\"founded\":1976},{\"id\":2,\"name\":\"孟菲斯灰熊队\",\"abbr\":\"mem\",\"city\":\"孟菲斯\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"灰熊\",\"founded\":1995},{\"id\":3,\"name\":\"达拉斯小牛队\",\"abbr\":\"dal\",\"city\":\"达拉斯\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"小牛\",\"founded\":1980},{\"id\":4,\"name\":\"休斯顿火箭队\",\"abbr\":\"hou\",\"city\":\"休斯顿\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"火箭\",\"founded\":1967},{\"id\":5,\"name\":\"新奥尔良鹈鹕队\",\"abbr\":\"noh\",\"city\":\"新奥尔良\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":1,\"name\":\"西南区\"},\"sName\":\"鹈鹕\",\"founded\":1988},{\"id\":6,\"name\":\"明尼苏达森林狼队\",\"abbr\":\"min\",\"city\":\"明尼苏达\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"森林狼\",\"founded\":1989},{\"id\":7,\"name\":\"丹佛掘金队\",\"abbr\":\"den\",\"city\":\"丹佛\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"掘金\",\"founded\":1976},{\"id\":8,\"name\":\"犹他爵士队\",\"abbr\":\"UTAH\",\"city\":\"犹他\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"爵士\",\"founded\":1974},{\"id\":9,\"name\":\"波特兰开拓者队\",\"abbr\":\"por\",\"city\":\"波特兰\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"开拓者\",\"founded\":1970},{\"id\":10,\"name\":\"俄克拉荷马雷霆队\",\"abbr\":\"okc\",\"city\":\"俄克拉荷马城\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":2,\"name\":\"西北区\"},\"sName\":\"雷霆\",\"founded\":1967},{\"id\":11,\"name\":\"萨克拉门托国王队\",\"abbr\":\"sac\",\"city\":\"萨克拉门托\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"国王\",\"founded\":1948},{\"id\":12,\"name\":\"菲尼克斯太阳队\",\"abbr\":\"pho\",\"city\":\"菲尼克斯\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"太阳\",\"founded\":1968},{\"id\":13,\"name\":\"洛杉矶湖人队\",\"abbr\":\"lal\",\"city\":\"洛杉矶\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"湖人\",\"founded\":1948},{\"id\":14,\"name\":\"洛杉矶快船队\",\"abbr\":\"lac\",\"city\":\"洛杉矶\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"快船\",\"founded\":1970},{\"id\":15,\"name\":\"金州勇士队\",\"abbr\":\"GS\",\"city\":\"金州\",\"league\":{\"id\":1,\"name\":\"西部\"},\"conference\":{\"id\":3,\"name\":\"太平洋区\"},\"sName\":\"勇士\",\"founded\":1946},{\"id\":16,\"name\":\"迈阿密热队\",\"abbr\":\"mia\",\"city\":\"迈阿密\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"热火\",\"founded\":1988},{\"id\":17,\"name\":\"奥兰多魔术队\",\"abbr\":\"orl\",\"city\":\"奥兰多\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"魔术\",\"founded\":1989},{\"id\":18,\"name\":\"亚特兰大老鹰队\",\"abbr\":\"atl\",\"city\":\"亚特兰大\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"老鹰\",\"founded\":1949},{\"id\":19,\"name\":\"华盛顿奇才队\",\"abbr\":\"was\",\"city\":\"华盛顿\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"奇才\",\"founded\":1961},{\"id\":20,\"name\":\"夏洛特黄蜂队\",\"abbr\":\"cha\",\"city\":\"夏洛特\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":4,\"name\":\"东南区\"},\"sName\":\"黄蜂\",\"founded\":2004},{\"id\":21,\"name\":\"底特律活塞队\",\"abbr\":\"det\",\"city\":\"底特律\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"活塞\",\"founded\":1948},{\"id\":22,\"name\":\"印第安纳步行者队\",\"abbr\":\"ind\",\"city\":\"印第安纳\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"步行者\",\"founded\":1976},{\"id\":23,\"name\":\"克利夫兰骑士队\",\"abbr\":\"cle\",\"city\":\"克利夫兰\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"骑士\",\"founded\":1970},{\"id\":24,\"name\":\"芝加哥公牛队\",\"abbr\":\"chi\",\"city\":\"芝加哥\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"公牛\",\"founded\":1966},{\"id\":25,\"name\":\"密尔沃基雄鹿队\",\"abbr\":\"mil\",\"city\":\"密尔沃基\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":5,\"name\":\"中区\"},\"sName\":\"雄鹿\",\"founded\":1968},{\"id\":26,\"name\":\"波士顿凯尔特人队\",\"abbr\":\"bos\",\"city\":\"波士顿\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"凯尔特人\",\"founded\":1946},{\"id\":27,\"name\":\"费城76人队\",\"abbr\":\"phi\",\"city\":\"费城\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"76人\",\"founded\":1947},{\"id\":28,\"name\":\"纽约尼克斯队\",\"abbr\":\"nyk\",\"city\":\"纽约\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"尼克斯\",\"founded\":1946},{\"id\":29,\"name\":\"布鲁克林篮网队\",\"abbr\":\"BKN\",\"city\":\"布鲁克林\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"篮网\",\"founded\":1967},{\"id\":30,\"name\":\"多伦多猛龙队\",\"abbr\":\"tor\",\"city\":\"多伦多\",\"league\":{\"id\":2,\"name\":\"东部\"},\"conference\":{\"id\":6,\"name\":\"大西洋区\"},\"sName\":\"猛龙\",\"founded\":1995}]";
+//            jsonString = "[{\"id\":1,\"name\":\"老鹰\",\"city\":\"亚特兰大\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"菲利普斯球馆\",\"startYearInNBA\":1949,\"numOfChampions\":1},{\"id\":2,\"name\":\"凯尔特人\",\"city\":\"波士顿\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"TD花园球馆\",\"startYearInNBA\":1946,\"numOfChampions\":17},{\"id\":3,\"name\":\"鹈鹕\",\"city\":\"新奥尔良\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"新奥尔良球馆\",\"startYearInNBA\":1988,\"numOfChampions\":0},{\"id\":4,\"name\":\"公牛\",\"city\":\"芝加哥\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"联合中心球馆\",\"startYearInNBA\":1966,\"numOfChampions\":6},{\"id\":5,\"name\":\"骑士\",\"city\":\"克利夫兰\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"快贷球馆\",\"startYearInNBA\":1970,\"numOfChampions\":0},{\"id\":6,\"name\":\"小牛\",\"city\":\"达拉斯\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"美航中心球馆\",\"startYearInNBA\":1980,\"numOfChampions\":1},{\"id\":7,\"name\":\"掘金\",\"city\":\"丹佛\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"百事中心球馆\",\"startYearInNBA\":1976,\"numOfChampions\":0},{\"id\":8,\"name\":\"活塞\",\"city\":\"底特律\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"奥本山宫球馆\",\"startYearInNBA\":1948,\"numOfChampions\":3},{\"id\":9,\"name\":\"勇士\",\"city\":\"金州\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"甲骨文球馆\",\"startYearInNBA\":1946,\"numOfChampions\":4},{\"id\":10,\"name\":\"火箭\",\"city\":\"休斯顿\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"丰田中心球馆\",\"startYearInNBA\":1967,\"numOfChampions\":2},{\"id\":11,\"name\":\"步行者\",\"city\":\"印第安纳\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"银行家生活球馆\",\"startYearInNBA\":1976,\"numOfChampions\":0},{\"id\":12,\"name\":\"快船\",\"city\":\"洛杉矶\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"斯台普斯中心球馆\",\"startYearInNBA\":1970,\"numOfChampions\":0},{\"id\":13,\"name\":\"湖人\",\"city\":\"洛杉矶\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"斯台普斯中心球馆\",\"startYearInNBA\":1948,\"numOfChampions\":16},{\"id\":14,\"name\":\"热火\",\"city\":\"迈阿密\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"美航球馆\",\"startYearInNBA\":1988,\"numOfChampions\":3},{\"id\":15,\"name\":\"雄鹿\",\"city\":\"密尔沃基\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"布拉德利中心球馆\",\"startYearInNBA\":1968,\"numOfChampions\":1},{\"id\":16,\"name\":\"森林狼\",\"city\":\"明尼苏达\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"标靶中心球馆\",\"startYearInNBA\":1989,\"numOfChampions\":0},{\"id\":17,\"name\":\"篮网\",\"city\":\"布鲁克林\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"巴克莱中心球馆\",\"startYearInNBA\":1967,\"numOfChampions\":1},{\"id\":18,\"name\":\"尼克斯\",\"city\":\"纽约\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"麦迪逊广场花园球馆\",\"startYearInNBA\":1946,\"numOfChampions\":2},{\"id\":19,\"name\":\"魔术\",\"city\":\"奥兰多\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"安利中心球馆\",\"startYearInNBA\":1989,\"numOfChampions\":0},{\"id\":20,\"name\":\"76人\",\"city\":\"费城\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"富国银行中心球馆\",\"startYearInNBA\":1937,\"numOfChampions\":3},{\"id\":21,\"name\":\"太阳\",\"city\":\"菲尼克斯\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"美航中心球馆\",\"startYearInNBA\":1968,\"numOfChampions\":0},{\"id\":22,\"name\":\"开拓者\",\"city\":\"波特兰\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"玫瑰花园球馆\",\"startYearInNBA\":1970,\"numOfChampions\":1},{\"id\":23,\"name\":\"国王\",\"city\":\"萨克拉门托\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"能量平衡球馆\",\"startYearInNBA\":1948,\"numOfChampions\":1},{\"id\":24,\"name\":\"马刺\",\"city\":\"圣安东尼奥\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"AT&T中心球馆\",\"startYearInNBA\":1976,\"numOfChampions\":5},{\"id\":25,\"name\":\"雷霆\",\"city\":\"俄克拉荷马城\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"切萨皮克能源球馆\",\"startYearInNBA\":1967,\"numOfChampions\":1},{\"id\":26,\"name\":\"爵士\",\"city\":\"犹他\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"能源方案球馆\",\"startYearInNBA\":1974,\"numOfChampions\":0},{\"id\":27,\"name\":\"奇才\",\"city\":\"华盛顿\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"威瑞森中心球馆\",\"startYearInNBA\":1961,\"numOfChampions\":1},{\"id\":28,\"name\":\"猛龙\",\"city\":\"多伦多\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"加航中心球馆\",\"startYearInNBA\":1995,\"numOfChampions\":0},{\"id\":29,\"name\":\"灰熊\",\"city\":\"孟菲斯\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"联邦快递球馆\",\"startYearInNBA\":1995,\"numOfChampions\":0},{\"id\":30,\"name\":\"黄蜂\",\"city\":\"夏洛特\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"时代华纳中心球馆\",\"startYearInNBA\":2004,\"numOfChampions\":0}]";
 
-//        String jsonString= GetHttpResponse.getHttpResponse("http://192.168.2.122:8080/NBADataSystem/getTeams.do");
+            jsonString= GetHttpResponse.getHttpResponse(GetHttpResponse.getTeams);
 
-            ACache.get(mContext).put("getTeams",jsonString);
-            Log.i("数据源","网络");
+            ACache.get(mContext).put("getTeams",jsonString,ACache.TIME_DAY);
+            Log.i("Resource","Internet");
         }
-        else Log.i("数据源","缓存");
+        else
+        {
+            Log.i("Resource","Cache");
+        }
+
+        Log.i("info",jsonString);
 
         //解析jsonString 构造Map
         try {
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                String sName = obj.getString("sName");
-                JSONObject conferenceArray = obj.getJSONObject("conference");
-                String conference = conferenceArray.getString("name");
+                String name = obj.getString("name");
+                String conference = obj.getString("conference");
 
-                map.put(sName,conference);
+                map.put(name,conference);
 
             }
 
@@ -829,5 +827,51 @@ public class TeamListActivity extends AppCompatActivity {
         return map;
     }
 
+    private Map<String, Integer> getTeamID() {
+        Map<String,Integer> map = new HashMap<>();
+
+        String jsonString = ACache.get(mContext).getAsString("getTeams");
+
+        /**
+         * Test
+         * Remember to delete
+         */
+        jsonString = null;
+
+        if (jsonString == null){
+            //从server获取数据
+//            jsonString = "[{\"id\":1,\"name\":\"老鹰\",\"city\":\"亚特兰大\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"菲利普斯球馆\",\"startYearInNBA\":1949,\"numOfChampions\":1},{\"id\":2,\"name\":\"凯尔特人\",\"city\":\"波士顿\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"TD花园球馆\",\"startYearInNBA\":1946,\"numOfChampions\":17},{\"id\":3,\"name\":\"鹈鹕\",\"city\":\"新奥尔良\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"新奥尔良球馆\",\"startYearInNBA\":1988,\"numOfChampions\":0},{\"id\":4,\"name\":\"公牛\",\"city\":\"芝加哥\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"联合中心球馆\",\"startYearInNBA\":1966,\"numOfChampions\":6},{\"id\":5,\"name\":\"骑士\",\"city\":\"克利夫兰\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"快贷球馆\",\"startYearInNBA\":1970,\"numOfChampions\":0},{\"id\":6,\"name\":\"小牛\",\"city\":\"达拉斯\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"美航中心球馆\",\"startYearInNBA\":1980,\"numOfChampions\":1},{\"id\":7,\"name\":\"掘金\",\"city\":\"丹佛\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"百事中心球馆\",\"startYearInNBA\":1976,\"numOfChampions\":0},{\"id\":8,\"name\":\"活塞\",\"city\":\"底特律\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"奥本山宫球馆\",\"startYearInNBA\":1948,\"numOfChampions\":3},{\"id\":9,\"name\":\"勇士\",\"city\":\"金州\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"甲骨文球馆\",\"startYearInNBA\":1946,\"numOfChampions\":4},{\"id\":10,\"name\":\"火箭\",\"city\":\"休斯顿\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"丰田中心球馆\",\"startYearInNBA\":1967,\"numOfChampions\":2},{\"id\":11,\"name\":\"步行者\",\"city\":\"印第安纳\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"银行家生活球馆\",\"startYearInNBA\":1976,\"numOfChampions\":0},{\"id\":12,\"name\":\"快船\",\"city\":\"洛杉矶\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"斯台普斯中心球馆\",\"startYearInNBA\":1970,\"numOfChampions\":0},{\"id\":13,\"name\":\"湖人\",\"city\":\"洛杉矶\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"斯台普斯中心球馆\",\"startYearInNBA\":1948,\"numOfChampions\":16},{\"id\":14,\"name\":\"热火\",\"city\":\"迈阿密\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"美航球馆\",\"startYearInNBA\":1988,\"numOfChampions\":3},{\"id\":15,\"name\":\"雄鹿\",\"city\":\"密尔沃基\",\"league\":\"东部\",\"conference\":\"中部区\",\"court\":\"布拉德利中心球馆\",\"startYearInNBA\":1968,\"numOfChampions\":1},{\"id\":16,\"name\":\"森林狼\",\"city\":\"明尼苏达\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"标靶中心球馆\",\"startYearInNBA\":1989,\"numOfChampions\":0},{\"id\":17,\"name\":\"篮网\",\"city\":\"布鲁克林\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"巴克莱中心球馆\",\"startYearInNBA\":1967,\"numOfChampions\":1},{\"id\":18,\"name\":\"尼克斯\",\"city\":\"纽约\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"麦迪逊广场花园球馆\",\"startYearInNBA\":1946,\"numOfChampions\":2},{\"id\":19,\"name\":\"魔术\",\"city\":\"奥兰多\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"安利中心球馆\",\"startYearInNBA\":1989,\"numOfChampions\":0},{\"id\":20,\"name\":\"76人\",\"city\":\"费城\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"富国银行中心球馆\",\"startYearInNBA\":1937,\"numOfChampions\":3},{\"id\":21,\"name\":\"太阳\",\"city\":\"菲尼克斯\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"美航中心球馆\",\"startYearInNBA\":1968,\"numOfChampions\":0},{\"id\":22,\"name\":\"开拓者\",\"city\":\"波特兰\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"玫瑰花园球馆\",\"startYearInNBA\":1970,\"numOfChampions\":1},{\"id\":23,\"name\":\"国王\",\"city\":\"萨克拉门托\",\"league\":\"西部\",\"conference\":\"太平洋区\",\"court\":\"能量平衡球馆\",\"startYearInNBA\":1948,\"numOfChampions\":1},{\"id\":24,\"name\":\"马刺\",\"city\":\"圣安东尼奥\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"AT&T中心球馆\",\"startYearInNBA\":1976,\"numOfChampions\":5},{\"id\":25,\"name\":\"雷霆\",\"city\":\"俄克拉荷马城\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"切萨皮克能源球馆\",\"startYearInNBA\":1967,\"numOfChampions\":1},{\"id\":26,\"name\":\"爵士\",\"city\":\"犹他\",\"league\":\"西部\",\"conference\":\"西北区\",\"court\":\"能源方案球馆\",\"startYearInNBA\":1974,\"numOfChampions\":0},{\"id\":27,\"name\":\"奇才\",\"city\":\"华盛顿\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"威瑞森中心球馆\",\"startYearInNBA\":1961,\"numOfChampions\":1},{\"id\":28,\"name\":\"猛龙\",\"city\":\"多伦多\",\"league\":\"东部\",\"conference\":\"大西洋区\",\"court\":\"加航中心球馆\",\"startYearInNBA\":1995,\"numOfChampions\":0},{\"id\":29,\"name\":\"灰熊\",\"city\":\"孟菲斯\",\"league\":\"西部\",\"conference\":\"西南区\",\"court\":\"联邦快递球馆\",\"startYearInNBA\":1995,\"numOfChampions\":0},{\"id\":30,\"name\":\"黄蜂\",\"city\":\"夏洛特\",\"league\":\"东部\",\"conference\":\"东南区\",\"court\":\"时代华纳中心球馆\",\"startYearInNBA\":2004,\"numOfChampions\":0}]";
+
+            jsonString= GetHttpResponse.getHttpResponse(GetHttpResponse.getTeams);
+
+            ACache.get(mContext).put("getTeams",jsonString,ACache.TIME_DAY);
+            Log.i("Resource","Internet");
+        }
+        else
+        {
+            Log.i("Resource","Cache");
+        }
+
+        //解析jsonString 构造Map
+        try {
+            JSONArray array = new JSONArray(jsonString);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                String name = obj.getString("name");
+                int id = obj.getInt("id");
+
+                map.put(name, id);
+
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return map;
+    }
   
 }

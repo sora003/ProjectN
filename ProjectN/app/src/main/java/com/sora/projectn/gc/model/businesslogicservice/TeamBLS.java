@@ -2,9 +2,9 @@ package com.sora.projectn.gc.model.businesslogicservice;
 
 import android.content.Context;
 
-import com.sora.projectn.gc.model.vo.TeamConferenceVo;
-import com.sora.projectn.gc.model.vo.TeamInfoVo;
-import com.sora.projectn.gc.model.vo.TeamSeasonInfoVo;
+import com.sora.projectn.utils.beans.TeamConferenceVo;
+import com.sora.projectn.utils.beans.TeamInfoVo;
+import com.sora.projectn.utils.beans.TeamSeasonInfoVo;
 
 import java.util.List;
 

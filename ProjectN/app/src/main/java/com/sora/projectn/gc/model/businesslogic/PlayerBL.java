@@ -12,9 +12,9 @@ import com.sora.projectn.gc.po.PlayerMatchInfoPo;
 import com.sora.projectn.gc.po.PlayerPo;
 import com.sora.projectn.gc.po.PlayerPrimaryInfoPo;
 import com.sora.projectn.gc.po.PlayerTempInfoPo;
-import com.sora.projectn.gc.model.vo.AllPlayerInfoVo;
-import com.sora.projectn.gc.model.vo.SearchPlayerKeysVo;
-import com.sora.projectn.gc.model.vo.TeamPlayerVo;
+import com.sora.projectn.utils.beans.AllPlayerInfoVo;
+import com.sora.projectn.utils.beans.SearchPlayerKeysVo;
+import com.sora.projectn.utils.beans.TeamPlayerVo;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

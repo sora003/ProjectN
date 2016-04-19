@@ -6,7 +6,7 @@ import com.sora.projectn.gc.model.businesslogicservice.MatchBLS;
 import com.sora.projectn.gc.dataservice.TeamDS;
 import com.sora.projectn.gc.dataservice.impl.TeamDSImpl;
 import com.sora.projectn.gc.po.MatchInfoPo;
-import com.sora.projectn.gc.model.vo.MatchInfoVo;
+import com.sora.projectn.utils.beans.MatchInfoVo;
 
 import java.util.ArrayList;
 import java.util.List;

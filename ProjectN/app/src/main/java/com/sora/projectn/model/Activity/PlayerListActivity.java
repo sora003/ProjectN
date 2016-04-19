@@ -16,8 +16,8 @@ import com.sora.projectn.R;
 import com.sora.projectn.gc.model.businesslogic.PlayerBL;
 import com.sora.projectn.gc.model.businesslogicservice.PlayerBLS;
 import com.sora.projectn.utils.PlayerListAdapter;
-import com.sora.projectn.gc.model.vo.AllPlayerInfoVo;
-import com.sora.projectn.gc.model.vo.SearchPlayerKeysVo;
+import com.sora.projectn.utils.beans.AllPlayerInfoVo;
+import com.sora.projectn.utils.beans.SearchPlayerKeysVo;
 
 import java.util.ArrayList;
 import java.util.List;

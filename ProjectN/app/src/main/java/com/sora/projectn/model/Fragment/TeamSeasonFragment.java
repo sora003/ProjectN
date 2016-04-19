@@ -15,7 +15,7 @@ import com.sora.projectn.R;
 import com.sora.projectn.gc.model.businesslogic.TeamBL;
 import com.sora.projectn.gc.model.businesslogicservice.TeamBLS;
 import com.sora.projectn.utils.TeamSeasonAdapter;
-import com.sora.projectn.gc.model.vo.TeamSeasonInfoVo;
+import com.sora.projectn.utils.beans.TeamSeasonInfoVo;
 
 import java.util.ArrayList;
 import java.util.List;

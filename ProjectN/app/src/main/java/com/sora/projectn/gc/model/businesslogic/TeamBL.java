@@ -9,9 +9,9 @@ import com.sora.projectn.gc.dataservice.TeamDS;
 import com.sora.projectn.gc.dataservice.impl.TeamDSImpl;
 import com.sora.projectn.gc.po.TeamPo;
 import com.sora.projectn.gc.po.TeamSeasonGamePo;
-import com.sora.projectn.gc.model.vo.TeamConferenceVo;
-import com.sora.projectn.gc.model.vo.TeamInfoVo;
-import com.sora.projectn.gc.model.vo.TeamSeasonInfoVo;
+import com.sora.projectn.utils.beans.TeamConferenceVo;
+import com.sora.projectn.utils.beans.TeamInfoVo;
+import com.sora.projectn.utils.beans.TeamSeasonInfoVo;
 import com.sora.projectn.utils.GetHttpResponse;
 
 import org.json.JSONArray;

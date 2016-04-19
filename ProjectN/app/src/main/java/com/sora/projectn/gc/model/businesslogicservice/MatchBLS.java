@@ -3,7 +3,7 @@ package com.sora.projectn.gc.model.businesslogicservice;
 import android.content.Context;
 
 import com.sora.projectn.gc.po.MatchInfoPo;
-import com.sora.projectn.gc.model.vo.MatchInfoVo;
+import com.sora.projectn.utils.beans.MatchInfoVo;
 
 import java.util.List;
 

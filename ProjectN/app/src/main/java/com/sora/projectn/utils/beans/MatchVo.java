@@ -1,4 +1,4 @@
-package com.sora.projectn.gc.model.vo;
+package com.sora.projectn.utils.beans;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.sora.projectn.gc.model.vo;
+package com.sora.projectn.utils.beans;
 
 /**
  * Created by Sora on 2016/2/12.

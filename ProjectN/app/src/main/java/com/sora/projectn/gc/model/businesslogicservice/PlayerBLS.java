@@ -2,9 +2,9 @@ package com.sora.projectn.gc.model.businesslogicservice;
 
 import android.content.Context;
 
-import com.sora.projectn.gc.model.vo.AllPlayerInfoVo;
-import com.sora.projectn.gc.model.vo.SearchPlayerKeysVo;
-import com.sora.projectn.gc.model.vo.TeamPlayerVo;
+import com.sora.projectn.utils.beans.AllPlayerInfoVo;
+import com.sora.projectn.utils.beans.SearchPlayerKeysVo;
+import com.sora.projectn.utils.beans.TeamPlayerVo;
 
 import java.util.List;
 

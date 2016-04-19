@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
-import com.sora.projectn.gc.model.vo.AllPlayerInfoVo;
+import com.sora.projectn.utils.beans.AllPlayerInfoVo;
 
 import java.util.List;
 
