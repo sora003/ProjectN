@@ -27,6 +27,7 @@
     <dimen name="content_horizontal_margin">10dp</dimen>
     <dimen name="item_teamSeasonSize">16sp</dimen>
     <dimen name="teamdata_vertical_margin">10dp</dimen>
+    <dimen name="text_margin">10dp</dimen>
     <dimen name="teamDataSize">18sp</dimen>
 
 </resources>

@@ -59,6 +59,9 @@
     <string name="text_playerKey">数据项:</string>
     <string name="text_playerAge">年龄:</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!--Test For activity_teamlist-->
     <!--<string name="text_wC1T1">小牛</string>-->
     <!--<string name="text_wC1T2">火箭</string>-->

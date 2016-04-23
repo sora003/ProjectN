@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     //ActionBarDrawerToggle控件
     private ActionBarDrawerToggle mDrawerToggle;
     //ActionBarDrawerToggle控件内的内容
-    private String[] data = {"球队数据","球员数据","比赛数据"};
+    private String[] data = {"球队数据","球员数据","比赛数据","排行榜"};
     private ArrayAdapter arrayAdapter;
 
     @Override
@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2:
                         startActivity(new Intent(mContext,MatchListActivity.class));
+                        break;
+                    case 3:
+                        startActivity(new Intent(mContext,RankActivity.class));
                         break;
                 }
             }

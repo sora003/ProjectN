@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/team_rank"
+        android:layout_width="70dip"
+        android:layout_height="wrap_content"
+        android:textColor="#CD3700"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/team_rank_name"
+        android:layout_width="120dip"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/team_win_lose"
+        android:layout_width="70dip"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="0.5px"
+        android:layout_height="fill_parent"
+        android:background="#B8B8B8"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/team_field_difference"
+        android:layout_width="100dip"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+
+
+
+
+</LinearLayout>
