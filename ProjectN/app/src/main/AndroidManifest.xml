@@ -58,6 +58,9 @@
 
 
 
+        <activity android:name=".model.Activity.RankActivity"
+            />
+
         <service
             android:name=".gc.Service.ScrapeService"
             >

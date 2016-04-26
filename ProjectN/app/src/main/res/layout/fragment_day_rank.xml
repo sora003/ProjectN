@@ -1,0 +1,181 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            tools:context="com.sora.projectn.model.Fragment.DayRankFragment">
+
+            <!-- TODO: Update blank fragment layout -->
+            <TextView
+                android:id="@+id/dayrank_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="得分"
+                android:textSize="@dimen/titleSize"/>
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/dayrank_t1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dayrank_title1"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="180dip"
+                    android:layout_height="30dp"
+                    android:text="球员"
+                    android:textSize="@dimen/playerSize" />
+
+                <TextView
+                    android:layout_width="120dip"
+                    android:layout_height="30dp"
+                    android:text="所属球队"
+                    android:textSize="@dimen/playerSize" />
+
+                <TextView
+                    android:layout_width="80dip"
+                    android:layout_height="30dp"
+                    android:text="数据"
+                    android:textSize="@dimen/playerSize" />
+
+            </LinearLayout>
+            <com.sora.projectn.utils.ListViewForScrollView
+                android:id="@+id/day_rank_pts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dayrank_t1">
+
+            </com.sora.projectn.utils.ListViewForScrollView>
+            <TextView
+                android:id="@+id/dayrank_t2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="篮板"
+                android:layout_below="@id/day_rank_pts"
+                android:textSize="@dimen/titleSize"/>
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/dayrank_title2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dayrank_t2"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="180dip"
+                    android:layout_height="30dp"
+                    android:text="球员"
+                    android:textSize="@dimen/playerSize" />
+
+                <TextView
+                    android:layout_width="120dip"
+                    android:layout_height="30dp"
+                    android:text="所属球队"
+                    android:textSize="@dimen/playerSize" />
+
+                <TextView
+                    android:layout_width="80dip"
+                    android:layout_height="30dp"
+                    android:text="数据"
+                    android:textSize="@dimen/playerSize" />
+
+            </LinearLayout>
+            <com.sora.projectn.utils.ListViewForScrollView
+                android:id="@+id/day_rank_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dayrank_title2">
+
+            </com.sora.projectn.utils.ListViewForScrollView>
+            <TextView
+                android:id="@+id/dayrank_t3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="助攻"
+                android:layout_below="@id/day_rank_2"
+                android:textSize="@dimen/titleSize"/>
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/dayrank_title3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dayrank_t3"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="180dip"
+                    android:layout_height="30dp"
+                    android:text="球员"
+                    android:textSize="@dimen/playerSize" />
+
+                <TextView
+                    android:layout_width="120dip"
+                    android:layout_height="30dp"
+                    android:text="所属球队"
+                    android:textSize="@dimen/playerSize" />
+
+                <TextView
+                    android:layout_width="80dip"
+                    android:layout_height="30dp"
+                    android:text="数据"
+                    android:textSize="@dimen/playerSize" />
+            </LinearLayout>
+            <com.sora.projectn.utils.ListViewForScrollView
+                android:id="@+id/day_rank_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dayrank_title3">
+
+            </com.sora.projectn.utils.ListViewForScrollView>
+            <TextView
+                android:id="@+id/dayrank_t4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="抢断"
+                android:layout_below="@id/day_rank_3"
+                android:textSize="@dimen/titleSize"/>
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/dayrank_title4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dayrank_t4"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="180dip"
+                    android:layout_height="30dp"
+                    android:text="球员"
+                    android:textSize="@dimen/playerSize" />
+
+                <TextView
+                    android:layout_width="120dip"
+                    android:layout_height="30dp"
+                    android:text="所属球队"
+                    android:textSize="@dimen/playerSize" />
+
+                <TextView
+                    android:layout_width="80dip"
+                    android:layout_height="30dp"
+                    android:text="数据"
+                    android:textSize="@dimen/playerSize" />
+
+            </LinearLayout>
+            <com.sora.projectn.utils.ListViewForScrollView
+                android:id="@+id/day_rank_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dayrank_title4">
+
+            </com.sora.projectn.utils.ListViewForScrollView>
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

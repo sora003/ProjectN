@@ -23,5 +23,6 @@
     <color name="conferenceColor">#696969</color>
     <color name="color_viewpager">#333896</color>
     <color name="text_white">#FFFFFF</color>
-
+    <color name="bg">#ffffff</color>
+    <color name="red">#ff0000</color>
 </resources>

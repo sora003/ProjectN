@@ -60,7 +60,12 @@
     <string name="text_playerAge">年龄:</string>
     <string name="hint">Waiting...</string>
 
+
+
     <!--Test For activity_teamlist_old-->
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--<string name="text_wC1T1">小牛</string>-->
     <!--<string name="text_wC1T2">火箭</string>-->
     <!--<string name="text_wC1T3">灰熊</string>-->

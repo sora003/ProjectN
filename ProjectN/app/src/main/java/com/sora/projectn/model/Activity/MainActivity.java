@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
     //ActionBarDrawerToggle控件
     private ActionBarDrawerToggle mDrawerToggle;
     //ActionBarDrawerToggle控件内的内容
+
     private String[] data = {"我关注的球队","球队","球员检索","历史比赛数据"};
+
     private ArrayAdapter arrayAdapter;
 
     @Override

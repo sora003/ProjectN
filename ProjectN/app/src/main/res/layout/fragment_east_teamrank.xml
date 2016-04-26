@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sora.projectn.model.Fragment.EastTeamRankFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/east_team_rank_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="70dip"
+            android:layout_height="30dp"
+            android:text="排名"
+            android:textSize="@dimen/rankSize" />
+
+        <TextView
+            android:layout_width="120dip"
+            android:layout_height="30dp"
+            android:text="球队"
+            android:textSize="@dimen/rankSize" />
+
+        <TextView
+            android:layout_width="70dip"
+            android:layout_height="30dp"
+            android:text="胜/负"
+            android:textSize="@dimen/rankSize" />
+
+        <TextView
+            android:layout_width="100dip"
+            android:layout_height="30dp"
+            android:text="胜场差"
+            android:textSize="@dimen/rankSize" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/east_team_rank_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/east_team_rank_title">
+    </ListView>
+</RelativeLayout>
