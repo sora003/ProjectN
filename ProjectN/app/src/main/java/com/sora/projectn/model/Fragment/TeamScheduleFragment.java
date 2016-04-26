@@ -20,8 +20,6 @@ public class TeamScheduleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_teamschedule,container,false);
 
 
-
-
         return view;
 
     }

@@ -2,14 +2,16 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="twice_activity_horizontal_margin">32dp</dimen>
+    <dimen name="twice_activity_vertical_margin">32dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="teamSize">20sp</dimen>
+    <dimen name="conSize">20sp</dimen>
     <dimen name="teamPadding">12dp</dimen>
     <dimen name="conference_horizontal_margin">10dp</dimen>
     <dimen name="team_horizontal_margin">10dp</dimen>
-    <dimen name="conferenceSize">18sp</dimen>
+    <dimen name="teamSize">20sp</dimen>
     <dimen name="conference_vertical_margin">5dp</dimen>
-    <dimen name="teamLogo_maxWidth">30dp</dimen>
+    <dimen name="teamLogo_maxWidth">50dp</dimen>
     <dimen name="titleSize">25sp</dimen>
 
     <!--activity_team-->
@@ -28,5 +30,9 @@
     <dimen name="item_teamSeasonSize">16sp</dimen>
     <dimen name="teamdata_vertical_margin">10dp</dimen>
     <dimen name="teamDataSize">18sp</dimen>
+    <dimen name="teamPlayerSize">18sp</dimen>
+    <dimen name="teamStaticsSize">18sp</dimen>
+    <dimen name="content_vertical_margin">10dp</dimen>
+    <dimen name="conferenceSize">20sp</dimen>
 
 </resources>

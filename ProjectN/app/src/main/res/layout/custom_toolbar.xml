@@ -4,7 +4,9 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_DDBlue"
+    android:background="@color/colorPrimary"
+    app:navigationIcon="@drawable/navigationicon"
+    android:navigationIcon="@drawable/navigationicon"
     android:minHeight="?attr/actionBarSize"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:theme="@style/ThemeOverlay.AppCompat.ActionBar">

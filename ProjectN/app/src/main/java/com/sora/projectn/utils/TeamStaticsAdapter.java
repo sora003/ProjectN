@@ -8,19 +8,19 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
-import com.sora.projectn.utils.beans.TeamSeasonInfoVo;
+import com.sora.projectn.utils.beans.TeamSeasonStaticsVo;
 
 import java.util.List;
 
 /**
  * Created by Sora on 2016/1/31.
  */
-public class TeamSeasonAdapter extends BaseAdapter{
+public class TeamStaticsAdapter extends BaseAdapter{
 
-    private List<TeamSeasonInfoVo> list;
+    private List<TeamSeasonStaticsVo> list;
     LayoutInflater inflater;
 
-    public TeamSeasonAdapter(Context context, List<TeamSeasonInfoVo> list) {
+    public TeamStaticsAdapter(Context context, List<TeamSeasonStaticsVo> list) {
         inflater = LayoutInflater.from(context);
         this.list = list;
     }
@@ -45,7 +45,7 @@ public class TeamSeasonAdapter extends BaseAdapter{
         ViewHolder viewHolder = null;
         View view = null;
         if (convertView == null || convertView.getTag() == null){
-            view = inflater.inflate(R.layout.item_teamseason,null);
+            view = inflater.inflate(R.layout.item_teamstatics,null);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         }
@@ -54,24 +54,21 @@ public class TeamSeasonAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        TeamSeasonInfoVo vo = (TeamSeasonInfoVo) getItem(position);
+        TeamSeasonStaticsVo vo = (TeamSeasonStaticsVo) getItem(position);
 
         viewHolder.item_entry.setText(vo.getEntry());
-        viewHolder.item_data1.setText(vo.getTmData());
-        viewHolder.item_data2.setText(vo.getOpData());
+        viewHolder.item_data.setText(vo.getData());
 
         return view;
     }
 
     class ViewHolder{
         TextView item_entry;
-        TextView item_data1;
-        TextView item_data2;
+        TextView item_data;
 
         public ViewHolder(View view) {
-            this.item_entry = (TextView) view.findViewById(R.id.item_entry);
-            this.item_data1 = (TextView) view.findViewById(R.id.item_data1);
-            this.item_data2 = (TextView) view.findViewById(R.id.item_data2);
+            this.item_entry = (TextView) view.findViewById(R.id.item_teamstatics_entry);
+            this.item_data = (TextView) view.findViewById(R.id.item_teamstatics_data);
         }
     }
 }

@@ -17,10 +17,9 @@ public class BitmapHelper {
      * 获取球队对应图标
      *
      * @param s
-     * @param context
      * @return
      */
-    public static  int getBitmap(String s,Context context) {
+    public static  int getBitmap(String s) {
 
         switch (s){
             case "老鹰" :

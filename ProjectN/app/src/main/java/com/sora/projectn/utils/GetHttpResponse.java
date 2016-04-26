@@ -14,13 +14,7 @@ import java.net.URL;
  */
 public class GetHttpResponse {
 
-    private static String url = "http://192.168.191.1:8080/NBADataSystem/";
 
-    public static String getTeams = url + "getTeams.do";
-
-    public static String getTeamInfos = url + "getTeamInfos.do";
-
-    public static String getTeamPlayerList = url + "getTeamPlayerList.do";
 
 
     public static String getHttpResponse(String urlStr){

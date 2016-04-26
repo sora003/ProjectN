@@ -44,7 +44,7 @@ public class TeamPlayerAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
         View view = null;
         if (convertView == null || convertView.getTag() == null){
-            view = inflater.inflate(R.layout.item_teamseason,null);
+            view = inflater.inflate(R.layout.item_teamplayer,null);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         }
@@ -57,22 +57,22 @@ public class TeamPlayerAdapter extends BaseAdapter {
 
         //Error:android.content.res.Resources$NotFoundException: String resource ID #0x0
         //把一个int型业务数据的 设置setText（）或者类似的方法中 ,这样Android系统就会主动去资源文件当中寻找, 但是它不是一个资源文件ID, 所以就会报出这个bug  需要将int型业务数据 转换成String类型
-        viewHolder.item_entry.setText(String.valueOf(vo.getNo()));
-        viewHolder.item_data1.setText(vo.getName());
-        viewHolder.item_data2.setText(vo.getPos());
+        viewHolder.item_teamplayer_num.setText(String.valueOf(vo.getNum()));
+        viewHolder.item_teamplayer_name.setText(vo.getName());
+        viewHolder.item_teamplayer_pos.setText(vo.getPos());
 
         return view;
     }
 
     class ViewHolder{
-        TextView item_entry;
-        TextView item_data1;
-        TextView item_data2;
+        TextView item_teamplayer_num;
+        TextView item_teamplayer_name;
+        TextView item_teamplayer_pos;
 
         public ViewHolder(View view) {
-            this.item_entry = (TextView) view.findViewById(R.id.item_entry);
-            this.item_data1 = (TextView) view.findViewById(R.id.item_data1);
-            this.item_data2 = (TextView) view.findViewById(R.id.item_data2);
+            this.item_teamplayer_num = (TextView) view.findViewById(R.id.item_teamplayer_num);
+            this.item_teamplayer_name = (TextView) view.findViewById(R.id.item_teamplayer_name);
+            this.item_teamplayer_pos = (TextView) view.findViewById(R.id.item_teamplayer_pos);
         }
     }
 }

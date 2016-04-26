@@ -4,7 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_grey">
+    android:background="@color/colorPrimary">
+
+
+    <include layout="@layout/custom_toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,8 +45,8 @@
                     android:id="@+id/tv_teamName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_teamName"
-                    android:textColor="@color/color_white"
+                    android:text="@string/hint"
+                    android:textColor="@color/text_white"
                     android:textSize="@dimen/teamTitleSize"/>
 
                 <!--赛季年份-->
@@ -51,8 +54,7 @@
                     android:id="@+id/tv_season"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_season"
-                    android:textColor="@color/color_white"
+                    android:textColor="@color/text_white"
                     android:textSize="@dimen/teamInfoSize"
                     android:layout_marginTop="@dimen/teamInfo_vertical_margin"
                     android:layout_marginLeft="@dimen/team_horizontal_margin"/>
@@ -68,8 +70,7 @@
                         android:id="@+id/tv_winlose"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_winlose"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/text_white"
                         android:textSize="@dimen/teamInfoSize"/>
 
                     <!--球队在联盟中的排名-->
@@ -77,8 +78,7 @@
                         android:id="@+id/tv_rank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_rank"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/text_white"
                         android:textSize="@dimen/teamInfoSize"
                         android:layout_marginLeft="20dp"/>
 
@@ -99,7 +99,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <!--导航栏-->
@@ -117,7 +117,7 @@
                 android:gravity="center"
                 android:text="@string/text_teamGuide1"
                 android:textSize="@dimen/teamGuideSize"
-                android:textColor="@color/color_white"
+                android:textColor="@color/text_white"
                 android:alpha="0.5"/>
 
 
@@ -129,7 +129,7 @@
                 android:gravity="center"
                 android:text="@string/text_teamGuide2"
                 android:textSize="@dimen/teamGuideSize"
-                android:textColor="@color/color_white"
+                android:textColor="@color/text_white"
                 android:alpha="0.5" />
 
             <TextView
@@ -140,7 +140,7 @@
                 android:gravity="center"
                 android:text="@string/text_teamGuide3"
                 android:textSize="@dimen/teamGuideSize"
-                android:textColor="@color/color_white"
+                android:textColor="@color/text_white"
                 android:alpha="0.5"/>
 
             <TextView
@@ -151,7 +151,7 @@
                 android:gravity="center"
                 android:text="@string/text_teamGuide4"
                 android:textSize="@dimen/teamGuideSize"
-                android:textColor="@color/color_white"
+                android:textColor="@color/text_white"
                 android:alpha="0.5"/>
 
         </LinearLayout>
