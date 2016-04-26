@@ -362,14 +362,14 @@ public class TeamActivity extends FragmentActivity{
         /**
          * getTeamSeasonRanks
          */
-        jsonString = ACache.get(mContext).getAsString("getTeamSeasonRanks - " + id);
+        jsonString = ACache.get(mContext).getAsString("getTeamSeasonRanks - " + (id-1));
 
         if (jsonString == null){
             //从server获取数据
 
-            jsonString= GetHttpResponse.getHttpResponse(Consts.getTeamSeasonRanks + "?teamId=" + id);
+            jsonString= GetHttpResponse.getHttpResponse(Consts.getTeamSeasonRanks + "?teamId=" + (id-1));
 
-            ACache.get(mContext).put("getTeamSeasonRanks - " + id ,jsonString,ACache.TEST_TIME);
+            ACache.get(mContext).put("getTeamSeasonRanks - " + (id-1) ,jsonString,ACache.TEST_TIME);
             Log.i("Resource", "server");
         }
         else
