@@ -1,4 +1,4 @@
-package com.sora.projectn.model.Fragment;
+package com.sora.projectn.utils;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,12 +16,12 @@ import java.util.Map;
 /**
  * Created by qhy on 2016/4/19.
  */
-public class PlayerRankAdapter extends BaseAdapter{
+public class DayRankAdapter extends BaseAdapter{
 
     private List<Map<String,String>> rank;
     private LayoutInflater inflater;
 
-    public PlayerRankAdapter(List<Map<String,String>> rank,Context context){
+    public DayRankAdapter(List<Map<String,String>> rank,Context context){
         this.rank = rank;
         this.inflater = LayoutInflater.from(context);
     }
@@ -54,14 +54,14 @@ public class PlayerRankAdapter extends BaseAdapter{
 
         } else {
 //            view = super.getView(position, convertView, parent);
-            view = inflater.inflate(R.layout.playerrank_item, null);
+            view = inflater.inflate(R.layout.dayrank_item, null);
             vh = new ViewHolder(view);
             view.setTag(vh);
 
         }
         vh.name.setText(rank.get(position).get("name"));
         vh.teamname.setText(rank.get(position).get("teamName"));
-        vh.data.setText(rank.get(position).get("seasonData"));
+        vh.data.setText(rank.get(position).get("data"));
 
         int[] colors = { Color.WHITE, Color.rgb(219, 238, 244) };//RGB颜色
 
@@ -76,9 +76,9 @@ public class PlayerRankAdapter extends BaseAdapter{
         TextView teamname;
         TextView data;
         ViewHolder(View view){
-            name = (TextView)view.findViewById(R.id.player_rank_name);
-            teamname = (TextView)view.findViewById(R.id.player_rank_team);
-            data = (TextView)view.findViewById(R.id.player_rank_data);
+            name = (TextView)view.findViewById(R.id.day_rank_name);
+            teamname = (TextView)view.findViewById(R.id.day_rank_team);
+            data = (TextView)view.findViewById(R.id.day_rank_data);
         }
     }
 

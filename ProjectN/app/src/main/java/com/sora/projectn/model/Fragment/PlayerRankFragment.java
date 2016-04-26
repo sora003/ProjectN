@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.sora.projectn.R;
+import com.sora.projectn.utils.PlayerRankAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

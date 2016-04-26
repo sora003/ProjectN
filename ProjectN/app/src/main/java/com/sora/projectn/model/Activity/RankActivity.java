@@ -36,16 +36,17 @@ public class RankActivity extends FragmentActivity {
     private ViewPager pager;
     private PagerTabStrip tabstrip;
     private static final int GET_DATA = 0x01;
-    private static final String serverIP = "192.168.2.136";
+    private static final String serverIP = "192.168.31.225";
     private static final String serverPORT = "8080";
     private static final String databaseNAME = "NBADataSystem";
     private static final String teamrank = "getTeamSeasonRanks.do";
     private static final String playerrank = "getPlayerRanks.do";
-    private static final String dayrank = "getDayRanks.do";
+    private static final String dayrank = "getPlayerRanks.do?date=2016-03-21";
     ArrayList<Fragment> viewContainter = new ArrayList<Fragment>();
     ArrayList<String> titleContainer = new ArrayList<String>();
     List<Map<String, String>> eastranks = new ArrayList<Map<String,String>>(),westranks = new ArrayList<Map<String,String>>();
     List<Map<String, String>> playerranks = new ArrayList<Map<String,String>>();
+    List<Map<String, String>> dayranks = new ArrayList<Map<String,String>>();
 
 
     @Override
@@ -101,7 +102,7 @@ public class RankActivity extends FragmentActivity {
         viewContainter.add(new EastTeamRankFragment(eastranks));
         viewContainter.add(new WestTeamRankFragment(westranks));
         viewContainter.add(new PlayerRankFragment(playerranks));
-        viewContainter.add(new DayRankFragment());
+        viewContainter.add(new DayRankFragment(dayranks));
         titleContainer.add("东部排行");
         titleContainer.add("西部排行");
         titleContainer.add("球员排行");
@@ -157,38 +158,74 @@ public class RankActivity extends FragmentActivity {
                 ranks = null;
             }
 
-            List<Map<String,String>> playerranks = new ArrayList<Map<String,String>>();
-            String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+playerrank;
-            String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
-            try{
-                JSONArray array2 = new JSONArray(jsonstring2);
-                for (int i = 0; i < array2.length(); i++) {
-                    Map<String,String> temp = new HashMap<String,String>();
-                    JSONObject obj = array2.getJSONObject(i);
-                    String name = obj.getString("name");
-                    String id = obj.getString("id");
-                    String teamName = obj.getString("teamName");
-                    String data = obj.getString("data");
-                    String seasonData = obj.getString("seasonData");
-                    String type = obj.getString("type");
-
-                    temp.put("name",name);
-                    temp.put("id", id);
-                    temp.put("teamName", teamName);
-                    temp.put("data",data);
-                    temp.put("seasonData",seasonData);
-                    temp.put("type",type);
-                    playerranks.add(temp);
-                }
-
-            }catch (JSONException e2) {
-                e2.printStackTrace();
-            }
-            RankActivity.this.playerranks = playerranks;
+            getplayerranks();
+            getdayranks();
             initdata(ranks);
             handler.sendEmptyMessage(GET_DATA);
         }
     });
+
+    public void getplayerranks(){
+        List<Map<String,String>> playerranks = new ArrayList<Map<String,String>>();
+        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+playerrank;
+        String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
+        try{
+            JSONArray array2 = new JSONArray(jsonstring2);
+            for (int i = 0; i < array2.length(); i++) {
+                Map<String,String> temp = new HashMap<String,String>();
+                JSONObject obj = array2.getJSONObject(i);
+                String name = obj.getString("name");
+                String id = obj.getString("id");
+                String teamName = obj.getString("teamName");
+                String data = obj.getString("data");
+                String seasonData = obj.getString("seasonData");
+                String type = obj.getString("type");
+
+                temp.put("name",name);
+                temp.put("id", id);
+                temp.put("teamName", teamName);
+                temp.put("data",data);
+                temp.put("seasonData",seasonData);
+                temp.put("type",type);
+                playerranks.add(temp);
+            }
+
+        }catch (JSONException e2) {
+            e2.printStackTrace();
+        }
+        RankActivity.this.playerranks = playerranks;
+    }
+
+    public void getdayranks(){
+        List<Map<String,String>> dayranks = new ArrayList<Map<String,String>>();
+        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+dayrank;
+        String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
+        try{
+            JSONArray array2 = new JSONArray(jsonstring2);
+            for (int i = 0; i < array2.length(); i++) {
+                Map<String,String> temp = new HashMap<String,String>();
+                JSONObject obj = array2.getJSONObject(i);
+                String name = obj.getString("name");
+                String id = obj.getString("id");
+                String teamName = obj.getString("teamName");
+                String data = obj.getString("data");
+                String seasonData = obj.getString("seasonData");
+                String type = obj.getString("type");
+
+                temp.put("name",name);
+                temp.put("id", id);
+                temp.put("teamName", teamName);
+                temp.put("data",data);
+                temp.put("seasonData",seasonData);
+                temp.put("type",type);
+                dayranks.add(temp);
+            }
+
+        }catch (JSONException e2) {
+            e2.printStackTrace();
+        }
+        RankActivity.this.dayranks = dayranks;
+    }
 
     Handler handler = new Handler(){
         @Override

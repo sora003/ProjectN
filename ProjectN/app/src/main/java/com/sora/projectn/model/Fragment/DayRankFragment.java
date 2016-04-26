@@ -7,8 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.sora.projectn.R;
+import com.sora.projectn.utils.DayRankAdapter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,10 +36,71 @@ public class DayRankFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private List<Map<String,String>> dayranks;
+    private List<Map<String,String>> ranklist1 = new ArrayList<Map<String,String>>(),ranklist2 = new ArrayList<Map<String,String>>(),ranklist3 = new ArrayList<Map<String,String>>(),ranklist4 = new ArrayList<Map<String,String>>();//得分篮板,助攻,抢断
+    private ListView rank1,rank2,rank3,rank4;
+
     private OnFragmentInteractionListener mListener;
 
     public DayRankFragment() {
         // Required empty public constructor
+    }
+
+    public DayRankFragment(List<Map<String,String>> dayranks){
+        this.dayranks = dayranks;
+        initdata();
+    }
+
+
+    private void initdata(){
+        for(Map<String,String> player:dayranks){
+            switch (player.get("type")){
+                case "0":
+                    ranklist1.add(player);
+                    break;
+                case "1":
+                    ranklist2.add(player);
+                    break;
+                case "2":
+                    ranklist3.add(player);
+                    break;
+                case "3":
+                    ranklist4.add(player);
+                    break;
+            }
+        }
+        Collections.sort(ranklist1, new Comparator<Map<String, String>>() {
+            @Override
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
+                    return 1;
+                } else return -1;
+            }
+        });
+        Collections.sort(ranklist2, new Comparator<Map<String, String>>() {
+            @Override
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
+                    return 1;
+                } else return -1;
+            }
+        });
+        Collections.sort(ranklist3, new Comparator<Map<String, String>>() {
+            @Override
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
+                    return 1;
+                } else return -1;
+            }
+        });
+        Collections.sort(ranklist4, new Comparator<Map<String, String>>() {
+            @Override
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
+                    return 1;
+                } else return -1;
+            }
+        });
     }
 
     /**
@@ -65,7 +134,20 @@ public class DayRankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_day_rank, container, false);
+        View view = inflater.inflate(R.layout.fragment_day_rank, container, false);
+        rank1 = (ListView)view.findViewById(R.id.day_rank_pts);
+        rank2 = (ListView)view.findViewById(R.id.day_rank_2);
+        rank3 = (ListView)view.findViewById(R.id.day_rank_3);
+        rank4 = (ListView)view.findViewById(R.id.day_rank_4);
+        DayRankAdapter adapter1 = new DayRankAdapter(ranklist1,getContext());
+        DayRankAdapter adapter2 = new DayRankAdapter(ranklist2,getContext());
+        DayRankAdapter adapter3 = new DayRankAdapter(ranklist3,getContext());
+        DayRankAdapter adapter4 = new DayRankAdapter(ranklist4,getContext());
+        rank1.setAdapter(adapter1);
+        rank2.setAdapter(adapter2);
+        rank3.setAdapter(adapter3);
+        rank4.setAdapter(adapter4);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

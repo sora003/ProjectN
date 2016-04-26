@@ -11,6 +11,8 @@
     <dimen name="conference_vertical_margin">5dp</dimen>
     <dimen name="teamLogo_maxWidth">30dp</dimen>
     <dimen name="titleSize">25sp</dimen>
+    <dimen name="playerSize">20sp</dimen>
+    <dimen name="rankSize">20sp</dimen>
 
     <!--activity_team-->
     <!--球队Logo占用的最大宽度-->
