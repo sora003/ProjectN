@@ -4,14 +4,25 @@ package com.sora.projectn.utils.beans;
  * Created by Sora on 2016/2/5.
  */
 public class TeamPlayerVo {
+    private int id;
+    private int num;
     private String name;
     private String pos;
-    private int no;
 
-    public TeamPlayerVo(String name, int no, String pos) {
+
+    public TeamPlayerVo(int id, int num,String name,String pos) {
+        this.id = id;
         this.name = name;
-        this.no = no;
+        this.num = num;
         this.pos = pos;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -22,12 +33,12 @@ public class TeamPlayerVo {
         this.name = name;
     }
 
-    public int getNo() {
-        return no;
+    public int getNum() {
+        return num;
     }
 
-    public void setNo(int no) {
-        this.no = no;
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public String getPos() {

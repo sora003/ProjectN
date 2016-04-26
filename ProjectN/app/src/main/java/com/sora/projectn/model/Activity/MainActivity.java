@@ -44,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(mContext,TeamListActivity.class));
                         break;
                     case 1:
-                        startActivity(new Intent(mContext,PlayerListActivity.class));
+                        startActivity(new Intent(mContext,TeamListActivity.class));
                         break;
                     case 2:
-                        startActivity(new Intent(mContext,MatchListActivity.class));
+//                        startActivity(new Intent(mContext,MatchListActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(mContext,RankActivity.class));

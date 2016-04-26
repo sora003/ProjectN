@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
+import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
 import com.sora.projectn.utils.TeamPlayerAdapter;
 import com.sora.projectn.utils.beans.TeamPlayerVo;
@@ -29,8 +31,6 @@ import java.util.List;
  * Created by Sora on 2016/1/28.
  */
 public class TeamPlayerFragment extends Fragment {
-
-    private static final int SET_VIEW = 0x01;
 
     private Context mContext;
 
@@ -53,7 +53,21 @@ public class TeamPlayerFragment extends Fragment {
 
         parseIntent();
 
-        getData.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                list = getTeamPlayer();
+
+
+                if (list == null){
+                    handler.sendEmptyMessage(Consts.RES_ERROR);
+                }
+                else {
+                    handler.sendEmptyMessage(Consts.SET_VIEW);
+                }
+
+            }
+        }).start();
 
 
         return view;
@@ -79,17 +93,7 @@ public class TeamPlayerFragment extends Fragment {
         id = bundle.getInt("id");
     }
 
-    /**
-     * 获取数据
-     */
-    Thread getData = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            list = getTeamPlayer();
 
-            handler.sendEmptyMessage(SET_VIEW);
-        }
-    });
 
     /**
      * Handler
@@ -99,8 +103,12 @@ public class TeamPlayerFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case SET_VIEW:
+                case Consts.SET_VIEW:
                     setView();
+                    break;
+                case Consts.RES_ERROR:
+                    Toast.makeText(mContext, Consts.ToastMessage01, Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
@@ -118,34 +126,38 @@ public class TeamPlayerFragment extends Fragment {
     public List<TeamPlayerVo> getTeamPlayer() {
         List<TeamPlayerVo> list = new ArrayList<>();
 
-        String jsonString = ACache.get(mContext).getAsString("c" + id);
+        String jsonString = ACache.get(mContext).getAsString("getTeamPlayerList - " + id);
 
         if (jsonString == null){
 
             //从server获取数据
 
-            jsonString = "test";
-//            jsonString= GetHttpResponse.getHttpResponse(GetHttpResponse.getTeamPlayerList + "?teamId=" + id);
 
-            ACache.get(mContext).put("getTeamPlayerList" + id ,jsonString);
+            jsonString= GetHttpResponse.getHttpResponse(Consts.getTeamPlayerList + "?teamId=" + id);
 
-            Log.i("Resource", "Internet");
+            if (jsonString == null){
+                return null;
+            }
+
+
+            ACache.get(mContext).put("getTeamPlayerList - " + id ,jsonString,ACache.TEST_TIME);
+
+            Log.i("Resource", Consts.resourceFromServer);
         }
         else
         {
-            Log.i("Resource","Cache");
+            Log.i("Resource",Consts.resourceFromCache);
         }
 
         //解析jsonString 构造Map
 
         try {
             JSONArray array = new JSONArray(jsonString);
-//            for (int i = 0; i < array.length(); i++) {
-//                JSONObject obj = array.getJSONObject(i);
-//                String sName = obj.getString("sName");
-//                int id = obj.getInt("id");
-//
-//                map.put(sName, id);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                TeamPlayerVo vo = new TeamPlayerVo(obj.getInt("id"),obj.getInt("num"),obj.getString("name"),obj.getString("pos"));
+                list.add(vo);
+            }
 
 
 

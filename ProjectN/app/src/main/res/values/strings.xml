@@ -4,10 +4,10 @@
     <string name="open">data</string>
     <string name="close">data</string>
 
-    <!--activity_teamlist-->
+    <!--activity_teamlist_old-->
     <string name="text_westConference">西部球队</string>
     <string name="text_eastConference">东部球队</string>
-    <string name="text_wC1">西南区</string>
+    <string name="text_sw">西南区</string>
     <string name="text_wC1T1"> </string>
     <string name="text_wC1T2"> </string>
     <string name="text_wC1T3"> </string>
@@ -51,18 +51,16 @@
     <string name="text_teamGuide2">数据</string>
     <string name="text_teamGuide3">阵容</string>
     <string name="text_teamGuide4">赛程</string>
-    <string name="text_fragment_teamseason">本赛季数据分析</string>
+    <string name="text_fragment_teamseason">本赛季场均数据统计</string>
     <string name="text_league">West Conference</string>
     <string name="text_Keys">筛选条件：</string>
     <string name="text_playerLeague">赛区:</string>
     <string name="text_playerPosition">位置:</string>
     <string name="text_playerKey">数据项:</string>
     <string name="text_playerAge">年龄:</string>
+    <string name="hint">Waiting...</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <!--Test For activity_teamlist-->
+    <!--Test For activity_teamlist_old-->
     <!--<string name="text_wC1T1">小牛</string>-->
     <!--<string name="text_wC1T2">火箭</string>-->
     <!--<string name="text_wC1T3">灰熊</string>-->

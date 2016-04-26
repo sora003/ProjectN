@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
+import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
 
 
@@ -23,13 +25,12 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * Created by Sora on 2016/1/28.
  */
 public class TeamDataFragment extends Fragment {
-
-    private static final int SET_VIEW = 0x01;
 
 
     /**
@@ -40,7 +41,6 @@ public class TeamDataFragment extends Fragment {
 
     private int id;
     private Context mContext;
-    private Map<String, String> teamInfo;
     private View fView;
 
     private TextView tv_league;
@@ -62,7 +62,26 @@ public class TeamDataFragment extends Fragment {
 
         parseIntent();
 
-        getData.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                infoMap = getTeamInfo();
+
+                //测试数据
+//            test();
+
+                if (infoMap == null){
+                    handler.sendEmptyMessage(Consts.RES_ERROR);
+                }
+                else {
+                    handler.sendEmptyMessage(Consts.SET_VIEW);
+                }
+
+
+
+            }
+        }).start();
+
 
         return view;
 
@@ -88,20 +107,6 @@ public class TeamDataFragment extends Fragment {
 
     }
 
-    /**
-     * 获取数据
-     */
-    Thread getData = new Thread(new Runnable() {
-        @Override
-        public void run() {
-//            infoMap = getTeamInfo();
-
-            //测试数据
-            test();
-
-            handler.sendEmptyMessage(SET_VIEW);
-        }
-    });
 
     private void test() {
         Map<String,String> map = new HashMap<>();
@@ -124,8 +129,11 @@ public class TeamDataFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case SET_VIEW:
+                case Consts.SET_VIEW:
                     setView();
+                    break;
+                case Consts.RES_ERROR:
+                    Toast.makeText(mContext, Consts.ToastMessage01 ,Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -146,47 +154,51 @@ public class TeamDataFragment extends Fragment {
      *
      * @return
      */
-    private Map<String,String> getTeamInfo() {
-        Map<String,String> map = new HashMap<>();
+    public Map<String, String> getTeamInfo() {
+        Map<String ,String> map = new HashMap<>();
 
-        String jsonString = ACache.get(mContext).getAsString("getTeamInfos" + id);
+        String jsonString = ACache.get(mContext).getAsString("getTeamInfos - " + id);
 
 
 
         if (jsonString == null){
-
             //从server获取数据
 
-            jsonString = "test";
-//            jsonString= GetHttpResponse.getHttpResponse(GetHttpResponse.getTeamInfos + "?teamId=" + id);
 
-            ACache.get(mContext).put("getTeamInfos" + id ,jsonString,ACache.TIME_HOUR);
+            jsonString= GetHttpResponse.getHttpResponse(Consts.getTeamInfos + "?teamId=" + id);
 
-            Log.i("Resource", "Internet");
+            if (jsonString == null){
+                return null;
+            }
+
+            ACache.get(mContext).put("getTeamInfos - " + id ,jsonString,ACache.TEST_TIME);
+            Log.i("Resource", Consts.resourceFromServer);
         }
         else
         {
-            Log.i("Resource","Cache");
+            Log.i("Resource",Consts.resourceFromCache);
         }
 
         //解析jsonString 构造Map
-
-        JSONObject obj = null;
         try {
-            obj = new JSONObject(jsonString);
 
+            JSONObject obj = new JSONObject(jsonString);
+
+            map.put("name",obj.getString("name"));
             map.put("city",obj.getString("city"));
             map.put("league",obj.getString("league"));
             map.put("conference",obj.getString("conference"));
             map.put("court",obj.getString("court"));
-            map.put("startYearInNBA", String.valueOf(obj.getInt("startYearInNBA")));
-            map.put("numOfChampions", String.valueOf(obj.getInt("numOfChampions")));
+            map.put("startYearInNBA",obj.getString("startYearInNBA"));
+            map.put("numOfChampions",obj.getString("numOfChampions"));
+
 
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
         return map;
     }
