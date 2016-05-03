@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 /**
  * Created by Sora on 2016-04-26.
+ *
  * 解决ScrollView下嵌套ListView只能显示一行的问题
  */
 public class MyListView extends ListView {

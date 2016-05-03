@@ -254,7 +254,7 @@ public class TeamStaticsFragment extends Fragment {
 
         listView.setAdapter(adapter);
 
-        textView.setText("本赛季场均数据统计");
+        textView.setText("赛季场均数据统计");
 
 
     }

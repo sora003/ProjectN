@@ -1,5 +1,7 @@
 package com.sora.projectn.utils;
 
+import android.content.SharedPreferences;
+
 /**
  * Created by Sora on 2016-04-26.
  */
@@ -8,7 +10,7 @@ public class Consts {
     /**
      * Server地址
      */
-    
+
     private static final  String url = "http://192.168.191.1:8080/NBADataSystem/";
 
     public static final  String getTeams = url + "getTeams.do";
@@ -20,6 +22,14 @@ public class Consts {
     public static final  String getTeamSeasonStatistics = url + "getTeamSeasonStatistics.do";
 
     public static final  String getTeamSeasonRanks = url + "getTeamSeasonRanks.do";
+
+    public static final  String getPlayerRanks = url + "getPlayerRanks.do";
+
+    public static final  String getPlayerSeasonStatistics = url + "getPlayerSeasonStatistics.do";
+
+    public static final String getTeamVsStatistics = url + "getTeamVsStatistics.do";
+
+
 
 
     /**
@@ -55,6 +65,27 @@ public class Consts {
     public static final String Central = "中部区";
 
     public static final String Atlantic = "大西洋区";
+
+
+    /**
+     * SharedPreferences记录变量
+     */
+    public static final String SharedPreferences_KEY_01 = "character";
+
+    /**
+     * 球迷
+     */
+    public static final int SharedPreferences_Vaule_01_1 = 0xE01;
+
+    /**
+     * 教练
+     */
+    public static final int SharedPreferences_Vaule_01_2 = 0xE02;
+
+    /**
+     * 球探
+     */
+    public static final int SharedPreferences_Vaule_01_3 = 0xE03;
 
 
 

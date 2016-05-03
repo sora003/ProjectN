@@ -46,13 +46,13 @@
             android:textSize="@dimen/playerSize" />
 
     </LinearLayout>
-    <com.sora.projectn.utils.ListViewForScrollView
+    <com.sora.projectn.utils.MyListView
         android:id="@+id/player_rank_pts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/playerrank_t1">
 
-    </com.sora.projectn.utils.ListViewForScrollView>
+    </com.sora.projectn.utils.MyListView>
     <TextView
         android:id="@+id/playerrank_t2"
         android:layout_width="wrap_content"
@@ -87,13 +87,13 @@
             android:textSize="@dimen/playerSize" />
 
     </LinearLayout>
-    <com.sora.projectn.utils.ListViewForScrollView
+    <com.sora.projectn.utils.MyListView
         android:id="@+id/player_rank_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/playerrank_title2">
 
-    </com.sora.projectn.utils.ListViewForScrollView>
+    </com.sora.projectn.utils.MyListView>
     <TextView
         android:id="@+id/playerrank_t3"
         android:layout_width="wrap_content"
@@ -127,13 +127,13 @@
             android:text="数据"
             android:textSize="@dimen/playerSize" />
     </LinearLayout>
-    <com.sora.projectn.utils.ListViewForScrollView
+    <com.sora.projectn.utils.MyListView
         android:id="@+id/player_rank_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/playerrank_title3">
 
-    </com.sora.projectn.utils.ListViewForScrollView>
+    </com.sora.projectn.utils.MyListView>
     <TextView
         android:id="@+id/playerrank_t4"
         android:layout_width="wrap_content"
@@ -168,13 +168,13 @@
             android:textSize="@dimen/playerSize" />
 
     </LinearLayout>
-    <com.sora.projectn.utils.ListViewForScrollView
+    <com.sora.projectn.utils.MyListView
         android:id="@+id/player_rank_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/playerrank_title4">
 
-    </com.sora.projectn.utils.ListViewForScrollView>
+    </com.sora.projectn.utils.MyListView>
 
 </RelativeLayout>
     </LinearLayout>

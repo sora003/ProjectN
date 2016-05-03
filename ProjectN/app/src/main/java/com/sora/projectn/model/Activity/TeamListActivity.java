@@ -28,35 +28,35 @@ import java.util.List;
 public class TeamListActivity extends FragmentActivity {
 
 
-    private Toolbar toolbar;
+    protected Toolbar toolbar;
 
-    private Context mContext;
+    protected Context mContext;
 
     //Fragment
-    private TeamListFragment westFragment;
-    private TeamListFragment eastFragment;
+    protected TeamListFragment westFragment;
+    protected TeamListFragment eastFragment;
 
     //ViewPager
-    private ViewPager viewPager;
+    protected ViewPager viewPager;
 
 
     //TextView
-    private TextView tv_westConference;
-    private TextView tv_eastConference;
+    protected TextView tv_westConference;
+    protected TextView tv_eastConference;
 
     //ImageView
-    private ImageView cursor;
+    protected ImageView cursor;
 
-    private List<Fragment> fragments;
+    protected List<Fragment> fragments;
 
-    private FragAdapter adapter;
+    protected FragAdapter adapter;
 
     //游标宽度
-    private int bmpw = 0;
+    protected int bmpw = 0;
     //动画图片偏移量 滑块占据一个标签栏 offset设置为0
-    private int offset = 0;
+    protected int offset = 0;
     //当前页卡编号  初始编号为0
-    private int currIndex = 0;
+    protected int currIndex = 0;
 
 
     @Override
@@ -78,7 +78,7 @@ public class TeamListActivity extends FragmentActivity {
     /**
      * 初始化View
      */
-    private void initView() {
+    protected void initView() {
 
         mContext = this;
 
@@ -119,7 +119,7 @@ public class TeamListActivity extends FragmentActivity {
     /**
      * 获取Intent传递来的abbr值
      */
-    private void parseIntent() {
+    protected void parseIntent() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         int west = 0;
@@ -142,7 +142,7 @@ public class TeamListActivity extends FragmentActivity {
     /**
      * 初始化ViewPager
      */
-    private void initViewPager() {
+    protected void initViewPager() {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         fragments = new ArrayList<Fragment>();
@@ -168,7 +168,7 @@ public class TeamListActivity extends FragmentActivity {
     }
 
 
-    private void initCursorPos() {
+    protected void initCursorPos() {
         //初始化游标宽度为二分之一屏幕宽度
         WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         int width = windowManager.getDefaultDisplay().getWidth();
@@ -185,7 +185,7 @@ public class TeamListActivity extends FragmentActivity {
     /**
      * 设置监听
      */
-    private void initListener() {
+    protected void initListener() {
         //标签栏的监听
         tv_westConference.setOnClickListener(new MyOnClickListener(){
             @Override
@@ -209,7 +209,7 @@ public class TeamListActivity extends FragmentActivity {
     }
 
 
-    private class MyOnClickListener implements View.OnClickListener {
+    protected class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             //跳转到新的fragment
@@ -225,7 +225,7 @@ public class TeamListActivity extends FragmentActivity {
         }
     }
 
-    private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+    protected class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         //相邻页面的偏移量
         private int one = bmpw;

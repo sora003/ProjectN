@@ -13,6 +13,7 @@ import com.sora.projectn.model.Fragment.DayRankFragment;
 import com.sora.projectn.model.Fragment.EastTeamRankFragment;
 import com.sora.projectn.model.Fragment.PlayerRankFragment;
 import com.sora.projectn.model.Fragment.WestTeamRankFragment;
+import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
 import com.sora.projectn.utils.RankAdapter;
 
@@ -35,13 +36,6 @@ public class RankActivity extends FragmentActivity {
 
     private ViewPager pager;
     private PagerTabStrip tabstrip;
-    private static final int GET_DATA = 0x01;
-    private static final String serverIP = "192.168.31.225";
-    private static final String serverPORT = "8080";
-    private static final String databaseNAME = "NBADataSystem";
-    private static final String teamrank = "getTeamSeasonRanks.do";
-    private static final String playerrank = "getPlayerRanks.do";
-    private static final String dayrank = "getPlayerRanks.do?date=2016-03-21";
     ArrayList<Fragment> viewContainter = new ArrayList<Fragment>();
     ArrayList<String> titleContainer = new ArrayList<String>();
     List<Map<String, String>> eastranks = new ArrayList<Map<String,String>>(),westranks = new ArrayList<Map<String,String>>();
@@ -53,7 +47,60 @@ public class RankActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initview();
-        getData.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //TODO 这个要改掉
+//            list = BLS.getTeamConference(mContext);
+                List<Map<String, String>> ranks = new ArrayList<Map<String,String>>();
+                String url = Consts.getTeamSeasonRanks;
+                String jsonstring = GetHttpResponse.getHttpResponse(url);
+
+
+                try {
+                    JSONArray array = new JSONArray(jsonstring);
+                    for (int i = 0; i < array.length(); i++) {
+                        Map<String,String> temp = new HashMap<String,String>();
+                        JSONObject obj = array.getJSONObject(i);
+                        String teamID = obj.getString("teamId");
+                        String rank = obj.getString("rank");
+                        String name = obj.getString("name");
+                        String league = obj.getString("league");
+                        String wins = obj.getString("wins");
+                        String loses = obj.getString("loses");
+                        String winRate = obj.getString("winRate");
+                        String gamesBehind = obj.getString("gamesBehind");
+                        String pspg = obj.getString("pspg");
+                        String papg = obj.getString("papg");
+
+                        temp.put("teamID", teamID);
+                        temp.put("rank", rank);
+                        temp.put("name", name);
+                        temp.put("league", league);
+                        temp.put("wins", wins);
+                        temp.put("loses", loses);
+                        temp.put("winRate", winRate);
+                        temp.put("gamesBehind", gamesBehind);
+                        temp.put("pspg", pspg);
+                        temp.put("papg", papg);
+
+                        ranks.add(temp);
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    ranks = null;
+                }
+
+                getplayerranks();
+                getdayranks();
+                initdata(ranks);
+                handler.sendEmptyMessage(Consts.SET_VIEW);
+            }
+        }).start();
+
 //        initviewpager();
     }
 
@@ -113,61 +160,11 @@ public class RankActivity extends FragmentActivity {
 
 
 
-    Thread getData = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            //TODO 这个要改掉
-//            list = BLS.getTeamConference(mContext);
-            List<Map<String, String>> ranks = new ArrayList<Map<String,String>>();
-            String url = "http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+teamrank;
-            String jsonstring = GetHttpResponse.getHttpResponse(url);
-            try {
-                JSONArray array = new JSONArray(jsonstring);
-                for (int i = 0; i < array.length(); i++) {
-                    Map<String,String> temp = new HashMap<String,String>();
-                    JSONObject obj = array.getJSONObject(i);
-                    String teamID = obj.getString("teamId");
-                    String rank = obj.getString("rank");
-                    String name = obj.getString("name");
-                    String league = obj.getString("league");
-                    String wins = obj.getString("wins");
-                    String loses = obj.getString("loses");
-                    String winRate = obj.getString("winRate");
-                    String gamesBehind = obj.getString("gamesBehind");
-                    String pspg = obj.getString("pspg");
-                    String papg = obj.getString("papg");
 
-                    temp.put("teamID", teamID);
-                    temp.put("rank", rank);
-                    temp.put("name", name);
-                    temp.put("league", league);
-                    temp.put("wins", wins);
-                    temp.put("loses", loses);
-                    temp.put("winRate", winRate);
-                    temp.put("gamesBehind", gamesBehind);
-                    temp.put("pspg", pspg);
-                    temp.put("papg", papg);
-
-                    ranks.add(temp);
-                }
-
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                ranks = null;
-            }
-
-            getplayerranks();
-            getdayranks();
-            initdata(ranks);
-            handler.sendEmptyMessage(GET_DATA);
-        }
-    });
 
     public void getplayerranks(){
         List<Map<String,String>> playerranks = new ArrayList<Map<String,String>>();
-        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+playerrank;
+        String url2 =Consts.getPlayerRanks;
         String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
         try{
             JSONArray array2 = new JSONArray(jsonstring2);
@@ -198,7 +195,7 @@ public class RankActivity extends FragmentActivity {
 
     public void getdayranks(){
         List<Map<String,String>> dayranks = new ArrayList<Map<String,String>>();
-        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+dayrank;
+        String url2 = Consts.getPlayerRanks + "?date=2016-03-21";
         String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
         try{
             JSONArray array2 = new JSONArray(jsonstring2);
@@ -232,7 +229,7 @@ public class RankActivity extends FragmentActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case GET_DATA:
+                case Consts.SET_VIEW:
                     initviewpager();
             }
         }

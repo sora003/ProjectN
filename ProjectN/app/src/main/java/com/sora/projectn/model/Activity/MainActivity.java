@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     //ActionBarDrawerToggle控件内的内容
 
-    private String[] data = {"我关注的球队","球队","球员检索","历史比赛数据"};
+    private String[] data = {"我关注的球队","球队","球员检索","历史比赛数据","设置","排行榜(测试)","球探功能(测试)","教练球队数据对比功能测试"};
 
     private ArrayAdapter arrayAdapter;
 
@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init_ActionBarDrawerToggle();
+
+
 
         lv_left_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -53,6 +55,22 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3:
 //                        startActivity(new Intent(mContext,MatchListActivity.class));
+                        break;
+                    case 4:
+                        startActivity(new Intent(mContext,RankActivity.class));
+                        break;
+                    case 5:
+                        startActivity(new Intent(mContext,RankActivity.class));
+                        break;
+                    case 6:
+                        startActivity(new Intent(mContext,SearchPlayerActivity.class));
+                        break;
+                    case 7:
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("teamId", 1);
+                        Intent intent = new Intent(mContext,TeamCombatListActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         break;
                 }
             }

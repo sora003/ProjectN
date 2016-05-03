@@ -172,7 +172,7 @@ public class TeamListActivity_Old extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teamlist_old);
+        setContentView(R.layout.old_activity_teamlist);
 
         initView();
         getData.start();

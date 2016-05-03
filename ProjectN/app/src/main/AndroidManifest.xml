@@ -17,11 +17,16 @@
         android:theme="@style/AppTheme">
 
         <activity
+            android:name=".model.Activity.WelcomeActivity_Old">
+
+        </activity>
+
+        <activity
             android:name=".model.Activity.WelcomeActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+            <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -56,10 +61,28 @@
 
         </activity>
 
+        <activity
+            android:name=".model.Activity.SearchPlayerActivity">
+
+        </activity>
 
 
-        <activity android:name=".model.Activity.RankActivity"
-            />
+
+        <activity android:name=".model.Activity.RankActivity">
+
+        </activity>
+
+        <activity
+            android:name=".model.Activity.TeamCombatListActivity">
+
+        </activity>
+
+
+        <activity
+            android:name=".model.Activity.TeamCombatActivity">
+
+        </activity>
+
 
         <service
             android:name=".gc.Service.ScrapeService"
