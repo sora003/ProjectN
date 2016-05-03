@@ -98,7 +98,7 @@ public class TeamCombatActivity extends AppCompatActivity{
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         //设置Toolbar标题
-        toolbar.setTitle("场均数据对比");
+        toolbar.setTitle("数据对比");
         //设置标题颜色
         toolbar.setTitleTextColor(getResources().getColor(R.color.color_white));
         //设置返回键可用
