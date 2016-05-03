@@ -8,95 +8,105 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.gc.Service.ScrapeService;
+import com.sora.projectn.utils.Consts;
 
 /**
- * Created by Sora on 2016/1/11.
- * 爬取NBA官网数据，在爬取过程中显示固定画面
+ * Created by Sora on 2016-04-26.
  */
 public class WelcomeActivity extends AppCompatActivity{
 
     private static final String HAS_TEAMINFO = "hasTeamLogo";
 
     private Intent intent;
-    private Context mContext = this;
-    private ScrapeService scrapeService;
-    private Boolean hasTeamInfo;
+    private Context mContext;
+
+
     private SharedPreferences.Editor editor;
+    private int character;
+    TextView textView_01;
+    TextView textView_02;
+    TextView textView_03;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        initView();
+
+        initListener();
+
+
         //使用SharedPreferences 读取球队基本数据是否已经存在
-        SharedPreferences sharedPreferences = getSharedPreferences("hasData", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("character", MODE_PRIVATE);
+        //获取编辑器
         editor = sharedPreferences.edit();
-        hasTeamInfo = sharedPreferences.getBoolean(HAS_TEAMINFO,false);
-        if (hasTeamInfo){
+        character = sharedPreferences.getInt(Consts.SharedPreferences_KEY_01, 0);
+        if (character != 0){
             startActivity(new Intent(mContext,MainActivity.class));
+            /**
+             * TODO 有待考量
+             */
             finish();
         }
         else {
-            initService();
-            editor.remove(HAS_TEAMINFO);
-            editor.putBoolean(HAS_TEAMINFO, true);
+
+            editor.putInt(Consts.SharedPreferences_KEY_01, character);
+            //提交修改
+            editor.commit();
         }
 
 
 
     }
 
+    private void initView() {
+        mContext = this;
 
-    //TODO 考虑到爬取数据尤其是图片是非常耗时的操作 因此考虑仅在第一次启动程序时爬取数据 可在Setting中添加更新数据库操作功能  不排除每次启动时仅更新部分数据的可行性
-    //启动Service
-    private void initService() {
-        intent = new Intent(mContext, ScrapeService.class);
-        //启动WeatherService
-        startService(intent);
-        //绑定Service
-        bindService(intent, conn, Context.BIND_AUTO_CREATE);
+        textView_01 = (TextView) findViewById(R.id.tv_welcome_01);
+        textView_02 = (TextView) findViewById(R.id.tv_welcome_02);
+        textView_03 = (TextView) findViewById(R.id.tv_welcome_03);
     }
 
-    ///ServiceConnection 与Service交互
-    ServiceConnection conn = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            //通过Binder 获取Service的引用
-           scrapeService = ((ScrapeService.CrawlerServiceBinder) service).getService();
+    private void initListener() {
+        textView_01.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt(Consts.SharedPreferences_KEY_01, Consts.SharedPreferences_Vaule_01_1);
+                commit();
 
-            //从接口读取数据
-            scrapeService.setCallBack(new ScrapeService.OnParserCallBack() {
-                @Override
-                public void OnParserComplete(Boolean isScrape) {
-                    //如果爬取完成 跳转到MainActivity
-                    if (isScrape){
-                        //修改SharedPreferences中的数据 说明已爬取过基本数据
-                        //取代commit使用
-                        editor.apply();
-                        startActivity(new Intent(mContext,MainActivity.class));
-                        //TODO  WeatherActivity的关闭问题
-                        finish();
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            scrapeService.removeCallBack();
-        }
-    };
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //添加了是否使用Service爬取数据的判断 防止数据已爬取过不调用Service而报错的情况
-        if (!hasTeamInfo){
-            unbindService(conn);
-            stopService(intent);
-        }
+            }
+        });
+        textView_02.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt(Consts.SharedPreferences_KEY_01, Consts.SharedPreferences_Vaule_01_2);
+                commit();
+            }
+        });
+        textView_03.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.putInt(Consts.SharedPreferences_KEY_01, Consts.SharedPreferences_Vaule_01_3);
+                commit();
+            }
+        });
     }
+
+    private void commit() {
+        //提交
+        editor.commit();
+
+        //跳转
+        Intent intent = new Intent(mContext,MainActivity.class);
+        startActivity(intent);
+    }
+
+
 }

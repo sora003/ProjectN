@@ -8,10 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/iv_main"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+        <!--这里动态添加Fragment-->
     </LinearLayout>
 
     <!--侧滑菜单-->

@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.utils.DayRankAdapter;
+import com.sora.projectn.utils.MyListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +39,7 @@ public class DayRankFragment extends Fragment {
 
     private List<Map<String,String>> dayranks;
     private List<Map<String,String>> ranklist1 = new ArrayList<Map<String,String>>(),ranklist2 = new ArrayList<Map<String,String>>(),ranklist3 = new ArrayList<Map<String,String>>(),ranklist4 = new ArrayList<Map<String,String>>();//得分篮板,助攻,抢断
-    private ListView rank1,rank2,rank3,rank4;
+    private MyListView rank1,rank2,rank3,rank4;
 
     private OnFragmentInteractionListener mListener;
 
@@ -135,10 +136,10 @@ public class DayRankFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_day_rank, container, false);
-        rank1 = (ListView)view.findViewById(R.id.day_rank_pts);
-        rank2 = (ListView)view.findViewById(R.id.day_rank_2);
-        rank3 = (ListView)view.findViewById(R.id.day_rank_3);
-        rank4 = (ListView)view.findViewById(R.id.day_rank_4);
+        rank1 = (MyListView)view.findViewById(R.id.day_rank_pts);
+        rank2 = (MyListView)view.findViewById(R.id.day_rank_2);
+        rank3 = (MyListView)view.findViewById(R.id.day_rank_3);
+        rank4 = (MyListView)view.findViewById(R.id.day_rank_4);
         DayRankAdapter adapter1 = new DayRankAdapter(ranklist1,getContext());
         DayRankAdapter adapter2 = new DayRankAdapter(ranklist2,getContext());
         DayRankAdapter adapter3 = new DayRankAdapter(ranklist3,getContext());

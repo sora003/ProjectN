@@ -1,0 +1,93 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.sora.projectn.model.Activity.SearchPlayerActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="自定义参数名称："/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/customParameterName"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="请输入公式："/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/customFunction"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="请按规则输入:关键字、数字的带括号的加减乘除四则运算，关键字包括 *isFirst 			首发次数
+ *totalMatches 		出场次数
+ *time 				场均上场时间
+ *twoHit 			场均两分命中数
+ *twoShot 			场均两分出手次数
+ *threeHit 			场均三分命中数
+ *threeShot 		场均三分出手次数
+ *freeThrowHit 		场均罚球次数
+ *freeThrowShot 	场均罚球命中率
+ *offReb 			场均进攻篮板个数
+ *defReb 			场均防守篮板个数
+ *totReb 			场均篮板数
+ *ass 				场均助攻数
+ *steal 			场均抢断数
+ *blockShot 		场均盖帽数
+ *turnOver 			场均失误
+ *foul 				场均犯规
+ *score 			场均得分"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:id="@+id/submitFunction"
+        android:text="确 定"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchPlayerList">
+
+        </TextView>
+
+    </ScrollView>
+
+
+
+</LinearLayout>
+

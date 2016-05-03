@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.sora.projectn.R;
+import com.sora.projectn.utils.MyListView;
 import com.sora.projectn.utils.PlayerRankAdapter;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class PlayerRankFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private List<Map<String,String>> playerranks;
     private List<Map<String,String>> ranklist1 = new ArrayList<Map<String,String>>(),ranklist2 = new ArrayList<Map<String,String>>(),ranklist3 = new ArrayList<Map<String,String>>(),ranklist4 = new ArrayList<Map<String,String>>();//得分篮板,助攻,抢断
-    private ListView rank1,rank2,rank3,rank4;
+    private MyListView rank1,rank2,rank3,rank4;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -133,10 +134,10 @@ public class PlayerRankFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_player_rank, container, false);
-        rank1 = (ListView)view.findViewById(R.id.player_rank_pts);
-        rank2 = (ListView)view.findViewById(R.id.player_rank_2);
-        rank3 = (ListView)view.findViewById(R.id.player_rank_3);
-        rank4 = (ListView)view.findViewById(R.id.player_rank_4);
+        rank1 = (MyListView)view.findViewById(R.id.player_rank_pts);
+        rank2 = (MyListView)view.findViewById(R.id.player_rank_2);
+        rank3 = (MyListView)view.findViewById(R.id.player_rank_3);
+        rank4 = (MyListView)view.findViewById(R.id.player_rank_4);
         PlayerRankAdapter adapter1 = new PlayerRankAdapter(ranklist1,getContext());
         PlayerRankAdapter adapter2 = new PlayerRankAdapter(ranklist2,getContext());
         PlayerRankAdapter adapter3 = new PlayerRankAdapter(ranklist3,getContext());

@@ -57,13 +57,13 @@
                     android:textSize="@dimen/playerSize" />
 
             </LinearLayout>
-            <com.sora.projectn.utils.ListViewForScrollView
+            <com.sora.projectn.utils.MyListView
                 android:id="@+id/day_rank_pts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dayrank_t1">
 
-            </com.sora.projectn.utils.ListViewForScrollView>
+            </com.sora.projectn.utils.MyListView>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/dayrank_card2"
@@ -109,13 +109,13 @@
                     android:textSize="@dimen/playerSize" />
 
             </LinearLayout>
-            <com.sora.projectn.utils.ListViewForScrollView
+            <com.sora.projectn.utils.MyListView
                 android:id="@+id/day_rank_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dayrank_title2">
 
-            </com.sora.projectn.utils.ListViewForScrollView>
+            </com.sora.projectn.utils.MyListView>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/dayrank_card3"
@@ -160,13 +160,13 @@
                     android:text="数据"
                     android:textSize="@dimen/playerSize" />
             </LinearLayout>
-            <com.sora.projectn.utils.ListViewForScrollView
+            <com.sora.projectn.utils.MyListView
                 android:id="@+id/day_rank_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dayrank_title3">
 
-            </com.sora.projectn.utils.ListViewForScrollView>
+            </com.sora.projectn.utils.MyListView>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/dayrank_card4"
@@ -212,13 +212,13 @@
                     android:textSize="@dimen/playerSize" />
 
             </LinearLayout>
-            <com.sora.projectn.utils.ListViewForScrollView
+            <com.sora.projectn.utils.MyListView
                 android:id="@+id/day_rank_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dayrank_title4">
 
-            </com.sora.projectn.utils.ListViewForScrollView>
+            </com.sora.projectn.utils.MyListView>
             </LinearLayout>
 
         </RelativeLayout>

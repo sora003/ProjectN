@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
     //ActionBarDrawerToggle控件
     private ActionBarDrawerToggle mDrawerToggle;
     //ActionBarDrawerToggle控件内的内容
-    private String[] data = {"球队数据","球员数据","比赛数据","排行榜"};
+
+    private String[] data = {"我关注的球队","球队","球员检索","历史比赛数据","设置","排行榜(测试)","球探功能(测试)","教练球队数据对比功能测试"};
+
     private ArrayAdapter arrayAdapter;
 
     @Override
@@ -36,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init_ActionBarDrawerToggle();
 
+
+
         lv_left_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        startActivity(new Intent(mContext,TeamListActivity.class));
+//                        startActivity(new Intent(mContext,TeamListActivity.class));
                         break;
                     case 1:
                         startActivity(new Intent(mContext,TeamListActivity.class));
@@ -50,7 +54,23 @@ public class MainActivity extends AppCompatActivity {
 //                        startActivity(new Intent(mContext,MatchListActivity.class));
                         break;
                     case 3:
+//                        startActivity(new Intent(mContext,MatchListActivity.class));
+                        break;
+                    case 4:
                         startActivity(new Intent(mContext,RankActivity.class));
+                        break;
+                    case 5:
+                        startActivity(new Intent(mContext,RankActivity.class));
+                        break;
+                    case 6:
+                        startActivity(new Intent(mContext,SearchPlayerActivity.class));
+                        break;
+                    case 7:
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("teamId", 1);
+                        Intent intent = new Intent(mContext,TeamCombatListActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         break;
                 }
             }

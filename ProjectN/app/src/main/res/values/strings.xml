@@ -4,7 +4,7 @@
     <string name="open">data</string>
     <string name="close">data</string>
 
-    <!--activity_teamlist_old-->
+    <!--old_activity_teamlist-->
     <string name="text_westConference">西部球队</string>
     <string name="text_eastConference">东部球队</string>
     <string name="text_sw">西南区</string>
@@ -64,6 +64,16 @@
     <string name="text_playerAge">年龄:</string>
     <string name="hint">Waiting...</string>
 
+
+
+    <!--Test For old_activity_teamlist-->
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_text">请选择您的角色</string>
+    <string name="character_01">球迷</string>
+    <string name="character_02">教练</string>
+    <string name="character_03">球探</string>
     <!--Test For activity_teamlist_old-->
     <!--<string name="text_wC1T1">小牛</string>-->
     <!--<string name="text_wC1T2">火箭</string>-->

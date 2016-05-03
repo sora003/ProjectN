@@ -362,14 +362,14 @@ public class TeamActivity extends FragmentActivity{
         /**
          * getTeamSeasonRanks
          */
-        jsonString = ACache.get(mContext).getAsString("getTeamSeasonRanks - " + id);
+        jsonString = ACache.get(mContext).getAsString("getTeamSeasonRanks - " + (id));
 
         if (jsonString == null){
             //从server获取数据
 
-            jsonString= GetHttpResponse.getHttpResponse(Consts.getTeamSeasonRanks + "?teamId=" + id);
+            jsonString= GetHttpResponse.getHttpResponse(Consts.getTeamSeasonRanks + "?teamId=" + (id-1));
 
-            ACache.get(mContext).put("getTeamSeasonRanks - " + id ,jsonString,ACache.TEST_TIME);
+            ACache.get(mContext).put("getTeamSeasonRanks - " + (id) ,jsonString,ACache.TEST_TIME);
             Log.i("Resource", "server");
         }
         else
@@ -382,7 +382,7 @@ public class TeamActivity extends FragmentActivity{
 
             JSONArray array = new JSONArray(jsonString);
 
-            JSONObject obj = array.getJSONObject(id);
+            JSONObject obj = array.getJSONObject(id - 1);
 
             map.put("rank", String.valueOf(obj.getInt("rank")));
 

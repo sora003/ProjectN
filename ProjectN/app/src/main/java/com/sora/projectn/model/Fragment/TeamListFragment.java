@@ -42,46 +42,46 @@ import java.util.Objects;
  */
 public class TeamListFragment extends Fragment {
 
-    private Context mContext;
+    protected Context mContext;
 
     /**
      * 球队编码
      */
-    private int teamId;
+    protected int teamId;
 
-    private View fView;
+    protected View fView;
 
-    private MyListView listView1;
-    private MyListView listView2;
-    private MyListView listView3;
+    protected MyListView listView1;
+    protected MyListView listView2;
+    protected MyListView listView3;
 
-    private TextView textView1;
-    private TextView textView2;
-    private TextView textView3;
+    protected TextView textView1;
+    protected TextView textView2;
+    protected TextView textView3;
 
-    private int league;
+    protected int league;
 
-    private Map<String ,String> confMap = new HashMap<>();
+    protected Map<String ,String> confMap = new HashMap<>();
 
-    private Map<String ,Integer> idMap = new HashMap<>();
+    protected Map<String ,Integer> idMap = new HashMap<>();
 
     /**
      * 分区球队列表
      */
-    List<String> list1 = new ArrayList<>();
-    List<String> list2 = new ArrayList<>();
-    List<String> list3 = new ArrayList<>();
+    protected List<String> list1 = new ArrayList<>();
+    protected List<String> list2 = new ArrayList<>();
+    protected List<String> list3 = new ArrayList<>();
 
-    private List<Map<String,Object>> maps1 = new ArrayList<>();
-    private List<Map<String,Object>> maps2 = new ArrayList<>();
-    private List<Map<String,Object>> maps3 = new ArrayList<>();
+    protected List<Map<String,Object>> maps1 = new ArrayList<>();
+    protected List<Map<String,Object>> maps2 = new ArrayList<>();
+    protected List<Map<String,Object>> maps3 = new ArrayList<>();
 
 
 
     /**
      * 记录分区
      */
-    private String[] conf;
+    protected String[] conf;
 
     @Nullable
     @Override
@@ -122,7 +122,7 @@ public class TeamListFragment extends Fragment {
         return view;
     }
 
-    private void initListener() {
+    protected void initListener() {
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -155,7 +155,7 @@ public class TeamListFragment extends Fragment {
     /**
      * Handler
      */
-    Handler handler = new Handler(){
+    protected Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -181,7 +181,7 @@ public class TeamListFragment extends Fragment {
     /**
      * 更新界面
      */
-    private void setView() {
+    protected void setView() {
         listView1.setAdapter(new MySimpleAdapter(mContext,maps1,R.layout.item_teamlist,new String[]{"logo","name"},new int[] {R.id.iv_teamList,R.id.tv_teamList}));
         listView2.setAdapter(new MySimpleAdapter(mContext,maps2,R.layout.item_teamlist,new String[]{"logo","name"},new int[] {R.id.iv_teamList,R.id.tv_teamList}));
         listView3.setAdapter(new MySimpleAdapter(mContext,maps3,R.layout.item_teamlist,new String[]{"logo","name"},new int[] {R.id.iv_teamList,R.id.tv_teamList}));
@@ -196,7 +196,7 @@ public class TeamListFragment extends Fragment {
     /**
      * 初始化参数
      */
-    private void initView() {
+    protected void initView() {
         mContext = this.getActivity();
 
         listView1 = (MyListView) fView.findViewById(R.id.lv_con01);
@@ -212,7 +212,7 @@ public class TeamListFragment extends Fragment {
     /**
      * 接收Activity传递的参数
      */
-    private void parseIntent(){
+    protected void parseIntent(){
         Bundle bundle = this.getArguments();
         league = bundle.getInt("league");
 
@@ -222,7 +222,7 @@ public class TeamListFragment extends Fragment {
      * 整理数据 对map1 map2 map3封装数据
      * @param infoMap
      */
-    private void getTeamList(Map<String,String> infoMap) {
+    protected void getTeamList(Map<String,String> infoMap) {
 
         /**
          * 判断东西部球队
@@ -286,7 +286,7 @@ public class TeamListFragment extends Fragment {
      * 获取数据
      * @return confMap
      */
-    public Map<String,String> getTeams() {
+    protected Map<String,String> getTeams() {
 
         Map<String,String> map = new HashMap<>();
 
@@ -336,7 +336,7 @@ public class TeamListFragment extends Fragment {
      * 获取数据
      * @return idMap
      */
-    public Map<String,Integer> getTeamsId() {
+    protected Map<String,Integer> getTeamsId() {
 
         Map<String,Integer> map = new HashMap<>();
 
