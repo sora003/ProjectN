@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
     <!--Toolbar-->
     <include layout="@layout/custom_toolbar"/>
@@ -25,8 +26,15 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none">
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:id="@+id/match_card1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/card"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/match_t1"
@@ -102,13 +110,13 @@
 
                 </LinearLayout>
 
-                <com.sora.projectn.utils.ListViewForScrollView
+                <com.sora.projectn.utils.MyListView
                     android:id="@+id/match_pts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/match_t1">
 
-                </com.sora.projectn.utils.ListViewForScrollView>
+                </com.sora.projectn.utils.MyListView>
             </RelativeLayout>
             </HorizontalScrollView>
                 <TextView
@@ -116,6 +124,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="主队"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_below="@id/HSV_for_match1"
                     android:textSize="@dimen/titleSize"/>
                 <HorizontalScrollView
@@ -125,8 +135,14 @@
                     android:layout_below="@id/match_t2"
                     android:scrollbars="none">
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:id="@+id/match_card2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/card"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin">
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/match_title2"
@@ -196,13 +212,13 @@
 
                 </LinearLayout>
 
-                <com.sora.projectn.utils.ListViewForScrollView
+                <com.sora.projectn.utils.MyListView
                     android:id="@+id/match_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/match_title2">
 
-                </com.sora.projectn.utils.ListViewForScrollView>
+                </com.sora.projectn.utils.MyListView>
                     </RelativeLayout>
                 </HorizontalScrollView>
                 <TextView
@@ -210,6 +226,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="客队"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_below="@id/HSV_for_match2"
                     android:textSize="@dimen/titleSize"/>
                 <HorizontalScrollView
@@ -219,8 +237,14 @@
                     android:layout_below="@id/match_t3"
                     android:scrollbars="none">
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:id="@+id/match_card3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/card"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin">
                 <LinearLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/match_title3"
@@ -289,13 +313,13 @@
                         android:textSize="@dimen/playerSize" />
                 </LinearLayout>
 
-                    <com.sora.projectn.utils.ListViewForScrollView
+                    <com.sora.projectn.utils.MyListView
                        android:id="@+id/match_3"
                         android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:layout_below="@id/match_title3">
 
-                   </com.sora.projectn.utils.ListViewForScrollView>
+                   </com.sora.projectn.utils.MyListView>
                     </RelativeLayout>
                 </HorizontalScrollView>
 

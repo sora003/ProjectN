@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toolbar;
 
 import com.sora.projectn.R;
+import com.sora.projectn.utils.ACache;
+import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
 import com.sora.projectn.utils.MatchPlayerAdapter;
 import com.sora.projectn.utils.MatchTeamAdapter;
@@ -90,13 +93,48 @@ public class MatchActivity extends AppCompatActivity{
 
     private void getmatchteaminfo(){
         List<Map<String, String>> match_teaminfo = new ArrayList<Map<String,String>>();
-        String url = "http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+getmatchInfo+"?"+"matchId="+matchId;
+        String url = Consts.getTeamMatchStatistics+"?"+"matchId="+matchId;
         String jsonstring = GetHttpResponse.getHttpResponse(url);
         try {
             JSONArray array = new JSONArray(jsonstring);
             for (int i = 0; i < array.length(); i++) {
                 Map<String,String> temp = new HashMap<String,String>();
                 JSONObject obj = array.getJSONObject(i);
+                String tempurl = Consts.getTeamInfos+"?"+obj.get("teamId");
+                String name = null;
+                String jsonString;
+
+                /**
+                 * getTeamInfos
+                 */
+                jsonString = ACache.get(this).getAsString("getTeamInfos - " + obj.get("teamId"));
+
+                if (jsonString == null){
+
+                    jsonString = GetHttpResponse.getHttpResponse(Consts.getTeamInfos + "?teamId=" + obj.get("teamId"));
+
+
+
+                    ACache.get(this).put("getTeamInfos - " + obj.get("teamId") ,jsonString,ACache.TEST_TIME);
+                    Log.i("Resource", Consts.resourceFromServer);
+                }
+                else
+                {
+                    Log.i("Resource",Consts.resourceFromCache);
+                }
+
+                //解析jsonString 构造Map
+                try {
+
+                    JSONObject obj2 = new JSONObject(jsonString);
+
+                    name = obj2.getString("name");
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 String matchId = obj.getString("matchId");
                 String teamId = obj.getString("teamId");
                 String ifHome = obj.getString("ifHome");
@@ -118,6 +156,7 @@ public class MatchActivity extends AppCompatActivity{
 
                 temp.put("matchId",matchId);
                 temp.put("teamId",teamId);
+                temp.put("name",name);
                 temp.put("ifHome",ifHome);
                 if(customteamId == 0 && Integer.parseInt(ifHome) == 0){
                     customteamId = Integer.parseInt(teamId);

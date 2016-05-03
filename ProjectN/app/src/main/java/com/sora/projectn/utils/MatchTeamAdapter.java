@@ -63,8 +63,8 @@ public class MatchTeamAdapter extends BaseAdapter {
         vh.team_two.setText(String.valueOf(Integer.parseInt(match_team_infos.get(position).get("twoHit"))*2));
         vh.team_three.setText(String.valueOf(Integer.parseInt(match_team_infos.get(position).get("threeHit"))*3));
         //现在只有ID
-        vh.team_name.setText(match_team_infos.get(position).get("teamId"));
-        vh.team_ifHome.setText(match_team_infos.get(position).get("ifHome"));
+        vh.team_name.setText(match_team_infos.get(position).get("name"));
+        vh.team_ifHome.setText(match_team_infos.get(position).get("ifHome").equals("1")?"是":"否");
         vh.team_foul.setText(match_team_infos.get(position).get("foul"));
         vh.team_blockshot.setText(match_team_infos.get(position).get("blockShot"));
         vh.team_ass.setText(match_team_infos.get(position).get("ass"));
