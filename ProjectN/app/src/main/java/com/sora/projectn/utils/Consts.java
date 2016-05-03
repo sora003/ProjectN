@@ -9,7 +9,7 @@ public class Consts {
      * Server地址
      */
     
-    private static final  String url = "http://192.168.191.1:8080/NBADataSystem/";
+    private static final  String url = "http://192.168.31.225:8080/NBADataSystem/";
 
     public static final  String getTeams = url + "getTeams.do";
 
@@ -20,6 +20,12 @@ public class Consts {
     public static final  String getTeamSeasonStatistics = url + "getTeamSeasonStatistics.do";
 
     public static final  String getTeamSeasonRanks = url + "getTeamSeasonRanks.do";
+
+    public static final String teamrank = url + "getTeamSeasonRanks.do";
+
+    public static final String playerrank = url + "getPlayerRanks.do";
+
+    public static final String dayrank = url + "getPlayerRanks.do?date=2016-03-21";
 
 
     /**

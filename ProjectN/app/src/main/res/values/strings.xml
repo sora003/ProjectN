@@ -51,6 +51,10 @@
     <string name="text_teamGuide2">数据</string>
     <string name="text_teamGuide3">阵容</string>
     <string name="text_teamGuide4">赛程</string>
+    <string name="text_rankGuide1">东部排行</string>
+    <string name="text_rankGuide2">西部排行</string>
+    <string name="text_rankGuide3">球员排行</string>
+    <string name="text_rankGuide4">每日排行</string>
     <string name="text_fragment_teamseason">本赛季场均数据统计</string>
     <string name="text_league">West Conference</string>
     <string name="text_Keys">筛选条件：</string>

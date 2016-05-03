@@ -1,18 +1,29 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/background"
     android:fillViewport="true">
     <LinearLayout
         android:layout_width="wrap_content"
+        android:background="@color/background"
         android:layout_height="wrap_content">
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             tools:context="com.sora.projectn.model.Fragment.DayRankFragment">
 
             <!-- TODO: Update blank fragment layout -->
+            <LinearLayout
+                android:id="@+id/dayrank_card1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/card"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
             <TextView
                 android:id="@+id/dayrank_title1"
                 android:layout_width="wrap_content"
@@ -34,7 +45,7 @@
                     android:textSize="@dimen/playerSize" />
 
                 <TextView
-                    android:layout_width="120dip"
+                    android:layout_width="95dip"
                     android:layout_height="30dp"
                     android:text="所属球队"
                     android:textSize="@dimen/playerSize" />
@@ -53,12 +64,23 @@
                 android:layout_below="@id/dayrank_t1">
 
             </com.sora.projectn.utils.ListViewForScrollView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/dayrank_card2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/card"
+                android:layout_below="@id/dayrank_card1"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
             <TextView
                 android:id="@+id/dayrank_t2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="篮板"
-                android:layout_below="@id/day_rank_pts"
                 android:textSize="@dimen/titleSize"/>
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -75,7 +97,7 @@
                     android:textSize="@dimen/playerSize" />
 
                 <TextView
-                    android:layout_width="120dip"
+                    android:layout_width="95dip"
                     android:layout_height="30dp"
                     android:text="所属球队"
                     android:textSize="@dimen/playerSize" />
@@ -94,12 +116,23 @@
                 android:layout_below="@id/dayrank_title2">
 
             </com.sora.projectn.utils.ListViewForScrollView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/dayrank_card3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/card"
+                android:layout_below="@id/dayrank_card2"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
             <TextView
                 android:id="@+id/dayrank_t3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="助攻"
-                android:layout_below="@id/day_rank_2"
                 android:textSize="@dimen/titleSize"/>
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -116,7 +149,7 @@
                     android:textSize="@dimen/playerSize" />
 
                 <TextView
-                    android:layout_width="120dip"
+                    android:layout_width="95dip"
                     android:layout_height="30dp"
                     android:text="所属球队"
                     android:textSize="@dimen/playerSize" />
@@ -134,12 +167,23 @@
                 android:layout_below="@id/dayrank_title3">
 
             </com.sora.projectn.utils.ListViewForScrollView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/dayrank_card4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/card"
+                android:layout_below="@id/dayrank_card3"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
             <TextView
                 android:id="@+id/dayrank_t4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="抢断"
-                android:layout_below="@id/day_rank_3"
                 android:textSize="@dimen/titleSize"/>
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -156,7 +200,7 @@
                     android:textSize="@dimen/playerSize" />
 
                 <TextView
-                    android:layout_width="120dip"
+                    android:layout_width="95dip"
                     android:layout_height="30dp"
                     android:text="所属球队"
                     android:textSize="@dimen/playerSize" />
@@ -175,6 +219,7 @@
                 android:layout_below="@id/dayrank_title4">
 
             </com.sora.projectn.utils.ListViewForScrollView>
+            </LinearLayout>
 
         </RelativeLayout>
     </LinearLayout>

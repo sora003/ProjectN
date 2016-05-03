@@ -1,5 +1,6 @@
 package com.sora.projectn.model.Activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,14 +8,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sora.projectn.R;
 import com.sora.projectn.model.Fragment.DayRankFragment;
 import com.sora.projectn.model.Fragment.EastTeamRankFragment;
 import com.sora.projectn.model.Fragment.PlayerRankFragment;
 import com.sora.projectn.model.Fragment.WestTeamRankFragment;
+import com.sora.projectn.utils.ACache;
+import com.sora.projectn.utils.Consts;
+import com.sora.projectn.utils.FragAdapter;
 import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.RankAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,8 +46,31 @@ import java.util.Map;
  */
 public class RankActivity extends FragmentActivity {
 
+    private Toolbar toolbar;
+    private Context mContext;
     private ViewPager pager;
     private PagerTabStrip tabstrip;
+
+    private WestTeamRankFragment westTeamRankFragment;
+    private EastTeamRankFragment eastTeamRankFragment;
+    private PlayerRankFragment playerRankFragment;
+    private DayRankFragment dayRankFragment;
+
+    private TextView tv_rankGuide1,tv_rankGuide2,tv_rankGuide3,tv_rankGuide4;
+
+    private ImageView cursor;
+
+    private List<Fragment> fragments;
+
+    private FragAdapter adapter;
+
+    //游标宽度
+    private int bmpw = 0;
+    //动画图片偏移量 滑块占据一个标签栏 offset设置为0
+    private int offset = 0;
+    //当前页卡编号  初始编号为0
+    private int currIndex = 0;
+
     private static final int GET_DATA = 0x01;
     private static final String serverIP = "192.168.31.225";
     private static final String serverPORT = "8080";
@@ -42,8 +78,6 @@ public class RankActivity extends FragmentActivity {
     private static final String teamrank = "getTeamSeasonRanks.do";
     private static final String playerrank = "getPlayerRanks.do";
     private static final String dayrank = "getPlayerRanks.do?date=2016-03-21";
-    ArrayList<Fragment> viewContainter = new ArrayList<Fragment>();
-    ArrayList<String> titleContainer = new ArrayList<String>();
     List<Map<String, String>> eastranks = new ArrayList<Map<String,String>>(),westranks = new ArrayList<Map<String,String>>();
     List<Map<String, String>> playerranks = new ArrayList<Map<String,String>>();
     List<Map<String, String>> dayranks = new ArrayList<Map<String,String>>();
@@ -55,19 +89,33 @@ public class RankActivity extends FragmentActivity {
         initview();
         getData.start();
 //        initviewpager();
+
+        initlistener();
+
     }
 
     private void initview(){
         setContentView(R.layout.activity_rank);
-        pager = (ViewPager)findViewById(R.id.rankpager);
-        tabstrip = (PagerTabStrip) this.findViewById(R.id.ranktabstrip);
-        //取消tab下面的长横线
-        tabstrip.setDrawFullUnderline(false);
-        //设置tab的背景色
-        tabstrip.setBackgroundColor(this.getResources().getColor(R.color.bg));
-        //设置当前tab页签的下划线颜色
-        tabstrip.setTabIndicatorColor(this.getResources().getColor(R.color.red));
-        tabstrip.setTextSpacing(200);
+        mContext = this;
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("排行榜");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.color_white));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        tv_rankGuide1 = (TextView)findViewById(R.id.tv_rankGuide1);
+        tv_rankGuide2 = (TextView)findViewById(R.id.tv_rankGuide2);
+        tv_rankGuide3 = (TextView)findViewById(R.id.tv_rankGuide3);
+        tv_rankGuide4 = (TextView)findViewById(R.id.tv_rankGuide4);
+
+        cursor = (ImageView)findViewById(R.id.iv_rankCursor);
+
+        pager = (ViewPager)findViewById(R.id.viewpager);
 
     }
 
@@ -99,18 +147,44 @@ public class RankActivity extends FragmentActivity {
     }
 
     private void initviewpager(){
-        viewContainter.add(new EastTeamRankFragment(eastranks));
-        viewContainter.add(new WestTeamRankFragment(westranks));
-        viewContainter.add(new PlayerRankFragment(playerranks));
-        viewContainter.add(new DayRankFragment(dayranks));
-        titleContainer.add("东部排行");
-        titleContainer.add("西部排行");
-        titleContainer.add("球员排行");
-        titleContainer.add("今日排行");
-        pager.setAdapter(new RankAdapter(getSupportFragmentManager(), viewContainter, titleContainer));
+        fragments = new ArrayList<Fragment>();
+        eastTeamRankFragment = new EastTeamRankFragment(eastranks);
+        westTeamRankFragment = new WestTeamRankFragment(westranks);
+        playerRankFragment = new PlayerRankFragment(playerranks);
+        dayRankFragment = new DayRankFragment(dayranks);
+//        viewContainter.add(new EastTeamRankFragment(eastranks));
+//        viewContainter.add(new WestTeamRankFragment(westranks));
+//        viewContainter.add(new PlayerRankFragment(playerranks));
+//        viewContainter.add(new DayRankFragment(dayranks));
+
+        fragments.add(eastTeamRankFragment);
+        fragments.add(westTeamRankFragment);
+        fragments.add(playerRankFragment);
+        fragments.add(dayRankFragment);
+
+        adapter = new FragAdapter(getSupportFragmentManager(),fragments);
+
+        initCursorPos();
+        pager.setAdapter(adapter);
+
+
+        pager.setCurrentItem(0);
+        tv_rankGuide1.setAlpha(1);
 
     }
 
+    private void initCursorPos() {
+        //初始化游标宽度为四分之一屏幕宽度
+        WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        int width = windowManager.getDefaultDisplay().getWidth();
+        bmpw = width/4;
+
+        ViewGroup.LayoutParams params = cursor.getLayoutParams();
+
+        //动态设置cursor的宽度
+        params.width = bmpw;
+
+    }
 
 
     Thread getData = new Thread(new Runnable() {
@@ -118,11 +192,36 @@ public class RankActivity extends FragmentActivity {
         public void run() {
             //TODO 这个要改掉
 //            list = BLS.getTeamConference(mContext);
+
+            String jsonString;
+
+            /**
+             * getTeamRankInfos
+             */
+            jsonString = ACache.get(mContext).getAsString("getTeamSeasonRanks" );
+
+            if (jsonString == null){
+
+                jsonString = GetHttpResponse.getHttpResponse(Consts.teamrank);
+
+                if (jsonString == null){
+//                    return null;
+                    handler.sendEmptyMessage(Consts.RES_ERROR);
+                }
+
+                ACache.get(mContext).put("getTeamSeasonRanks" ,jsonString,ACache.TEST_TIME);
+                Log.i("Resource", Consts.resourceFromServer);
+            }
+            else
+            {
+                Log.i("Resource",Consts.resourceFromCache);
+            }
+
             List<Map<String, String>> ranks = new ArrayList<Map<String,String>>();
-            String url = "http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+teamrank;
-            String jsonstring = GetHttpResponse.getHttpResponse(url);
+//            String url = "http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+teamrank;
+//            String jsonstring = GetHttpResponse.getHttpResponse(url);
             try {
-                JSONArray array = new JSONArray(jsonstring);
+                JSONArray array = new JSONArray(jsonString);
                 for (int i = 0; i < array.length(); i++) {
                     Map<String,String> temp = new HashMap<String,String>();
                     JSONObject obj = array.getJSONObject(i);
@@ -161,16 +260,42 @@ public class RankActivity extends FragmentActivity {
             getplayerranks();
             getdayranks();
             initdata(ranks);
-            handler.sendEmptyMessage(GET_DATA);
+            handler.sendEmptyMessage(Consts.SET_VIEW);
         }
     });
 
+
     public void getplayerranks(){
+
+        String jsonString;
+
+        /**
+         * getPlayerRankInfos
+         */
+        jsonString = ACache.get(mContext).getAsString("getPlayerRanks" );
+
+        if (jsonString == null){
+
+            jsonString = GetHttpResponse.getHttpResponse(Consts.playerrank);
+
+            if (jsonString == null){
+//                    return null;
+                handler.sendEmptyMessage(Consts.RES_ERROR);
+            }
+
+            ACache.get(mContext).put("getPlayerRanks" ,jsonString,ACache.TEST_TIME);
+            Log.i("Resource", Consts.resourceFromServer);
+        }
+        else
+        {
+            Log.i("Resource",Consts.resourceFromCache);
+        }
+
         List<Map<String,String>> playerranks = new ArrayList<Map<String,String>>();
-        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+playerrank;
-        String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
+//        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+playerrank;
+//        String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
         try{
-            JSONArray array2 = new JSONArray(jsonstring2);
+            JSONArray array2 = new JSONArray(jsonString);
             for (int i = 0; i < array2.length(); i++) {
                 Map<String,String> temp = new HashMap<String,String>();
                 JSONObject obj = array2.getJSONObject(i);
@@ -197,11 +322,36 @@ public class RankActivity extends FragmentActivity {
     }
 
     public void getdayranks(){
+
+        String jsonString;
+
+        /**
+         * getDayRankInfos
+         */
+        jsonString = ACache.get(mContext).getAsString("getDayRanks" );
+
+        if (jsonString == null){
+
+            jsonString = GetHttpResponse.getHttpResponse(Consts.dayrank);
+
+            if (jsonString == null){
+//                    return null;
+                handler.sendEmptyMessage(Consts.RES_ERROR);
+            }
+
+            ACache.get(mContext).put("getDayRanks" ,jsonString,ACache.TEST_TIME);
+            Log.i("Resource", Consts.resourceFromServer);
+        }
+        else
+        {
+            Log.i("Resource",Consts.resourceFromCache);
+        }
+
         List<Map<String,String>> dayranks = new ArrayList<Map<String,String>>();
-        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+dayrank;
-        String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
+//        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+dayrank;
+//        String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
         try{
-            JSONArray array2 = new JSONArray(jsonstring2);
+            JSONArray array2 = new JSONArray(jsonString);
             for (int i = 0; i < array2.length(); i++) {
                 Map<String,String> temp = new HashMap<String,String>();
                 JSONObject obj = array2.getJSONObject(i);
@@ -232,16 +382,135 @@ public class RankActivity extends FragmentActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case GET_DATA:
+                case Consts.SET_VIEW:
                     initviewpager();
+                    break;
+                case Consts.RES_ERROR:
+                    Toast.makeText(mContext, Consts.ToastMessage01, Toast.LENGTH_SHORT).show();
             }
         }
     };
 
     private void initlistener(){
-        //TODO 监听什么的以后再说.
+
+        tv_rankGuide1.setOnClickListener(new MyOnClickListener(){
+            @Override
+            public void onClick(View v) {
+                super.onClick(v);
+            }
+        });
+        tv_rankGuide2.setOnClickListener(new MyOnClickListener(){
+            @Override
+            public void onClick(View v) {
+                super.onClick(v);
+            }
+        });
+        tv_rankGuide3.setOnClickListener(new MyOnClickListener(){
+            @Override
+            public void onClick(View v) {
+                super.onClick(v);
+            }
+        });
+        tv_rankGuide4.setOnClickListener(new MyOnClickListener(){
+            @Override
+            public void onClick(View v) {
+                super.onClick(v);
+            }
+        });
+
+
+        //ViewPager的监听  解决用户通过手势滑动获取新的模块 此时标签栏没有同步改变的问题
+        //同时完成滑块滑动的动画
+        pager.setOnPageChangeListener(new MyOnPageChangeListener());
+
     }
 
+    private class MyOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            //跳转到新的fragment
+            switch (v.getId()){
+                case R.id.tv_rankGuide1:
+                    pager.setCurrentItem(0);
+                    break;
+                case R.id.tv_rankGuide2:
+                    pager.setCurrentItem(1);
+                    break;
+                case R.id.tv_rankGuide3:
+                    pager.setCurrentItem(2);
+                    break;
+                case R.id.tv_rankGuide4:
+                    pager.setCurrentItem(3);
+                    break;
 
+            }
+
+        }
+    }
+
+    private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        //相邻页面的偏移量
+        private int one = bmpw;
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        //即将显示的页卡的index
+        @Override
+        public void onPageSelected(int position) {
+            //初始化移动的动画 (从当前位置 平移到即将摇到的位置)
+            one = bmpw;
+            Animation animation = new TranslateAnimation(currIndex * one , position * one , 0 , 0);
+            //动画终止时停留在最后一帧  不然会回到没有执行前的状态
+            animation.setFillAfter(true);
+            //动画持续时间0.2秒
+            animation.setDuration(200);
+            //用游标来显示动画
+            cursor.startAnimation(animation);
+
+            //取消之前选中的标签的高亮显示
+            switch (currIndex){
+                case 0:
+                    tv_rankGuide1.setAlpha((float) 0.5);
+                    break;
+                case 1:
+                    tv_rankGuide2.setAlpha((float) 0.5);
+                    break;
+                case 2:
+                    tv_rankGuide3.setAlpha((float) 0.5);
+                    break;
+                case 3:
+                    tv_rankGuide4.setAlpha((float) 0.5);
+                    break;
+            }
+            //将即将切换到的标签的高亮显示
+            switch (position){
+                case 0:
+                    tv_rankGuide1.setAlpha(1);
+                    break;
+                case 1:
+                    tv_rankGuide2.setAlpha(1);
+                    break;
+                case 2:
+                    tv_rankGuide3.setAlpha(1);
+                    break;
+                case 3:
+                    tv_rankGuide4.setAlpha(1);
+                    break;
+            }
+
+            //当前页卡发生改变 重定义currIndex
+            currIndex = position;
+        }
+
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
 
 }
