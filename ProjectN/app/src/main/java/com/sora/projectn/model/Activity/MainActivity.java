@@ -14,12 +14,14 @@ import android.widget.ListView;
 
 import com.sora.projectn.R;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private ListView lv_left_menu;
     private Context mContext;
+
 
 
 
@@ -31,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private String[] data = {"我关注的球队","球队","球员检索","历史比赛数据","设置","排行榜(测试)","球探功能(测试)","教练球队数据对比功能测试"};
 
     private ArrayAdapter arrayAdapter;
+
+
+    private Intent intent;
+    private Bundle bundle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +64,11 @@ public class MainActivity extends AppCompatActivity {
 //                        startActivity(new Intent(mContext,MatchListActivity.class));
                         break;
                     case 4:
-                        startActivity(new Intent(mContext,RankActivity.class));
+                        intent = new Intent(mContext,WelcomeActivity.class);
+                        bundle = new Bundle();
+                        bundle.putInt("MainActivity",1);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         break;
                     case 5:
                         startActivity(new Intent(mContext,RankActivity.class));
@@ -66,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(mContext,SearchPlayerActivity.class));
                         break;
                     case 7:
-                        Bundle bundle = new Bundle();
+                        bundle = new Bundle();
                         bundle.putInt("teamId", 1);
-                        Intent intent = new Intent(mContext,TeamCombatListActivity.class);
+                        intent = new Intent(mContext,TeamCombatListActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         break;

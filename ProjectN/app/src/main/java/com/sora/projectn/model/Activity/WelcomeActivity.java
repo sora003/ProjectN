@@ -1,18 +1,14 @@
 package com.sora.projectn.model.Activity;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
-import com.sora.projectn.gc.Service.ScrapeService;
 import com.sora.projectn.utils.Consts;
 
 /**
@@ -32,6 +28,10 @@ public class WelcomeActivity extends AppCompatActivity{
     TextView textView_02;
     TextView textView_03;
 
+    private int flag = 0;
+
+    TextView tv_welcome;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,8 @@ public class WelcomeActivity extends AppCompatActivity{
         setContentView(R.layout.activity_welcome);
 
         initView();
+
+        parseIntent();
 
         initListener();
 
@@ -48,6 +50,12 @@ public class WelcomeActivity extends AppCompatActivity{
         //获取编辑器
         editor = sharedPreferences.edit();
         character = sharedPreferences.getInt(Consts.SharedPreferences_KEY_01, 0);
+
+        if (flag == 1){
+            character = 0;
+            tv_welcome.setText("请修改你的角色");
+        }
+
         if (character != 0){
             startActivity(new Intent(mContext,MainActivity.class));
             /**
@@ -66,12 +74,24 @@ public class WelcomeActivity extends AppCompatActivity{
 
     }
 
+    private void parseIntent() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null){
+            flag = bundle.getInt("MainActivity");
+        }
+
+
+    }
+
     private void initView() {
         mContext = this;
 
         textView_01 = (TextView) findViewById(R.id.tv_welcome_01);
         textView_02 = (TextView) findViewById(R.id.tv_welcome_02);
         textView_03 = (TextView) findViewById(R.id.tv_welcome_03);
+
+        tv_welcome = (TextView) findViewById(R.id.tv_welcome);
     }
 
     private void initListener() {
