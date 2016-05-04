@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MatchListFragment
 //                        startActivity(new Intent(mContext,MatchListActivity.class));
                         break;
                     case 3:
-//                        startActivity(new Intent(mContext,MatchListActivity.class));
+                        startActivity(new Intent(mContext,MatchSearchActivity.class));
                         break;
                     case 4:
                         startActivity(new Intent(mContext,RankActivity.class));
