@@ -51,6 +51,10 @@
     <string name="text_teamGuide2">数据</string>
     <string name="text_teamGuide3">阵容</string>
     <string name="text_teamGuide4">赛程</string>
+    <string name="text_rankGuide1">东部排行</string>
+    <string name="text_rankGuide2">西部排行</string>
+    <string name="text_rankGuide3">球员排行</string>
+    <string name="text_rankGuide4">每日排行</string>
     <string name="text_fragment_teamseason">本赛季场均数据统计</string>
     <string name="text_league">West Conference</string>
     <string name="text_Keys">筛选条件：</string>
@@ -61,7 +65,6 @@
     <string name="hint">Waiting...</string>
 
 
-
     <!--Test For old_activity_teamlist-->
 
 
@@ -70,6 +73,7 @@
     <string name="character_01">球迷</string>
     <string name="character_02">教练</string>
     <string name="character_03">球探</string>
+    <!--Test For activity_teamlist_old-->
     <!--<string name="text_wC1T1">小牛</string>-->
     <!--<string name="text_wC1T2">火箭</string>-->
     <!--<string name="text_wC1T3">灰熊</string>-->

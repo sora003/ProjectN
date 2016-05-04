@@ -1,15 +1,18 @@
 package com.sora.projectn.model.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.sora.projectn.R;
+import com.sora.projectn.model.Activity.TeamActivity;
 import com.sora.projectn.utils.TeamRankAdapter;
 
 import java.util.List;
@@ -77,7 +80,14 @@ public class EastTeamRankFragment extends Fragment {
         lv = (ListView)view.findViewById(R.id.east_team_rank_lv);
         TeamRankAdapter tradapter = new TeamRankAdapter(this.ranks,this.getContext());
         lv.setAdapter(tradapter);
-
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), TeamActivity.class);
+                intent.putExtra("id",Integer.parseInt(ranks.get(position).get("teamID")));
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

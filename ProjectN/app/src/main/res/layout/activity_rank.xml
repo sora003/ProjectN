@@ -1,19 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <!--Toolbar-->
     <include layout="@layout/custom_toolbar"/>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/rankpager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/ranktabstrip"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:gravity="center" />
-    </android.support.v4.view.ViewPager>
+        <!--导航栏-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/guide_vertical_margin">
+
+            <TextView
+                android:id="@+id/tv_rankGuide1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/text_rankGuide1"
+                android:textSize="@dimen/teamGuideSize"
+                android:textColor="@color/text_white"
+                android:alpha="0.5"/>
+
+
+            <TextView
+                android:id="@+id/tv_rankGuide2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/text_rankGuide2"
+                android:textSize="@dimen/teamGuideSize"
+                android:textColor="@color/text_white"
+                android:alpha="0.5" />
+
+            <TextView
+                android:id="@+id/tv_rankGuide3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/text_rankGuide3"
+                android:textSize="@dimen/teamGuideSize"
+                android:textColor="@color/text_white"
+                android:alpha="0.5"/>
+
+            <TextView
+                android:id="@+id/tv_rankGuide4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/text_rankGuide4"
+                android:textSize="@dimen/teamGuideSize"
+                android:textColor="@color/text_white"
+                android:alpha="0.5"/>
+
+        </LinearLayout>
+
+
+        <!--滑块-->
+        <ImageView
+            android:id="@+id/iv_rankCursor"
+            android:layout_width="9dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/guide_vertical_margin"
+            android:src="@color/color_white"
+            android:scaleType="matrix">
+
+        </ImageView>
+
+        <!--ViewPager-->
+        <include layout="@layout/myviewpager"/>
+
+    </LinearLayout>
 </LinearLayout>

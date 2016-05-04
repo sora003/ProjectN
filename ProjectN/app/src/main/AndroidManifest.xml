@@ -83,6 +83,10 @@
 
         </activity>
 
+        <activity android:name=".model.Activity.MatchSearchActivity">
+
+        </activity>
+
 
         <service
             android:name=".gc.Service.ScrapeService"

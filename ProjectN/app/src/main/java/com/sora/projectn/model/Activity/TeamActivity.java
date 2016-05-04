@@ -3,6 +3,7 @@ package com.sora.projectn.model.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,11 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sora.projectn.R;
+import com.sora.projectn.model.Fragment.MatchListFragment;
 import com.sora.projectn.model.Fragment.TeamDataFragment;
 import com.sora.projectn.model.Fragment.TeamPlayerFragment;
-import com.sora.projectn.model.Fragment.TeamScheduleFragment;
 import com.sora.projectn.model.Fragment.TeamStaticsFragment;
-
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.BitmapHelper;
 import com.sora.projectn.utils.Consts;
@@ -44,7 +44,7 @@ import java.util.Map;
 /**
  * Created by Sora on 2016/1/26.
  */
-public class TeamActivity extends FragmentActivity{
+public class TeamActivity extends FragmentActivity implements MatchListFragment.OnFragmentInteractionListener{
     
 
     private Context mContext;
@@ -58,7 +58,7 @@ public class TeamActivity extends FragmentActivity{
     private TeamDataFragment teamDataFragment;
     private TeamStaticsFragment teamStaticsFragment;
     private TeamPlayerFragment teamPlayerFragment;
-    private TeamScheduleFragment teamScheduleFragment;
+    private MatchListFragment teamScheduleFragment;
 
     //ViewPager
     private ViewPager viewPager;
@@ -160,6 +160,8 @@ public class TeamActivity extends FragmentActivity{
 
         teamPlayerFragment.setArguments(bundle);
 
+        teamScheduleFragment.setArguments(bundle);
+
     }
 
     /**
@@ -204,7 +206,7 @@ public class TeamActivity extends FragmentActivity{
         teamDataFragment = new TeamDataFragment();
         teamStaticsFragment = new TeamStaticsFragment();
         teamPlayerFragment = new TeamPlayerFragment();
-        teamScheduleFragment = new TeamScheduleFragment();
+        teamScheduleFragment = new MatchListFragment();
 
     }
 
@@ -397,6 +399,11 @@ public class TeamActivity extends FragmentActivity{
 
 
         return map;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
 
