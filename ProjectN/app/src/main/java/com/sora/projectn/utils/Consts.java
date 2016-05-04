@@ -10,8 +10,6 @@ public class Consts {
     /**
      * Server地址
      */
-    
-    private static final  String url = "http://192.168.31.225:8080/NBADataSystem/";
 
     private static final  String url = "http://192.168.191.1:8080/NBADataSystem/";
 

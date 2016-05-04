@@ -91,9 +91,11 @@ public class MatchActivity extends AppCompatActivity{
         }
     };
 
+
     private void getmatchteaminfo(){
         List<Map<String, String>> match_teaminfo = new ArrayList<Map<String,String>>();
-        String url = Consts.getTeamMatchStatistics+"?"+"matchId="+matchId;
+//        String url = Consts.getTeamMatchStatistics+"?"+"matchId="+matchId;
+        String url = "";
         String jsonstring = GetHttpResponse.getHttpResponse(url);
         try {
             JSONArray array = new JSONArray(jsonstring);

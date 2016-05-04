@@ -7,15 +7,12 @@
 
     <!--主布局-->
     <LinearLayout
+        android:id="@+id/main_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <!--这里动态添加Fragment-->
-        <fragment
-            android:id="@+id/mainforfansfragment"
-            android:name="com.sora.projectn.model.Fragment.MatchListFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/fragment_matchlist" />
+
     </LinearLayout>
 
     <!--侧滑菜单-->
