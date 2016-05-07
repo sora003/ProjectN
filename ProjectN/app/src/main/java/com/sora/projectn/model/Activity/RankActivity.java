@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -49,7 +48,6 @@ public class RankActivity extends FragmentActivity {
     private Toolbar toolbar;
     private Context mContext;
     private ViewPager pager;
-    private PagerTabStrip tabstrip;
 
     private WestTeamRankFragment westTeamRankFragment;
     private EastTeamRankFragment eastTeamRankFragment;
@@ -60,41 +58,41 @@ public class RankActivity extends FragmentActivity {
 
     private ImageView cursor;
 
-    private List<Fragment> fragments;
+    private List<Fragment> fragments ;
 
     private FragAdapter adapter;
 
     //游标宽度
     private int bmpw = 0;
-    //动画图片偏移量 滑块占据一个标签栏 offset设置为0
     private int offset = 0;
-    //当前页卡编号  初始编号为0
     private int currIndex = 0;
 
-    private static final int GET_DATA = 0x01;
-    private static final String serverIP = "192.168.31.225";
-    private static final String serverPORT = "8080";
-    private static final String databaseNAME = "NBADataSystem";
-    private static final String teamrank = "getTeamSeasonRanks.do";
-    private static final String playerrank = "getPlayerRanks.do";
-    private static final String dayrank = "getPlayerRanks.do?date=2016-03-21";
-    List<Map<String, String>> eastranks = new ArrayList<Map<String,String>>(),westranks = new ArrayList<Map<String,String>>();
-    List<Map<String, String>> playerranks = new ArrayList<Map<String,String>>();
-    List<Map<String, String>> dayranks = new ArrayList<Map<String,String>>();
+    List<Map<String, String>> eastRanks = new ArrayList<>(), westRanks = new ArrayList<>();
+    List<Map<String, String>> playerranks = new ArrayList<>();
+    List<Map<String, String>> dayranks = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initview();
-        getData.start();
-//        initviewpager();
+        initView();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //TODO 这个要改掉
+                playerranks =getPlayerRanks();
+                dayranks = getDayRanks();
+                List<Map<String,String>> ranks = getTeamRanks();
+                initData(ranks);
+                handler.sendEmptyMessage(Consts.SET_VIEW);
+            }
+        }).start();
 
-        initlistener();
+        initListener();
 
     }
 
-    private void initview(){
+    private void initView(){
         setContentView(R.layout.activity_rank);
         mContext = this;
 
@@ -108,7 +106,6 @@ public class RankActivity extends FragmentActivity {
             }
         });
 
-        tv_rankGuide1 = (TextView)findViewById(R.id.tv_rankGuide1);
         tv_rankGuide2 = (TextView)findViewById(R.id.tv_rankGuide2);
         tv_rankGuide3 = (TextView)findViewById(R.id.tv_rankGuide3);
         tv_rankGuide4 = (TextView)findViewById(R.id.tv_rankGuide4);
@@ -119,16 +116,16 @@ public class RankActivity extends FragmentActivity {
 
     }
 
-    private void initdata(List<Map<String,String>> ranks){
+    private void initData(List<Map<String, String>> ranks){
         for(Map<String, String> team:ranks){
             if(team.get("league").equals("0")){
-                eastranks.add(team);
+                eastRanks.add(team);
             }
             else if(team.get("league").equals("1")){
-                westranks.add(team);
+                westRanks.add(team);
             }
         }
-        Collections.sort(eastranks, new Comparator<Map<String, String>>() {
+        Collections.sort(eastRanks, new Comparator<Map<String, String>>() {
             @Override
             public int compare(Map<String, String> lhs, Map<String, String> rhs) {
                 if (Integer.parseInt(lhs.get("rank")) < Integer.parseInt(rhs.get("rank"))) {
@@ -136,7 +133,7 @@ public class RankActivity extends FragmentActivity {
                 } else return 1;
             }
         });
-        Collections.sort(westranks, new Comparator<Map<String, String>>() {
+        Collections.sort(westRanks, new Comparator<Map<String, String>>() {
             @Override
             public int compare(Map<String, String> lhs, Map<String, String> rhs) {
                 if (Integer.parseInt(lhs.get("rank")) < Integer.parseInt(rhs.get("rank"))) {
@@ -146,19 +143,12 @@ public class RankActivity extends FragmentActivity {
         });
     }
 
-    private void initviewpager(){
-        fragments = new ArrayList<Fragment>();
-        eastTeamRankFragment = new EastTeamRankFragment(eastranks);
-        westTeamRankFragment = new WestTeamRankFragment(westranks);
+    private void initViewPager(){
+        fragments = new ArrayList<>();
+        eastTeamRankFragment = new EastTeamRankFragment(eastRanks,westRanks);
         playerRankFragment = new PlayerRankFragment(playerranks);
         dayRankFragment = new DayRankFragment(dayranks);
-//        viewContainter.add(new EastTeamRankFragment(eastranks));
-//        viewContainter.add(new WestTeamRankFragment(westranks));
-//        viewContainter.add(new PlayerRankFragment(playerranks));
-//        viewContainter.add(new DayRankFragment(dayranks));
-
         fragments.add(eastTeamRankFragment);
-        fragments.add(westTeamRankFragment);
         fragments.add(playerRankFragment);
         fragments.add(dayRankFragment);
 
@@ -169,109 +159,93 @@ public class RankActivity extends FragmentActivity {
 
 
         pager.setCurrentItem(0);
-        tv_rankGuide1.setAlpha(1);
+        tv_rankGuide2.setAlpha(1);
 
     }
 
     private void initCursorPos() {
-        //初始化游标宽度为四分之一屏幕宽度
         WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         int width = windowManager.getDefaultDisplay().getWidth();
-        bmpw = width/4;
+        bmpw = width/3;
 
         ViewGroup.LayoutParams params = cursor.getLayoutParams();
 
-        //动态设置cursor的宽度
         params.width = bmpw;
 
     }
 
 
-    Thread getData = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            //TODO 这个要改掉
-//            list = BLS.getTeamConference(mContext);
 
-            String jsonString;
-
-            /**
-             * getTeamRankInfos
-             */
-            jsonString = ACache.get(mContext).getAsString("getTeamSeasonRanks" );
-
-            if (jsonString == null){
-
-                jsonString = GetHttpResponse.getHttpResponse(Consts.teamrank);
-
-                if (jsonString == null){
-//                    return null;
-                    handler.sendEmptyMessage(Consts.RES_ERROR);
-                }
-
-                ACache.get(mContext).put("getTeamSeasonRanks" ,jsonString,ACache.TEST_TIME);
-                Log.i("Resource", Consts.resourceFromServer);
-            }
-            else
-            {
-                Log.i("Resource",Consts.resourceFromCache);
-            }
-
-            List<Map<String, String>> ranks = new ArrayList<Map<String,String>>();
-//            String url = "http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+teamrank;
-//            String jsonstring = GetHttpResponse.getHttpResponse(url);
-            try {
-                JSONArray array = new JSONArray(jsonString);
-                for (int i = 0; i < array.length(); i++) {
-                    Map<String,String> temp = new HashMap<String,String>();
-                    JSONObject obj = array.getJSONObject(i);
-                    String teamID = obj.getString("teamId");
-                    String rank = obj.getString("rank");
-                    String name = obj.getString("name");
-                    String league = obj.getString("league");
-                    String wins = obj.getString("wins");
-                    String loses = obj.getString("loses");
-                    String winRate = obj.getString("winRate");
-                    String gamesBehind = obj.getString("gamesBehind");
-                    String pspg = obj.getString("pspg");
-                    String papg = obj.getString("papg");
-
-                    temp.put("teamID", teamID);
-                    temp.put("rank", rank);
-                    temp.put("name", name);
-                    temp.put("league", league);
-                    temp.put("wins", wins);
-                    temp.put("loses", loses);
-                    temp.put("winRate", winRate);
-                    temp.put("gamesBehind", gamesBehind);
-                    temp.put("pspg", pspg);
-                    temp.put("papg", papg);
-
-                    ranks.add(temp);
-                }
-
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                ranks = null;
-            }
-
-            getplayerranks();
-            getdayranks();
-            initdata(ranks);
-            handler.sendEmptyMessage(Consts.SET_VIEW);
-        }
-    });
-
-
-    public void getplayerranks(){
+    private List<Map<String, String>> getTeamRanks(){
 
         String jsonString;
 
-        /**
-         * getPlayerRankInfos
-         */
+        jsonString = ACache.get(mContext).getAsString("getTeamSeasonRanks" );
+
+        if (jsonString == null){
+
+            jsonString = GetHttpResponse.getHttpResponse(Consts.teamrank);
+
+            if (jsonString == null){
+                handler.sendEmptyMessage(Consts.RES_ERROR);
+            }
+
+            ACache.get(mContext).put("getTeamSeasonRanks" ,jsonString,ACache.TEST_TIME);
+            Log.i("Resource", Consts.resourceFromServer);
+        }
+        else
+        {
+            Log.i("Resource",Consts.resourceFromCache);
+        }
+
+        List<Map<String, String>> ranks = new ArrayList<>();
+        try {
+            JSONArray array = new JSONArray(jsonString);
+            for (int i = 0; i < array.length(); i++) {
+                Map<String,String> temp = new HashMap<>();
+                JSONObject obj = array.getJSONObject(i);
+                String teamID = obj.getString("teamId");
+                String rank = obj.getString("rank");
+                String name = obj.getString("name");
+                String league = obj.getString("league");
+                String wins = obj.getString("wins");
+                String loses = obj.getString("loses");
+                String winRate = obj.getString("winRate");
+                String gamesBehind = obj.getString("gamesBehind");
+                String pspg = obj.getString("pspg");
+                String papg = obj.getString("papg");
+
+                temp.put("teamID", teamID);
+                temp.put("rank", rank);
+                temp.put("name", name);
+                temp.put("league", league);
+                temp.put("wins", wins);
+                temp.put("loses", loses);
+                temp.put("winRate", winRate);
+                temp.put("gamesBehind", gamesBehind);
+                temp.put("pspg", pspg);
+                temp.put("papg", papg);
+
+                ranks.add(temp);
+            }
+
+
+
+        } catch(NullPointerException e2){
+            e2.printStackTrace();
+        }
+        catch (JSONException e2) {
+            e2.printStackTrace();
+        }
+        finally{
+            return ranks;
+        }
+    }
+
+    public List<Map<String,String>> getPlayerRanks(){
+
+        String jsonString;
+
         jsonString = ACache.get(mContext).getAsString("getPlayerRanks" );
 
         if (jsonString == null){
@@ -279,7 +253,6 @@ public class RankActivity extends FragmentActivity {
             jsonString = GetHttpResponse.getHttpResponse(Consts.playerrank);
 
             if (jsonString == null){
-//                    return null;
                 handler.sendEmptyMessage(Consts.RES_ERROR);
             }
 
@@ -291,13 +264,11 @@ public class RankActivity extends FragmentActivity {
             Log.i("Resource",Consts.resourceFromCache);
         }
 
-        List<Map<String,String>> playerranks = new ArrayList<Map<String,String>>();
-//        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+playerrank;
-//        String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
+        List<Map<String,String>> playerRanks = new ArrayList<>();
         try{
             JSONArray array2 = new JSONArray(jsonString);
             for (int i = 0; i < array2.length(); i++) {
-                Map<String,String> temp = new HashMap<String,String>();
+                Map<String,String> temp = new HashMap<>();
                 JSONObject obj = array2.getJSONObject(i);
                 String name = obj.getString("name");
                 String id = obj.getString("id");
@@ -312,22 +283,25 @@ public class RankActivity extends FragmentActivity {
                 temp.put("data",data);
                 temp.put("seasonData",seasonData);
                 temp.put("type",type);
-                playerranks.add(temp);
+                playerRanks.add(temp);
             }
 
-        }catch (JSONException e2) {
+        }catch(NullPointerException e2){
+            handler.sendEmptyMessage(Consts.SET_VIEW);
             e2.printStackTrace();
         }
-        RankActivity.this.playerranks = playerranks;
+        catch (JSONException e2) {
+            e2.printStackTrace();
+        }
+        finally{
+            return playerRanks;
+        }
     }
 
-    public void getdayranks(){
+    public List<Map<String,String>> getDayRanks(){
 
         String jsonString;
 
-        /**
-         * getDayRankInfos
-         */
         jsonString = ACache.get(mContext).getAsString("getDayRanks" );
 
         if (jsonString == null){
@@ -335,7 +309,6 @@ public class RankActivity extends FragmentActivity {
             jsonString = GetHttpResponse.getHttpResponse(Consts.dayrank);
 
             if (jsonString == null){
-//                    return null;
                 handler.sendEmptyMessage(Consts.RES_ERROR);
             }
 
@@ -347,13 +320,11 @@ public class RankActivity extends FragmentActivity {
             Log.i("Resource",Consts.resourceFromCache);
         }
 
-        List<Map<String,String>> dayranks = new ArrayList<Map<String,String>>();
-//        String url2 ="http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+dayrank;
-//        String jsonstring2 = GetHttpResponse.getHttpResponse(url2);
+        List<Map<String,String>> dayranks = new ArrayList<>();
         try{
             JSONArray array2 = new JSONArray(jsonString);
             for (int i = 0; i < array2.length(); i++) {
-                Map<String,String> temp = new HashMap<String,String>();
+                Map<String,String> temp = new HashMap<>();
                 JSONObject obj = array2.getJSONObject(i);
                 String name = obj.getString("name");
                 String id = obj.getString("id");
@@ -371,10 +342,15 @@ public class RankActivity extends FragmentActivity {
                 dayranks.add(temp);
             }
 
-        }catch (JSONException e2) {
+        }catch(NullPointerException e2){
             e2.printStackTrace();
         }
-        RankActivity.this.dayranks = dayranks;
+        catch (JSONException e2) {
+            e2.printStackTrace();
+        }
+        finally{
+            return dayranks;
+        }
     }
 
     Handler handler = new Handler(){
@@ -383,7 +359,7 @@ public class RankActivity extends FragmentActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case Consts.SET_VIEW:
-                    initviewpager();
+                    initViewPager();
                     break;
                 case Consts.RES_ERROR:
                     Toast.makeText(mContext, Consts.ToastMessage01, Toast.LENGTH_SHORT).show();
@@ -391,14 +367,7 @@ public class RankActivity extends FragmentActivity {
         }
     };
 
-    private void initlistener(){
-
-        tv_rankGuide1.setOnClickListener(new MyOnClickListener(){
-            @Override
-            public void onClick(View v) {
-                super.onClick(v);
-            }
-        });
+    private void initListener(){
         tv_rankGuide2.setOnClickListener(new MyOnClickListener(){
             @Override
             public void onClick(View v) {
@@ -430,17 +399,14 @@ public class RankActivity extends FragmentActivity {
         public void onClick(View v) {
             //跳转到新的fragment
             switch (v.getId()){
-                case R.id.tv_rankGuide1:
+                case R.id.tv_rankGuide2:
                     pager.setCurrentItem(0);
                     break;
-                case R.id.tv_rankGuide2:
+                case R.id.tv_rankGuide3:
                     pager.setCurrentItem(1);
                     break;
-                case R.id.tv_rankGuide3:
-                    pager.setCurrentItem(2);
-                    break;
                 case R.id.tv_rankGuide4:
-                    pager.setCurrentItem(3);
+                    pager.setCurrentItem(2);
                     break;
 
             }
@@ -474,30 +440,24 @@ public class RankActivity extends FragmentActivity {
             //取消之前选中的标签的高亮显示
             switch (currIndex){
                 case 0:
-                    tv_rankGuide1.setAlpha((float) 0.5);
-                    break;
-                case 1:
                     tv_rankGuide2.setAlpha((float) 0.5);
                     break;
-                case 2:
+                case 1:
                     tv_rankGuide3.setAlpha((float) 0.5);
                     break;
-                case 3:
+                case 2:
                     tv_rankGuide4.setAlpha((float) 0.5);
                     break;
             }
             //将即将切换到的标签的高亮显示
             switch (position){
                 case 0:
-                    tv_rankGuide1.setAlpha(1);
-                    break;
-                case 1:
                     tv_rankGuide2.setAlpha(1);
                     break;
-                case 2:
+                case 1:
                     tv_rankGuide3.setAlpha(1);
                     break;
-                case 3:
+                case 2:
                     tv_rankGuide4.setAlpha(1);
                     break;
             }

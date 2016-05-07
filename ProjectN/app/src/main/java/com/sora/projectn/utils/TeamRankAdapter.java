@@ -46,8 +46,8 @@ public class TeamRankAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         // listview每次得到一个item，都要view去绘制，通过getView方法得到view
         // position为item的序号
-        ViewHolder vh = null;
-        View view = null;
+        ViewHolder vh;
+        View view;
         if (convertView != null) {
             view = convertView;
             vh = (ViewHolder) convertView.getTag();
@@ -57,7 +57,7 @@ public class TeamRankAdapter extends BaseAdapter {
 
         } else {
 //            view = super.getView(position, convertView, parent);
-            view = inflater.inflate(R.layout.teamrank_item, null);
+            view = inflater.inflate(R.layout.item_teamrank, null);
             vh = new ViewHolder(view);
             view.setTag(vh);
 

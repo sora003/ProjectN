@@ -35,21 +35,21 @@ public class MatchSearchActivity  extends FragmentActivity {
 
 
     private Toolbar toolbar;
-    private List<Map<String,String>> matchlist = new ArrayList<Map<String,String>>();
-    private ListView matchlistview;
-    private DatePicker datepicker;
-    private int year,monthofyear,dayofmonth;
+    private List<Map<String,String>> matchList = new ArrayList<>();
+    private ListView matchListView;
+    private DatePicker datePicker;
+    private int year, monthOfYear, DayOfMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matchsearch);
-        initview();
-        initlistener();
+        initView();
+        initListener();
 
     }
 
-    private void initview(){
+    private void initView(){
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("历史球赛");
@@ -60,23 +60,23 @@ public class MatchSearchActivity  extends FragmentActivity {
                 finish();
             }
         });
-        datepicker = (DatePicker)findViewById(R.id.datepicker);
-        matchlistview = (ListView)findViewById(R.id.matchlist_for_date);
+        datePicker = (DatePicker)findViewById(R.id.datepicker);
+        matchListView = (ListView)findViewById(R.id.matchlist_for_date);
     }
 
-    private void initlistener(){
-        datepicker.init(2016, 4, 1, new DatePicker.OnDateChangedListener() {
+    private void initListener(){
+        datePicker.init(2016, 4, 1, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
                 MatchSearchActivity.this.year = year;
-                MatchSearchActivity.this.monthofyear = monthOfYear;
-                MatchSearchActivity.this.dayofmonth = dayOfMonth;
+                MatchSearchActivity.this.monthOfYear = monthOfYear;
+                MatchSearchActivity.this.DayOfMonth = dayOfMonth;
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String month = String.format("%02d", monthofyear);
-                        String day = String.format("%02d",dayofmonth);
-                        getmatchlistfordate(String.valueOf(MatchSearchActivity.this.year)+"-"+month+"-"+day);
+                        String month = String.format("%02d", MatchSearchActivity.this.monthOfYear);
+                        String day = String.format("%02d", DayOfMonth);
+                        getMatchListForDate(String.valueOf(MatchSearchActivity.this.year) + "-" + month + "-" + day);
                         handler.sendEmptyMessage(Consts.SET_VIEW);
                     }
                 }).start();
@@ -91,7 +91,7 @@ public class MatchSearchActivity  extends FragmentActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case Consts.SET_VIEW:
-                    initmatchlist();
+                    initMatchList();
                     break;
                 case Consts.RES_ERROR:
                     Toast.makeText(MatchSearchActivity.this, Consts.ToastMessage01, Toast.LENGTH_SHORT).show();
@@ -99,13 +99,13 @@ public class MatchSearchActivity  extends FragmentActivity {
         }
     };
 
-    private void initmatchlist(){
-        MatchListAdapter mladapter = new MatchListAdapter(matchlist,this);
-        matchlistview.setAdapter(mladapter);
-        matchlistview.setOnItemClickListener(new MListener());
+    private void initMatchList(){
+        MatchListAdapter matchListAdapter = new MatchListAdapter(matchList,this);
+        matchListView.setAdapter(matchListAdapter);
+        matchListView.setOnItemClickListener(new MListener());
     }
 
-    private void getmatchlistfordate(String dates){
+    private void getMatchListForDate(String dates){
 
         String jsonString;
 
@@ -130,11 +130,11 @@ public class MatchSearchActivity  extends FragmentActivity {
         {
             Log.i("Resource",Consts.resourceFromCache);
         }
-        List<Map<String, String>> matchfordate = new ArrayList<Map<String,String>>();
+        List<Map<String, String>> matchForDate = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
-                Map<String,String> temp = new HashMap<String,String>();
+                Map<String,String> temp = new HashMap<>();
                 JSONObject obj = array.getJSONObject(i);
                 String id = obj.getString("id");
                 String vId = obj.getString("vId");
@@ -160,17 +160,15 @@ public class MatchSearchActivity  extends FragmentActivity {
                 temp.put("year", year);
                 temp.put("time", time);
 
-                matchfordate.add(temp);
+                matchForDate.add(temp);
             }
 
 
 
         } catch (JSONException e) {
             e.printStackTrace();
-//            match_teaminfo = null;
         }
-//        this.match_team_info = match_teaminfo;
-        matchlist = matchfordate;
+        matchList = matchForDate;
     }
 
     private class MListener implements AdapterView.OnItemClickListener{
@@ -178,7 +176,7 @@ public class MatchSearchActivity  extends FragmentActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             Intent intent = new Intent(MatchSearchActivity.this, MatchActivity.class);
-            intent.putExtra("no",Integer.parseInt(matchlist.get(position).get("id")));
+            intent.putExtra("no",Integer.parseInt(matchList.get(position).get("id")));
             startActivity(intent);
 
 

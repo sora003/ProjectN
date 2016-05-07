@@ -43,8 +43,8 @@ public class PlayerRankAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh = null;
-        View view = null;
+        ViewHolder vh;
+        View view;
         if (convertView != null) {
             view = convertView;
             vh = (ViewHolder) convertView.getTag();
@@ -54,7 +54,7 @@ public class PlayerRankAdapter extends BaseAdapter{
 
         } else {
 //            view = super.getView(position, convertView, parent);
-            view = inflater.inflate(R.layout.playerrank_item, null);
+            view = inflater.inflate(R.layout.item_playerrank, null);
             vh = new ViewHolder(view);
             view.setTag(vh);
 

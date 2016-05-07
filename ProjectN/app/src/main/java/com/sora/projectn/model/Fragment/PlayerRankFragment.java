@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.utils.MyListView;
@@ -32,8 +31,8 @@ public class PlayerRankFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private List<Map<String,String>> playerranks;
-    private List<Map<String,String>> ranklist1 = new ArrayList<Map<String,String>>(),ranklist2 = new ArrayList<Map<String,String>>(),ranklist3 = new ArrayList<Map<String,String>>(),ranklist4 = new ArrayList<Map<String,String>>();//得分篮板,助攻,抢断
+    private List<Map<String,String>> playerRanks;
+    private List<Map<String,String>> rankList1 = new ArrayList<>(), rankList2 = new ArrayList<>(), rankList3 = new ArrayList<>(), rankList4 = new ArrayList<>();//得分篮板,助攻,抢断
     private MyListView rank1,rank2,rank3,rank4;
 
     // TODO: Rename and change types of parameters
@@ -46,29 +45,29 @@ public class PlayerRankFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public PlayerRankFragment(List<Map<String,String>> playerranks){
-        this.playerranks = playerranks;
+    public PlayerRankFragment(List<Map<String,String>> playerRanks){
+        this.playerRanks = playerRanks;
         initdata();
     }
 
     private void initdata(){
-        for(Map<String,String> player:playerranks){
+        for(Map<String,String> player: playerRanks){
             switch (player.get("type")){
                 case "0":
-                    ranklist1.add(player);
+                    rankList1.add(player);
                     break;
                 case "1":
-                    ranklist2.add(player);
+                    rankList2.add(player);
                     break;
                 case "2":
-                    ranklist3.add(player);
+                    rankList3.add(player);
                     break;
                 case "3":
-                    ranklist4.add(player);
+                    rankList4.add(player);
                     break;
             }
         }
-        Collections.sort(ranklist1, new Comparator<Map<String, String>>() {
+        Collections.sort(rankList1, new Comparator<Map<String, String>>() {
             @Override
             public int compare(Map<String, String> lhs, Map<String, String> rhs) {
                 if (Double.parseDouble(lhs.get("seasonData")) < Double.parseDouble(rhs.get("seasonData"))) {
@@ -76,7 +75,7 @@ public class PlayerRankFragment extends Fragment {
                 } else return -1;
             }
         });
-        Collections.sort(ranklist2, new Comparator<Map<String, String>>() {
+        Collections.sort(rankList2, new Comparator<Map<String, String>>() {
             @Override
             public int compare(Map<String, String> lhs, Map<String, String> rhs) {
                 if (Double.parseDouble(lhs.get("seasonData")) < Double.parseDouble(rhs.get("seasonData"))) {
@@ -84,7 +83,7 @@ public class PlayerRankFragment extends Fragment {
                 } else return -1;
             }
         });
-        Collections.sort(ranklist3, new Comparator<Map<String, String>>() {
+        Collections.sort(rankList3, new Comparator<Map<String, String>>() {
             @Override
             public int compare(Map<String, String> lhs, Map<String, String> rhs) {
                 if (Double.parseDouble(lhs.get("seasonData")) < Double.parseDouble(rhs.get("seasonData"))) {
@@ -92,7 +91,7 @@ public class PlayerRankFragment extends Fragment {
                 } else return -1;
             }
         });
-        Collections.sort(ranklist4, new Comparator<Map<String, String>>() {
+        Collections.sort(rankList4, new Comparator<Map<String, String>>() {
             @Override
             public int compare(Map<String, String> lhs, Map<String, String> rhs) {
                 if (Double.parseDouble(lhs.get("seasonData")) < Double.parseDouble(rhs.get("seasonData"))) {
@@ -138,10 +137,10 @@ public class PlayerRankFragment extends Fragment {
         rank2 = (MyListView)view.findViewById(R.id.player_rank_2);
         rank3 = (MyListView)view.findViewById(R.id.player_rank_3);
         rank4 = (MyListView)view.findViewById(R.id.player_rank_4);
-        PlayerRankAdapter adapter1 = new PlayerRankAdapter(ranklist1,getContext());
-        PlayerRankAdapter adapter2 = new PlayerRankAdapter(ranklist2,getContext());
-        PlayerRankAdapter adapter3 = new PlayerRankAdapter(ranklist3,getContext());
-        PlayerRankAdapter adapter4 = new PlayerRankAdapter(ranklist4,getContext());
+        PlayerRankAdapter adapter1 = new PlayerRankAdapter(rankList1,getContext());
+        PlayerRankAdapter adapter2 = new PlayerRankAdapter(rankList2,getContext());
+        PlayerRankAdapter adapter3 = new PlayerRankAdapter(rankList3,getContext());
+        PlayerRankAdapter adapter4 = new PlayerRankAdapter(rankList4,getContext());
         rank1.setAdapter(adapter1);
         rank2.setAdapter(adapter2);
         rank3.setAdapter(adapter3);
@@ -162,8 +161,6 @@ public class PlayerRankFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
         }
     }
 

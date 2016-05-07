@@ -35,8 +35,8 @@ public class EastTeamRankFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ListView lv;
-    private List<Map<String, String>> ranks;
+    private ListView lv_EastTeamRanks,lv_WestTeamRanks;
+    private List<Map<String, String>> eastRanks,westRanks;
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,9 +45,10 @@ public class EastTeamRankFragment extends Fragment {
 
     }
 
-    public EastTeamRankFragment(List<Map<String, String>> ranks) {
+    public EastTeamRankFragment(List<Map<String, String>> eastRanks,List<Map<String,String>> westRanks) {
         // Required empty public constructor
-        this.ranks = ranks;
+        this.eastRanks = eastRanks;
+        this.westRanks = westRanks;
     }
 
     /**
@@ -57,8 +58,8 @@ public class EastTeamRankFragment extends Fragment {
      * @return A new instance of fragment TeamRankFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EastTeamRankFragment newInstance(List<Map<String, String>> ranks) {
-        EastTeamRankFragment fragment = new EastTeamRankFragment(ranks);
+    public static EastTeamRankFragment newInstance(List<Map<String, String>> EastRanks,List<Map<String,String>> westRanks) {
+        EastTeamRankFragment fragment = new EastTeamRankFragment(EastRanks,westRanks);
         return fragment;
     }
 
@@ -77,14 +78,25 @@ public class EastTeamRankFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_east_teamrank, container, false);
-        lv = (ListView)view.findViewById(R.id.east_team_rank_lv);
-        TeamRankAdapter tradapter = new TeamRankAdapter(this.ranks,this.getContext());
-        lv.setAdapter(tradapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv_EastTeamRanks = (ListView)view.findViewById(R.id.east_team_rank_lv);
+        lv_WestTeamRanks = (ListView)view.findViewById(R.id.west_team_rank_lv);
+        TeamRankAdapter eastTeamRankAdapter = new TeamRankAdapter(this.eastRanks,this.getContext());
+        TeamRankAdapter westTeamRankAdapter = new TeamRankAdapter(this.westRanks,this.getContext());
+        lv_EastTeamRanks.setAdapter(eastTeamRankAdapter);
+        lv_EastTeamRanks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), TeamActivity.class);
-                intent.putExtra("id",Integer.parseInt(ranks.get(position).get("teamID")));
+                intent.putExtra("id", Integer.parseInt(eastRanks.get(position).get("teamID")));
+                startActivity(intent);
+            }
+        });
+        lv_WestTeamRanks.setAdapter(westTeamRankAdapter);
+        lv_WestTeamRanks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), TeamActivity.class);
+                intent.putExtra("id", Integer.parseInt(westRanks.get(position).get("teamID")));
                 startActivity(intent);
             }
         });
@@ -104,8 +116,7 @@ public class EastTeamRankFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+            
         }
     }
 
