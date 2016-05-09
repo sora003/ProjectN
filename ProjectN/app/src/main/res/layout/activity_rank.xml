@@ -19,18 +19,6 @@
             android:paddingBottom="@dimen/guide_vertical_margin">
 
             <TextView
-                android:id="@+id/tv_rankGuide1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:gravity="center"
-                android:text="@string/text_rankGuide1"
-                android:textSize="@dimen/teamGuideSize"
-                android:textColor="@color/text_white"
-                android:alpha="0.5"/>
-
-
-            <TextView
                 android:id="@+id/tv_rankGuide2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

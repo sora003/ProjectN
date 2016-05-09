@@ -44,8 +44,8 @@ public class MatchListFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private int teamId = 0;
 
-    private Map<String,List<Map<String,String>>> latestmatchlist = new TreeMap<String,List<Map<String,String>>>();
-    private ListView maincards;
+    private Map<String,List<Map<String,String>>> latestMatchList = new TreeMap<>();
+    private ListView mainCards;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -88,28 +88,10 @@ public class MatchListFragment extends Fragment {
         }
     }
 
-    Thread getData = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            //TODO 这个要改掉
-//            list = BLS.getTeamConference(mContext);
-            if(teamId == 0){
-                getLatestMatches();
-            }
-            else{
-                getTeamMatches();
-            }
 
-            handler.sendEmptyMessage(Consts.SET_VIEW);
-        }
-    });
-
-    private void getLatestMatches(){
+    private List<Map<String,String>> getLatestMatches(){
         String jsonString;
 
-        /**
-         * getTeamRankInfos
-         */
         jsonString = ACache.get(getContext()).getAsString("getLatestMatchList" );
 
         if (jsonString == null){
@@ -117,7 +99,6 @@ public class MatchListFragment extends Fragment {
             jsonString = GetHttpResponse.getHttpResponse(Consts.getLatestMatchList);
 
             if (jsonString == null){
-//                    return null;
                 handler.sendEmptyMessage(Consts.RES_ERROR);
             }
 
@@ -129,13 +110,11 @@ public class MatchListFragment extends Fragment {
             Log.i("Resource",Consts.resourceFromCache);
         }
 
-        List<Map<String, String>> matches = new ArrayList<Map<String,String>>();
-//            String url = "http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+teamrank;
-//            String jsonstring = GetHttpResponse.getHttpResponse(url);
+        List<Map<String, String>> matches = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
-                Map<String,String> temp = new HashMap<String,String>();
+                Map<String,String> temp = new HashMap<>();
                 JSONObject obj = array.getJSONObject(i);
                 String id = obj.getString("id");
                 String vId = obj.getString("vId");
@@ -166,23 +145,24 @@ public class MatchListFragment extends Fragment {
 
 
 
-        } catch (JSONException e) {
+        }catch (NullPointerException e){
+            handler.sendEmptyMessage(Consts.RES_ERROR);
+            handler.sendEmptyMessage(Consts.SET_VIEW);
             e.printStackTrace();
-//                ranks = null;
         }
-
-//            getplayerranks();
-//            getdayranks();
-        initdata(matches);
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            return matches;
+        }
     }
 
-    private void getTeamMatches(){
+    private List<Map<String,String>> getTeamMatches(){
 
         String jsonString;
 
-        /**
-         * getTeamRankInfos
-         */
         jsonString = ACache.get(getContext()).getAsString("getTeamMatchList" );
 
         if (jsonString == null){
@@ -190,7 +170,6 @@ public class MatchListFragment extends Fragment {
             jsonString = GetHttpResponse.getHttpResponse(Consts.getTeamMatchList+"?teamId="+String.valueOf(teamId));
 
             if (jsonString == null){
-//                    return null;
                 handler.sendEmptyMessage(Consts.RES_ERROR);
             }
 
@@ -202,13 +181,11 @@ public class MatchListFragment extends Fragment {
             Log.i("Resource",Consts.resourceFromCache);
         }
 
-        List<Map<String, String>> matches = new ArrayList<Map<String,String>>();
-//            String url = "http://"+serverIP+":"+serverPORT+"/"+databaseNAME+"/"+teamrank;
-//            String jsonstring = GetHttpResponse.getHttpResponse(url);
+        List<Map<String, String>> matches = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
-                Map<String,String> temp = new HashMap<String,String>();
+                Map<String,String> temp = new HashMap<>();
                 JSONObject obj = array.getJSONObject(i);
                 String id = obj.getString("id");
                 String vId = obj.getString("vId");
@@ -239,14 +216,17 @@ public class MatchListFragment extends Fragment {
 
 
 
+        }catch (NullPointerException e){
+            handler.sendEmptyMessage(Consts.RES_ERROR);
+            handler.sendEmptyMessage(Consts.SET_VIEW);
+            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
-//                ranks = null;
+        }
+        finally{
+            return matches;
         }
 
-//            getplayerranks();
-//            getdayranks();
-        initdata(matches);
     }
 
     Handler handler = new Handler(){
@@ -255,7 +235,7 @@ public class MatchListFragment extends Fragment {
             super.handleMessage(msg);
             switch (msg.what){
                 case Consts.SET_VIEW:
-                    initview();
+                    initView();
                     break;
                 case Consts.RES_ERROR:
                     Toast.makeText(getContext(), Consts.ToastMessage01, Toast.LENGTH_SHORT).show();
@@ -263,14 +243,14 @@ public class MatchListFragment extends Fragment {
         }
     };
 
-    private void initdata(List<Map<String,String>> matches){
+    private void initData(List<Map<String, String>> matches){
         //TODO 这里对数据进行接收和处理
         for(Map<String,String> m:matches){
-            if(latestmatchlist.get(m.get("date")) != null){
-                latestmatchlist.get(m.get("date")).add(m);
+            if(latestMatchList.get(m.get("date")) != null){
+                latestMatchList.get(m.get("date")).add(m);
             }else{
-                latestmatchlist.put(m.get("date"),new ArrayList<Map<String,String>>());
-                latestmatchlist.get(m.get("date")).add(m);
+                latestMatchList.put(m.get("date"), new ArrayList<Map<String, String>>());
+                latestMatchList.get(m.get("date")).add(m);
             }
         }
     }
@@ -278,11 +258,24 @@ public class MatchListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_matchlist, container, false);
-        maincards = (ListView)view.findViewById(R.id.main_cards);
+        mainCards = (ListView)view.findViewById(R.id.main_cards);
         parseIntent();
-        getData.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //TODO 这个要改掉
+//            list = BLS.getTeamConference(mContext);
+                if(teamId == 0){
+                    initData(getLatestMatches());
+                }
+                else{
+                    initData(getTeamMatches());
+                }
+
+                handler.sendEmptyMessage(Consts.SET_VIEW);
+            }
+        }).start();
         return view;
     }
 
@@ -298,10 +291,10 @@ public class MatchListFragment extends Fragment {
 
     }
 
-    private void initview(){
+    private void initView(){
 
-        MainCardsAdapter mcadapter = new MainCardsAdapter(latestmatchlist,getContext());
-        maincards.setAdapter(mcadapter);
+        MainCardsAdapter mcadapter = new MainCardsAdapter(latestMatchList,getContext());
+        mainCards.setAdapter(mcadapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

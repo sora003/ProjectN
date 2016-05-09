@@ -43,8 +43,8 @@ public class MatchListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh = null;
-        View view = null;
+        ViewHolder vh;
+        View view;
         if (convertView != null) {
             view = convertView;
             vh = (ViewHolder) convertView.getTag();
@@ -54,7 +54,7 @@ public class MatchListAdapter extends BaseAdapter {
 
         } else {
 //            view = super.getView(position, convertView, parent);
-            view = inflater.inflate(R.layout.matchlist_item, null);
+            view = inflater.inflate(R.layout.item_matchlist, null);
             vh = new ViewHolder(view);
             view.setTag(vh);
 

@@ -28,7 +28,7 @@ import com.sora.projectn.model.Fragment.MatchListFragment;
 import com.sora.projectn.utils.Consts;
 
 
-public class MainActivity extends FragmentActivity implements MatchListFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements MatchListFragment.OnFragmentInteractionListener{
 
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
