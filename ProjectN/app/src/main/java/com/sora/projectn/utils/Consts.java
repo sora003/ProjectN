@@ -1,7 +1,5 @@
 package com.sora.projectn.utils;
 
-import android.content.SharedPreferences;
-
 /**
  * Created by Sora on 2016-04-26.
  */
@@ -13,7 +11,7 @@ public class Consts {
     
     private static final  String url = "http://192.168.31.225:8080/NBADataSystem/";
 
-    private static final  String url = "http://192.168.191.1:8080/NBADataSystem/";
+//    private static final  String url = "http://192.168.191.1:8080/NBADataSystem/";
 
     public static final  String getTeams = url + "getTeams.do";
 
@@ -37,6 +35,15 @@ public class Consts {
 
     public static final String getTeamVsStatistics = url + "getTeamVsStatistics.do";
 
+    public static final String getLatestMatchList = url + "getLatestMatchList.do";
+
+    public static final String getTeamMatchList = url + "getTeamMatchList.do";
+
+    public static final String getTeamMatchStatistics = url + "getTeamMatchStatistics.do";
+
+    public static final String getMatchListForDay = url + "getMatchListOfDay.do";
+
+    public static final String getPlayerMatchStatistics = url + "getPlayerMatchStatistics.do";
 
 
 
