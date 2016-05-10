@@ -1,9 +1,17 @@
 package com.sora.projectn.model.Activity;
 
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +21,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+
 import com.sora.projectn.R;
+import com.sora.projectn.model.Fragment.CoachFragment;
 import com.sora.projectn.model.Fragment.MatchListFragment;
+import com.sora.projectn.utils.Consts;
+
 
 public class MainActivity extends AppCompatActivity implements MatchListFragment.OnFragmentInteractionListener{
 
@@ -22,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements MatchListFragment
     private Toolbar toolbar;
     private ListView lv_left_menu;
     private Context mContext;
+
 
 
 
@@ -34,14 +47,68 @@ public class MainActivity extends AppCompatActivity implements MatchListFragment
 
     private ArrayAdapter arrayAdapter;
 
+
+    private Intent intent;
+    private Bundle bundle;
+
+    /**
+     * 用户角色
+     */
+    private int character;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init_ActionBarDrawerToggle();
 
+        //使用SharedPreferences 读取球队基本数据是否已经存在
+        SharedPreferences sharedPreferences = getSharedPreferences("character", MODE_PRIVATE);
+        //获取编辑器
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        character = sharedPreferences.getInt(Consts.SharedPreferences_KEY_01, 0);
+
+        setFragment();
 
 
+
+        initListener();
+
+    }
+
+
+    /**
+     * 动态添加fragment
+     */
+    private void setFragment() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        /**
+         * 教练
+         */
+        CoachFragment coachFragment = new CoachFragment();
+
+        switch (character){
+            case 0:
+                break;
+            case 1:
+                fragmentTransaction.add(R.id.main_fragment_container,coachFragment);
+                break;
+            case 2:
+                break;
+        }
+
+
+        fragmentTransaction.commit();
+
+    }
+
+    /**
+     * 监听
+     */
+    private void initListener() {
         lv_left_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -59,7 +126,11 @@ public class MainActivity extends AppCompatActivity implements MatchListFragment
                         startActivity(new Intent(mContext,MatchSearchActivity.class));
                         break;
                     case 4:
-                        startActivity(new Intent(mContext,RankActivity.class));
+                        intent = new Intent(mContext,WelcomeActivity.class);
+                        bundle = new Bundle();
+                        bundle.putInt("MainActivity",1);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         break;
                     case 5:
                         startActivity(new Intent(mContext,RankActivity.class));
@@ -68,9 +139,9 @@ public class MainActivity extends AppCompatActivity implements MatchListFragment
                         startActivity(new Intent(mContext,SearchPlayerActivity.class));
                         break;
                     case 7:
-                        Bundle bundle = new Bundle();
+                        bundle = new Bundle();
                         bundle.putInt("teamId", 1);
-                        Intent intent = new Intent(mContext,TeamCombatListActivity.class);
+                        intent = new Intent(mContext,TeamCombatListActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         break;
@@ -78,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements MatchListFragment
             }
         });
     }
-
 
 
     private void init_ActionBarDrawerToggle() {

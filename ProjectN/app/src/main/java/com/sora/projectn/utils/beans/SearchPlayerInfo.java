@@ -1,7 +1,7 @@
 package com.sora.projectn.utils.beans;
 
 /**
- * Created by lenovo on 2016/4/26.
+ * Created by Erwin Rommel on 2016/4/26.
  *
  *playerId 			球员id
  *season 			赛季信息
@@ -36,8 +36,6 @@ package com.sora.projectn.utils.beans;
 public class SearchPlayerInfo {
 
     private int playerId;
-
-
 
     private String playerName;
 
@@ -88,6 +86,17 @@ public class SearchPlayerInfo {
     private double PER;
     private int doubleDouble;
     private int tripleDouble;
+
+    //用于排序
+    private double key;
+
+    public double getKey() {
+        return key;
+    }
+
+    public void setKey(double key) {
+        this.key = key;
+    }
 
     public double getTwoShot() {
         return twoShot;
@@ -319,5 +328,66 @@ public class SearchPlayerInfo {
 
     public void setTripleDouble(int tripleDouble) {
         this.tripleDouble = tripleDouble;
+    }
+
+    public Object getInfoByParameter(String para){
+
+        switch (para){
+            case "playerId":
+                return getPlayerId();
+            case "isFirst":
+                return getIsFirst();
+            case "totalMatches":
+                return getTotalMatches();
+            case "time":
+                return getTime();
+            case "twoHit":
+                return getTwoHit();
+            case "twoShot":
+                return getTwoShot();
+            case "threeHit":
+                return getThreeHit();
+            case "threeShot":
+                return getThreeShot();
+            case "freeThrowHit":
+                return getFreeThrowHit();
+            case "freeThrowShot":
+                return getFreeThrowShot();
+            case "offReb":
+                return getOffReb();
+            case "defReb":
+                return getDefReb();
+            case "totReb":
+                return getTotReb();
+            case "ass":
+                return getAss();
+            case "steal":
+                return getSteal();
+            case "blockShot":
+                return getBlockShot();
+            case "turnOver":
+                return getTurnOver();
+            case "foul":
+                return getFoul();
+            case "score":
+                return getScore();
+            case "twoRate":
+                return getTwoRate();
+            case "threeRate":
+                return getThreeRate();
+            case "freeThrowRate":
+                return getFreeThrowRate();
+            case "trueRate":
+                return getTrueRate();
+            case "per":
+                return getPER();
+            case "doubleDouble":
+                return getDoubleDouble();
+            case "tripleDouble":
+                return getTripleDouble();
+
+        }
+
+        return null;
     }
 }

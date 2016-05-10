@@ -106,6 +106,8 @@ public class MatchActivity extends AppCompatActivity{
         }
     };
 
+
+
     private List<Map<String,String>> getMatchTeamInfo(){
         List<Map<String, String>> matchTeamInfo = new ArrayList<>();
         String jsonString1;
@@ -114,6 +116,7 @@ public class MatchActivity extends AppCompatActivity{
             String url = Consts.getTeamMatchStatistics + "?" + "matchId=" + matchId;
             jsonString1 = GetHttpResponse.getHttpResponse(url);
         }
+
         try {
             JSONArray array = new JSONArray(jsonString1);
             for (int i = 0; i < array.length(); i++) {
