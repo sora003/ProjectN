@@ -21,12 +21,12 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link WestTeamRankFragment.OnFragmentInteractionListener} interface
+ * {@link TeamRankFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link WestTeamRankFragment#newInstance} factory method to
+ * Use the {@link TeamRankFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WestTeamRankFragment extends Fragment {
+public class TeamRankFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,19 +35,20 @@ public class WestTeamRankFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ListView lv;
-    private List<Map<String, String>> ranks;
+    private ListView lv_EastTeamRanks,lv_WestTeamRanks;
+    private List<Map<String, String>> eastRanks,westRanks;
 
     private OnFragmentInteractionListener mListener;
 
 
-    public WestTeamRankFragment(){
+    public TeamRankFragment(){
 
     }
 
-    public WestTeamRankFragment(List<Map<String, String>> ranks) {
+    public TeamRankFragment(List<Map<String, String>> eastRanks, List<Map<String, String>> westRanks) {
         // Required empty public constructor
-        this.ranks = ranks;
+        this.eastRanks = eastRanks;
+        this.westRanks = westRanks;
     }
 
     /**
@@ -57,8 +58,8 @@ public class WestTeamRankFragment extends Fragment {
      * @return A new instance of fragment TeamRankFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WestTeamRankFragment newInstance(List<Map<String, String>> ranks) {
-        WestTeamRankFragment fragment = new WestTeamRankFragment(ranks);
+    public static TeamRankFragment newInstance(List<Map<String, String>> EastRanks,List<Map<String,String>> westRanks) {
+        TeamRankFragment fragment = new TeamRankFragment(EastRanks,westRanks);
         return fragment;
     }
 
@@ -76,15 +77,26 @@ public class WestTeamRankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_west_team_rank, container, false);
-        lv = (ListView)view.findViewById(R.id.west_team_rank_lv);
-        TeamRankAdapter tradapter = new TeamRankAdapter(this.ranks,this.getContext());
-        lv.setAdapter(tradapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        View view = inflater.inflate(R.layout.fragment_teamrank, container, false);
+        lv_EastTeamRanks = (ListView)view.findViewById(R.id.east_team_rank_lv);
+        lv_WestTeamRanks = (ListView)view.findViewById(R.id.west_team_rank_lv);
+        TeamRankAdapter eastTeamRankAdapter = new TeamRankAdapter(this.eastRanks,this.getContext());
+        TeamRankAdapter westTeamRankAdapter = new TeamRankAdapter(this.westRanks,this.getContext());
+        lv_EastTeamRanks.setAdapter(eastTeamRankAdapter);
+        lv_EastTeamRanks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), TeamActivity.class);
-                intent.putExtra("id", Integer.parseInt(ranks.get(position).get("teamID")));
+                intent.putExtra("id", Integer.parseInt(eastRanks.get(position).get("teamID")));
+                startActivity(intent);
+            }
+        });
+        lv_WestTeamRanks.setAdapter(westTeamRankAdapter);
+        lv_WestTeamRanks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), TeamActivity.class);
+                intent.putExtra("id", Integer.parseInt(westRanks.get(position).get("teamID")));
                 startActivity(intent);
             }
         });
@@ -104,8 +116,7 @@ public class WestTeamRankFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+
         }
     }
 

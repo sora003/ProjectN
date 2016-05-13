@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="com.sora.projectn.model.Fragment.EastTeamRankFragment">
+    tools:context=".model.Fragment.TeamRankFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout

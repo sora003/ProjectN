@@ -20,9 +20,8 @@ import android.widget.Toast;
 
 import com.sora.projectn.R;
 import com.sora.projectn.model.Fragment.DayRankFragment;
-import com.sora.projectn.model.Fragment.EastTeamRankFragment;
 import com.sora.projectn.model.Fragment.PlayerRankFragment;
-import com.sora.projectn.model.Fragment.WestTeamRankFragment;
+import com.sora.projectn.model.Fragment.TeamRankFragment;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.FragAdapter;
@@ -38,6 +37,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by qhy on 2016/4/18.
@@ -49,8 +49,7 @@ public class RankActivity extends FragmentActivity {
     private Context mContext;
     private ViewPager pager;
 
-    private WestTeamRankFragment westTeamRankFragment;
-    private EastTeamRankFragment eastTeamRankFragment;
+    private TeamRankFragment teamRankFragment;
     private PlayerRankFragment playerRankFragment;
     private DayRankFragment dayRankFragment;
 
@@ -66,6 +65,7 @@ public class RankActivity extends FragmentActivity {
     private int bmpw = 0;
     private int offset = 0;
     private int currIndex = 0;
+    private String currentDate = "";
 
     List<Map<String, String>> eastRanks = new ArrayList<>(), westRanks = new ArrayList<>();
     List<Map<String, String>> playerranks = new ArrayList<>();
@@ -145,10 +145,10 @@ public class RankActivity extends FragmentActivity {
 
     private void initViewPager(){
         fragments = new ArrayList<>();
-        eastTeamRankFragment = new EastTeamRankFragment(eastRanks,westRanks);
+        teamRankFragment = new TeamRankFragment(eastRanks,westRanks);
         playerRankFragment = new PlayerRankFragment(playerranks);
-        dayRankFragment = new DayRankFragment(dayranks);
-        fragments.add(eastTeamRankFragment);
+        dayRankFragment = new DayRankFragment(dayranks,currentDate);
+        fragments.add(teamRankFragment);
         fragments.add(playerRankFragment);
         fragments.add(dayRankFragment);
 
@@ -306,7 +306,31 @@ public class RankActivity extends FragmentActivity {
 
         if (jsonString == null){
 
-            jsonString = GetHttpResponse.getHttpResponse(Consts.dayrank);
+            String jsonString2 = ACache.get(mContext).getAsString("LatestMatchDate");
+            if(jsonString2 == null){
+                jsonString2 = GetHttpResponse.getHttpResponse(Consts.getLatestMatchList);
+                try {
+                    JSONArray jsonArray = new JSONArray(jsonString2);
+                    Map<String,String> temp = new TreeMap<>();
+                    for(int i = 0; i<jsonArray.length(); i++){
+                        temp = new TreeMap<>();
+                        JSONObject obj = jsonArray.getJSONObject(i);
+                        temp.put(obj.getString("date"),obj.getString("year"));
+                    }
+                    ACache a = ACache.get(mContext);
+                    Map.Entry<String,String> entry = ((TreeMap<String,String>)temp).lastEntry();
+                    int year = Integer.parseInt(entry.getValue());
+                    int monthOfYear = Integer.parseInt(entry.getKey().split("月")[0]);
+                    int dayOfMonth = Integer.parseInt(entry.getKey().split("月")[1].split("日")[0]);
+                    String date = String.valueOf(year) + "-" + String.format("%02d", monthOfYear) + "-" + String.format("%02d", dayOfMonth);
+                    jsonString2 = date;
+                    a.put("LatestMatchDate", date, ACache.TEST_TIME);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            jsonString = GetHttpResponse.getHttpResponse(Consts.dayrank + "?date=" + jsonString2);
+            this.currentDate = jsonString2;
 
             if (jsonString == null){
                 handler.sendEmptyMessage(Consts.RES_ERROR);

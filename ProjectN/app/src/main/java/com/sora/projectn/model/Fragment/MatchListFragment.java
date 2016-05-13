@@ -245,6 +245,7 @@ public class MatchListFragment extends Fragment {
 
     private void initData(List<Map<String, String>> matches){
         //TODO 这里对数据进行接收和处理
+        latestMatchList = new TreeMap<>();
         for(Map<String,String> m:matches){
             if(latestMatchList.get(m.get("date")) != null){
                 latestMatchList.get(m.get("date")).add(m);
@@ -264,10 +265,16 @@ public class MatchListFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //TODO 这个要改掉
-//            list = BLS.getTeamConference(mContext);
                 if(teamId == 0){
                     initData(getLatestMatches());
+                    ACache a = ACache.get(getContext());
+                    Map.Entry<String,List<Map<String,String>>> entry = ((TreeMap<String,List<Map<String,String>>>)latestMatchList).lastEntry();
+                    int year = Integer.parseInt(entry.getValue().get(0).get("year"));
+                    int monthOfYear = Integer.parseInt(entry.getKey().split("月")[0]);
+                    int dayOfMonth = Integer.parseInt(entry.getKey().split("月")[1].split("日")[0]);
+                    String date = String.valueOf(year) + "-" + String.format("%02d", monthOfYear) + "-" + String.format("%02d", dayOfMonth);
+
+                    a.put("LatestMatchDate", date, ACache.TEST_TIME);
                 }
                 else{
                     initData(getTeamMatches());

@@ -67,7 +67,7 @@ public class MatchPlayerAdapter extends BaseAdapter {
         vh.player_blockshot.setText(match_player_infos.get(position).get("blockShot"));
         vh.player_ass.setText(match_player_infos.get(position).get("ass"));
         vh.player_turnover.setText(match_player_infos.get(position).get("turnOver"));
-        vh.player_reb.setText(match_player_infos.get(position).get("reb"));
+        vh.player_reb.setText(match_player_infos.get(position).get("totReb"));
         vh.player_score.setText(match_player_infos.get(position).get("score"));
         vh.player_steal.setText(match_player_infos.get(position).get("steal"));
 

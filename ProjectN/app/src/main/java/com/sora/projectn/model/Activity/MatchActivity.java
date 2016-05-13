@@ -174,6 +174,7 @@ public class MatchActivity extends AppCompatActivity{
                 String freeThrowShot = obj.getString("freeThrowShot");
                 String offReb = obj.getString("offReb");
                 String defReb = obj.getString("defReb");
+                String totReb = obj.getString("totReb");
                 String ass = obj.getString("ass");
                 String steal = obj.getString("steal");
                 String blockShot = obj.getString("blockShot");
@@ -200,6 +201,7 @@ public class MatchActivity extends AppCompatActivity{
                 temp.put("freeThrowShot",freeThrowShot);
                 temp.put("offReb",offReb);
                 temp.put("defReb",defReb);
+                temp.put("totReb",totReb);
                 temp.put("ass",ass);
                 temp.put("steal",steal);
                 temp.put("blockShot",blockShot);
@@ -261,6 +263,7 @@ public class MatchActivity extends AppCompatActivity{
                 String freeThrowShot = obj.getString("freeThrowShot");
                 String offReb = obj.getString("offReb");
                 String defReb = obj.getString("defReb");
+                String totReb = obj.getString("totReb");
                 String ass = obj.getString("ass");
                 String steal = obj.getString("steal");
                 String blockShot = obj.getString("blockShot");
@@ -282,6 +285,7 @@ public class MatchActivity extends AppCompatActivity{
                 temp.put("freeThrowShot",freeThrowShot);
                 temp.put("offReb",offReb);
                 temp.put("defReb",defReb);
+                temp.put("totReb",totReb);
                 temp.put("ass",ass);
                 temp.put("steal",steal);
                 temp.put("blockShot",blockShot);

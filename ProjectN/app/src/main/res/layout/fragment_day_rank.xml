@@ -13,6 +13,15 @@
             android:layout_height="wrap_content"
             tools:context="com.sora.projectn.model.Fragment.DayRankFragment">
 
+            <TextView
+                android:id="@+id/dayrank_titlemessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="以下是2016-04-22最新消息"
+                android:textSize="@dimen/titleSize"/>
             <!-- TODO: Update blank fragment layout -->
             <LinearLayout
                 android:id="@+id/dayrank_card1"
@@ -20,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@color/card"
+                android:layout_below="@id/dayrank_titlemessage"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"

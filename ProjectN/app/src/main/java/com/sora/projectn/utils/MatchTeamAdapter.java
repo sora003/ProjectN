@@ -69,7 +69,7 @@ public class MatchTeamAdapter extends BaseAdapter {
         vh.team_blockshot.setText(match_team_infos.get(position).get("blockShot"));
         vh.team_ass.setText(match_team_infos.get(position).get("ass"));
         vh.team_turnover.setText(match_team_infos.get(position).get("turnOver"));
-        vh.team_reb.setText(match_team_infos.get(position).get("reb"));
+        vh.team_reb.setText(match_team_infos.get(position).get("totReb"));
         vh.team_score.setText(match_team_infos.get(position).get("score"));
         vh.team_steal.setText(match_team_infos.get(position).get("steal"));
 

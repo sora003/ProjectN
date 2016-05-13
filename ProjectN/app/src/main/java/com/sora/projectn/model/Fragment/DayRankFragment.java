@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.utils.DayRankAdapter;
@@ -40,6 +40,8 @@ public class DayRankFragment extends Fragment {
     private List<Map<String,String>> dayranks;
     private List<Map<String,String>> ranklist1 = new ArrayList<Map<String,String>>(),ranklist2 = new ArrayList<Map<String,String>>(),ranklist3 = new ArrayList<Map<String,String>>(),ranklist4 = new ArrayList<Map<String,String>>();//得分篮板,助攻,抢断
     private MyListView rank1,rank2,rank3,rank4;
+    private TextView titleMessage;
+    private String date;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,8 +49,9 @@ public class DayRankFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public DayRankFragment(List<Map<String,String>> dayranks){
+    public DayRankFragment(List<Map<String,String>> dayranks,String date){
         this.dayranks = dayranks;
+        this.date = date;
         initdata();
     }
 
@@ -140,6 +143,7 @@ public class DayRankFragment extends Fragment {
         rank2 = (MyListView)view.findViewById(R.id.day_rank_2);
         rank3 = (MyListView)view.findViewById(R.id.day_rank_3);
         rank4 = (MyListView)view.findViewById(R.id.day_rank_4);
+        titleMessage = (TextView)view.findViewById(R.id.dayrank_titlemessage);
         DayRankAdapter adapter1 = new DayRankAdapter(ranklist1,getContext());
         DayRankAdapter adapter2 = new DayRankAdapter(ranklist2,getContext());
         DayRankAdapter adapter3 = new DayRankAdapter(ranklist3,getContext());
@@ -148,6 +152,7 @@ public class DayRankFragment extends Fragment {
         rank2.setAdapter(adapter2);
         rank3.setAdapter(adapter3);
         rank4.setAdapter(adapter4);
+        titleMessage.setText("以下是" + date + "最新消息");
         return view;
     }
 
