@@ -7,10 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.sora.projectn.R;
-import com.sora.projectn.utils.DayRankAdapter;
+import com.sora.projectn.utils.Adapter.DayRankAdapter;
 import com.sora.projectn.utils.MyListView;
 
 import java.util.ArrayList;

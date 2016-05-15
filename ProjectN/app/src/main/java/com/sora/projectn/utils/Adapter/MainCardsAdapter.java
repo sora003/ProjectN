@@ -1,4 +1,4 @@
-package com.sora.projectn.utils;
+package com.sora.projectn.utils.Adapter;
 
 import android.content.Context;
 import android.content.Intent;

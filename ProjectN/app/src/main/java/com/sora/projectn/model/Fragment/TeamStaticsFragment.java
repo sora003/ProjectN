@@ -18,7 +18,7 @@ import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.TeamStaticsAdapter;
+import com.sora.projectn.utils.Adapter.TeamStaticsAdapter;
 import com.sora.projectn.utils.beans.TeamSeasonStaticsVo;
 
 import org.json.JSONException;

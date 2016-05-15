@@ -32,7 +32,7 @@
 //import com.sora.projectn.utils.ACache;
 //import com.sora.projectn.utils.BitmapHelper;
 //import com.sora.projectn.utils.Consts;
-//import com.sora.projectn.utils.FragAdapter;
+//import com.sora.projectn.utils.Adapter.FragAdapter;
 //import com.sora.projectn.utils.GetHttpResponse;
 //
 //import org.json.JSONArray;

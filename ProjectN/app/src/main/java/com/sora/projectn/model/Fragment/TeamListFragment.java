@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +21,8 @@ import com.sora.projectn.model.Activity.TeamActivity;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.BitmapHelper;
 import com.sora.projectn.utils.Consts;
-import com.sora.projectn.utils.GetHttpResponse;
 import com.sora.projectn.utils.MyListView;
-import com.sora.projectn.utils.MySimpleAdapter;
+import com.sora.projectn.utils.Adapter.MySimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +33,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by Sora on 2016-04-25.

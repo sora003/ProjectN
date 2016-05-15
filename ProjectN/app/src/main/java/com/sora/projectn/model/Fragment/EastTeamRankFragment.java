@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.model.Activity.TeamActivity;
-import com.sora.projectn.utils.TeamRankAdapter;
+import com.sora.projectn.utils.Adapter.TeamRankAdapter;
 
 import java.util.List;
 import java.util.Map;

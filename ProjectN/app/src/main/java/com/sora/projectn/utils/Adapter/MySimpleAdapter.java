@@ -1,8 +1,10 @@
-package com.sora.projectn.utils;
+package com.sora.projectn.utils.Adapter;
 
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
+
+import com.sora.projectn.utils.BitmapHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,6 @@ public class MySimpleAdapter extends SimpleAdapter {
 
     @Override
     public void setViewImage(ImageView v, int value) {
-        v.setImageBitmap(BitmapHelper.loadBitMap(mContext,value));
+        v.setImageBitmap(BitmapHelper.loadBitMap(mContext, value));
     }
 }

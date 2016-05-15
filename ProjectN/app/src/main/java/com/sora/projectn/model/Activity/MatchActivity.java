@@ -15,8 +15,8 @@ import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.MatchPlayerAdapter;
-import com.sora.projectn.utils.MatchTeamAdapter;
+import com.sora.projectn.utils.Adapter.MatchPlayerAdapter;
+import com.sora.projectn.utils.Adapter.MatchTeamAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

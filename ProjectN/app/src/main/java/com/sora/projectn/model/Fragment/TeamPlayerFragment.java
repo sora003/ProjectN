@@ -17,7 +17,7 @@ import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.TeamPlayerAdapter;
+import com.sora.projectn.utils.Adapter.TeamPlayerAdapter;
 import com.sora.projectn.utils.beans.TeamPlayerVo;
 
 import org.json.JSONArray;

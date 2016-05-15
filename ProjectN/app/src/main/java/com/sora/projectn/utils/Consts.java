@@ -35,6 +35,17 @@ public class Consts {
 
     public static final String getTeamVsStatistics = url + "getTeamVsStatistics.do";
 
+    public static final String getLatestMatchList = url + "getLatestMatchList.do";
+
+    public static final String getTeamMatchList = url + "getTeamMatchList.do";
+
+    public static final String getTeamMatchStatistics = url + "getTeamMatchStatistics.do";
+
+    public static final String getMatchListForDay = url + "getMatchListOfDay.do";
+
+    public static final String getPlayerMatchStatistics = url + "getPlayerMatchStatistics.do";
+
+
 
 
 
@@ -78,20 +89,22 @@ public class Consts {
      */
     public static final String SharedPreferences_KEY_01 = "character";
 
+    public static final String SharedPreferences_KEY_02 = "user";
+
     /**
      * 球迷
      */
-    public static final int SharedPreferences_Vaule_01_1 = 0xE01;
+    public static final String SharedPreferences_Value_01 = "球迷";
 
     /**
      * 教练
      */
-    public static final int SharedPreferences_Vaule_01_2 = 0xE02;
+    public static final String SharedPreferences_Value_02 = "教练";
 
     /**
      * 球探
      */
-    public static final int SharedPreferences_Vaule_01_3 = 0xE03;
+    public static final String SharedPreferences_Value_03 = "球探";
 
 
 
