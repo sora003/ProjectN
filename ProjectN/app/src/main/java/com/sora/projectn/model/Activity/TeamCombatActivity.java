@@ -17,7 +17,7 @@ import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.TeamCombatAdapter;
+import com.sora.projectn.utils.Adapter.TeamCombatAdapter;
 import com.sora.projectn.utils.beans.TeamCombatStaticsVo;
 
 import org.json.JSONArray;

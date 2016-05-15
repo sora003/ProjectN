@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.model.Fragment.TeamListFragment;
-import com.sora.projectn.utils.FragAdapter;
+import com.sora.projectn.utils.Adapter.FragAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

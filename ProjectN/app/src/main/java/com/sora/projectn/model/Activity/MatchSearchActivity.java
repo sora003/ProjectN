@@ -17,7 +17,7 @@ import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.MatchListAdapter;
+import com.sora.projectn.utils.Adapter.MatchListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,7 +69,7 @@ public class MatchSearchActivity  extends FragmentActivity {
             @Override
             public void onDateChanged(DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
                 MatchSearchActivity.this.year = year;
-                MatchSearchActivity.this.monthOfYear = monthOfYear;
+                MatchSearchActivity.this.monthOfYear = monthOfYear + 1;
                 MatchSearchActivity.this.DayOfMonth = dayOfMonth;
                 new Thread(new Runnable() {
                     @Override

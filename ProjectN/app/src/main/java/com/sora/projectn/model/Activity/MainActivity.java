@@ -1,168 +1,146 @@
 package com.sora.projectn.model.Activity;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-
-
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 
 import com.sora.projectn.R;
-import com.sora.projectn.model.Fragment.CoachFragment;
 import com.sora.projectn.model.Fragment.MatchListFragment;
 import com.sora.projectn.utils.Consts;
+import com.sora.projectn.utils.SharedPreferencesHelper;
+
+import static com.sora.projectn.model.Fragment.Tool_NavigationDrawerFragment.menuClickListener;
+import static com.sora.projectn.model.Fragment.Tool_NavigationDrawerFragment.settingClickListener;
 
 
-public class MainActivity extends AppCompatActivity implements MatchListFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements menuClickListener,settingClickListener,MatchListFragment.OnFragmentInteractionListener {
 
+    //侧拉菜单
     private DrawerLayout mDrawerLayout;
+
     private Toolbar toolbar;
-    private ListView lv_left_menu;
-    private Context mContext;
-
-
-
-
 
     //ActionBarDrawerToggle控件
     private ActionBarDrawerToggle mDrawerToggle;
-    //ActionBarDrawerToggle控件内的内容
 
-    private String[] data = {"我关注的球队","球队","球员检索","历史比赛数据","设置","排行榜(测试)","球探功能(测试)","教练球队数据对比功能测试"};
-
-    private ArrayAdapter arrayAdapter;
 
 
     private Intent intent;
     private Bundle bundle;
 
-    /**
-     * 用户角色
-     */
-    private int character;
+    //正在使用的Fragment
+    private Fragment isFragment;
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init_ActionBarDrawerToggle();
-
-        //使用SharedPreferences 读取球队基本数据是否已经存在
-        SharedPreferences sharedPreferences = getSharedPreferences("character", MODE_PRIVATE);
-        //获取编辑器
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        character = sharedPreferences.getInt(Consts.SharedPreferences_KEY_01, 0);
-
-        setFragment();
 
 
+        initToolbar();
 
-        initListener();
+        initFragment(savedInstanceState);
 
     }
 
-
     /**
-     * 动态添加fragment
+     * 动态更新fragment
+     * @param savedInstanceState
      */
-    private void setFragment() {
+    private void initFragment(Bundle savedInstanceState) {
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        /**
-         * 教练
-         */
-        CoachFragment coachFragment = new CoachFragment();
 
-        switch (character){
-            case 0:
+
+        switch (SharedPreferencesHelper.getCharacter(getApplicationContext())){
+            case Consts.SharedPreferences_Value_01:
+                fragmentTransaction.add(R.id.main_fragment_container, new MatchListFragment());
                 break;
-            case 1:
-                fragmentTransaction.add(R.id.main_fragment_container,coachFragment);
+            case Consts.SharedPreferences_Value_02:
+
                 break;
-            case 2:
+            case Consts.SharedPreferences_Value_03:
+
                 break;
         }
 
 
         fragmentTransaction.commit();
+    }
 
+
+    /**
+     * 实现左侧菜单的接口 实现跳转
+     * @param menuName
+     */
+    @Override
+    public void menuClick(String menuName){
+        //关闭侧拉菜单
+        mDrawerLayout.closeDrawers();
+        switch (menuName){
+            case "我关注的球队":
+                break;
+            case "球队":
+                startActivity(new Intent(getApplicationContext(), TeamListActivity.class));
+                break;
+            case "球员检索":
+                startActivity(new Intent(getApplicationContext(), SearchPlayerActivity.class));
+                break;
+            case "历史比赛数据":
+                startActivity(new Intent(getApplicationContext(), MatchSearchActivity.class));
+                break;
+            case "排行榜":
+                startActivity(new Intent(getApplicationContext(), RankActivity.class));
+                break;
+
+        }
     }
 
     /**
-     * 监听
+     * 实现左侧菜单的接口 实现跳转 设置和切换主题
+     * @param settingName
      */
-    private void initListener() {
-        lv_left_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 0:
-//                        startActivity(new Intent(mContext,TeamListActivity.class));
-                        break;
-                    case 1:
-                        startActivity(new Intent(mContext,TeamListActivity.class));
-                        break;
-                    case 2:
-//                        startActivity(new Intent(mContext,MatchListActivity.class));
-                        break;
-                    case 3:
-                        startActivity(new Intent(mContext,MatchSearchActivity.class));
-                        break;
-                    case 4:
-                        intent = new Intent(mContext,WelcomeActivity.class);
-                        bundle = new Bundle();
-                        bundle.putInt("MainActivity",1);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        break;
-                    case 5:
-                        startActivity(new Intent(mContext,RankActivity.class));
-                        break;
-                    case 6:
-                        startActivity(new Intent(mContext,SearchPlayerActivity.class));
-                        break;
-                    case 7:
-                        bundle = new Bundle();
-                        bundle.putInt("teamId", 1);
-                        intent = new Intent(mContext,TeamCombatListActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        break;
-                }
-            }
-        });
+    @Override
+    public void settingClick(String settingName) {
+        switch (settingName){
+            case "设置":
+                Intent intent = new Intent(getApplicationContext(),WelcomeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("MainActivity" , 1);
+                intent.putExtras(bundle);
+                startActivity(intent);
+        }
     }
 
+    /**
+     * 初始化Toolbar
+     */
+    private void initToolbar() {
 
-    private void init_ActionBarDrawerToggle() {
-        mContext = this;
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        lv_left_menu = (ListView) findViewById(R.id.lv_left_menu);
-
 
         //设置Toolbar标题
         toolbar.setTitle("NBA");
         //设置标题颜色
         toolbar.setTitleTextColor(getResources().getColor(R.color.color_white));
         setSupportActionBar(toolbar);
+
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         //设置返回键可用
         getSupportActionBar().setHomeButtonEnabled(true);
         //决定左上角的图标是否可以点击
@@ -171,14 +149,16 @@ public class MainActivity extends AppCompatActivity implements MatchListFragment
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        //设置抽屉内的内容
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, data);
-        lv_left_menu.setAdapter(arrayAdapter);
+
+
 
     }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
 }

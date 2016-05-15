@@ -24,7 +24,7 @@ import com.sora.projectn.model.Fragment.PlayerRankFragment;
 import com.sora.projectn.model.Fragment.TeamRankFragment;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.Consts;
-import com.sora.projectn.utils.FragAdapter;
+import com.sora.projectn.utils.Adapter.FragAdapter;
 import com.sora.projectn.utils.GetHttpResponse;
 
 import org.json.JSONArray;
@@ -341,6 +341,31 @@ public class RankActivity extends FragmentActivity {
         }
         else
         {
+            String jsonString2 = ACache.get(mContext).getAsString("LatestMatchDate");
+            if(jsonString2 == null){
+                jsonString2 = GetHttpResponse.getHttpResponse(Consts.getLatestMatchList);
+                try {
+                    JSONArray jsonArray = new JSONArray(jsonString2);
+                    Map<String,String> temp = new TreeMap<>();
+                    for(int i = 0; i<jsonArray.length(); i++){
+                        temp = new TreeMap<>();
+                        JSONObject obj = jsonArray.getJSONObject(i);
+                        temp.put(obj.getString("date"),obj.getString("year"));
+                    }
+                    ACache a = ACache.get(mContext);
+                    Map.Entry<String,String> entry = ((TreeMap<String,String>)temp).lastEntry();
+                    int year = Integer.parseInt(entry.getValue());
+                    int monthOfYear = Integer.parseInt(entry.getKey().split("月")[0]);
+                    int dayOfMonth = Integer.parseInt(entry.getKey().split("月")[1].split("日")[0]);
+                    String date = String.valueOf(year) + "-" + String.format("%02d", monthOfYear) + "-" + String.format("%02d", dayOfMonth);
+                    jsonString2 = date;
+                    a.put("LatestMatchDate", date, ACache.TEST_TIME);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            jsonString = GetHttpResponse.getHttpResponse(Consts.dayrank + "?date=" + jsonString2);
+            this.currentDate = jsonString2;
             Log.i("Resource",Consts.resourceFromCache);
         }
 

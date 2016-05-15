@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
-import com.sora.projectn.utils.DayRankAdapter;
+import com.sora.projectn.utils.Adapter.DayRankAdapter;
 import com.sora.projectn.utils.MyListView;
 
 import java.util.ArrayList;

@@ -1,27 +1,14 @@
 package com.sora.projectn.model.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.model.Fragment.TeamCombatListFragment;
-import com.sora.projectn.model.Fragment.TeamListFragment;
-import com.sora.projectn.utils.FragAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Sora on 2016-05-02.
