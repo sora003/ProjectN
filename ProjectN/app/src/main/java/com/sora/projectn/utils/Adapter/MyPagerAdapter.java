@@ -1,4 +1,4 @@
-package com.sora.projectn.utils;
+package com.sora.projectn.utils.Adapter;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;

@@ -26,6 +26,9 @@ import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.Adapter.FragAdapter;
 import com.sora.projectn.utils.GetHttpResponse;
+import com.sora.projectn.utils.beans.DayRankInfo;
+import com.sora.projectn.utils.beans.PlayerRankInfo;
+import com.sora.projectn.utils.beans.TeamRankInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,9 +70,9 @@ public class RankActivity extends FragmentActivity {
     private int currIndex = 0;
     private String currentDate = "";
 
-    List<Map<String, String>> eastRanks = new ArrayList<>(), westRanks = new ArrayList<>();
-    List<Map<String, String>> playerranks = new ArrayList<>();
-    List<Map<String, String>> dayranks = new ArrayList<>();
+    List<TeamRankInfo> eastRanks = new ArrayList<>(), westRanks = new ArrayList<>();
+    List<PlayerRankInfo> playerranks = new ArrayList<>();
+    List<DayRankInfo> dayranks = new ArrayList<>();
 
 
     @Override
@@ -82,7 +85,7 @@ public class RankActivity extends FragmentActivity {
                 //TODO 这个要改掉
                 playerranks =getPlayerRanks();
                 dayranks = getDayRanks();
-                List<Map<String,String>> ranks = getTeamRanks();
+                List<TeamRankInfo> ranks = getTeamRanks();
                 initData(ranks);
                 handler.sendEmptyMessage(Consts.SET_VIEW);
             }
@@ -116,27 +119,27 @@ public class RankActivity extends FragmentActivity {
 
     }
 
-    private void initData(List<Map<String, String>> ranks){
-        for(Map<String, String> team:ranks){
-            if(team.get("league").equals("0")){
+    private void initData(List<TeamRankInfo> ranks){
+        for(TeamRankInfo team:ranks){
+            if(team.getLeague().equals("0")){
                 eastRanks.add(team);
             }
-            else if(team.get("league").equals("1")){
+            else if(team.getLeague().equals("1")){
                 westRanks.add(team);
             }
         }
-        Collections.sort(eastRanks, new Comparator<Map<String, String>>() {
+        Collections.sort(eastRanks, new Comparator<TeamRankInfo>() {
             @Override
-            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
-                if (Integer.parseInt(lhs.get("rank")) < Integer.parseInt(rhs.get("rank"))) {
+            public int compare(TeamRankInfo lhs, TeamRankInfo rhs) {
+                if (Integer.parseInt(lhs.getRank()) < Integer.parseInt(rhs.getRank())) {
                     return -1;
                 } else return 1;
             }
         });
-        Collections.sort(westRanks, new Comparator<Map<String, String>>() {
+        Collections.sort(westRanks, new Comparator<TeamRankInfo>() {
             @Override
-            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
-                if (Integer.parseInt(lhs.get("rank")) < Integer.parseInt(rhs.get("rank"))) {
+            public int compare(TeamRankInfo lhs, TeamRankInfo rhs) {
+                if (Integer.parseInt(lhs.getRank()) < Integer.parseInt(rhs.getRank())) {
                     return -1;
                 } else return 1;
             }
@@ -176,7 +179,7 @@ public class RankActivity extends FragmentActivity {
 
 
 
-    private List<Map<String, String>> getTeamRanks(){
+    private List<TeamRankInfo> getTeamRanks(){
 
         String jsonString;
 
@@ -198,11 +201,11 @@ public class RankActivity extends FragmentActivity {
             Log.i("Resource",Consts.resourceFromCache);
         }
 
-        List<Map<String, String>> ranks = new ArrayList<>();
+        List<TeamRankInfo> ranks = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
-                Map<String,String> temp = new HashMap<>();
+                TeamRankInfo temp = new TeamRankInfo();
                 JSONObject obj = array.getJSONObject(i);
                 String teamID = obj.getString("teamId");
                 String rank = obj.getString("rank");
@@ -215,17 +218,16 @@ public class RankActivity extends FragmentActivity {
                 String pspg = obj.getString("pspg");
                 String papg = obj.getString("papg");
 
-                temp.put("teamID", teamID);
-                temp.put("rank", rank);
-                temp.put("name", name);
-                temp.put("league", league);
-                temp.put("wins", wins);
-                temp.put("loses", loses);
-                temp.put("winRate", winRate);
-                temp.put("gamesBehind", gamesBehind);
-                temp.put("pspg", pspg);
-                temp.put("papg", papg);
-
+                temp.setTeamId(teamID);
+                temp.setRank(rank);
+                temp.setName(name);
+                temp.setLeague(league);
+                temp.setWins(wins);
+                temp.setLoses(loses);
+                temp.setWinRate(winRate);
+                temp.setGamesBehind(gamesBehind);
+                temp.setPspg(pspg);
+                temp.setPapg(papg);
                 ranks.add(temp);
             }
 
@@ -242,7 +244,7 @@ public class RankActivity extends FragmentActivity {
         }
     }
 
-    public List<Map<String,String>> getPlayerRanks(){
+    public List<PlayerRankInfo> getPlayerRanks(){
 
         String jsonString;
 
@@ -264,11 +266,11 @@ public class RankActivity extends FragmentActivity {
             Log.i("Resource",Consts.resourceFromCache);
         }
 
-        List<Map<String,String>> playerRanks = new ArrayList<>();
+        List<PlayerRankInfo> playerRanks = new ArrayList<>();
         try{
             JSONArray array2 = new JSONArray(jsonString);
             for (int i = 0; i < array2.length(); i++) {
-                Map<String,String> temp = new HashMap<>();
+                PlayerRankInfo temp = new PlayerRankInfo();
                 JSONObject obj = array2.getJSONObject(i);
                 String name = obj.getString("name");
                 String id = obj.getString("id");
@@ -277,12 +279,13 @@ public class RankActivity extends FragmentActivity {
                 String seasonData = obj.getString("seasonData");
                 String type = obj.getString("type");
 
-                temp.put("name",name);
-                temp.put("id", id);
-                temp.put("teamName", teamName);
-                temp.put("data",data);
-                temp.put("seasonData",seasonData);
-                temp.put("type",type);
+
+                temp.setName(name);
+                temp.setId(id);
+                temp.setTeamName(teamName);
+                temp.setData(data);
+                temp.setSeasonData(seasonData);
+                temp.setType(type);
                 playerRanks.add(temp);
             }
 
@@ -298,7 +301,7 @@ public class RankActivity extends FragmentActivity {
         }
     }
 
-    public List<Map<String,String>> getDayRanks(){
+    public List<DayRankInfo> getDayRanks(){
 
         String jsonString;
 
@@ -369,11 +372,11 @@ public class RankActivity extends FragmentActivity {
             Log.i("Resource",Consts.resourceFromCache);
         }
 
-        List<Map<String,String>> dayranks = new ArrayList<>();
+        List<DayRankInfo> dayranks = new ArrayList<>();
         try{
             JSONArray array2 = new JSONArray(jsonString);
             for (int i = 0; i < array2.length(); i++) {
-                Map<String,String> temp = new HashMap<>();
+                DayRankInfo temp = new DayRankInfo();
                 JSONObject obj = array2.getJSONObject(i);
                 String name = obj.getString("name");
                 String id = obj.getString("id");
@@ -382,12 +385,12 @@ public class RankActivity extends FragmentActivity {
                 String seasonData = obj.getString("seasonData");
                 String type = obj.getString("type");
 
-                temp.put("name",name);
-                temp.put("id", id);
-                temp.put("teamName", teamName);
-                temp.put("data",data);
-                temp.put("seasonData",seasonData);
-                temp.put("type",type);
+                temp.setName(name);
+                temp.setId(id);
+                temp.setTeamName(teamName);
+                temp.setData(data);
+                temp.setSeasonData(seasonData);
+                temp.setType(type);
                 dayranks.add(temp);
             }
 

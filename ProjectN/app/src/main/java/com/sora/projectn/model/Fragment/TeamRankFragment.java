@@ -14,9 +14,9 @@ import android.widget.ListView;
 import com.sora.projectn.R;
 import com.sora.projectn.model.Activity.TeamActivity;
 import com.sora.projectn.utils.Adapter.TeamRankAdapter;
+import com.sora.projectn.utils.beans.TeamRankInfo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +36,7 @@ public class TeamRankFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ListView lv_EastTeamRanks,lv_WestTeamRanks;
-    private List<Map<String, String>> eastRanks,westRanks;
+    private List<TeamRankInfo> eastRanks,westRanks;
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,7 +45,7 @@ public class TeamRankFragment extends Fragment {
 
     }
 
-    public TeamRankFragment(List<Map<String, String>> eastRanks, List<Map<String, String>> westRanks) {
+    public TeamRankFragment(List<TeamRankInfo> eastRanks, List<TeamRankInfo> westRanks) {
         // Required empty public constructor
         this.eastRanks = eastRanks;
         this.westRanks = westRanks;
@@ -58,7 +58,7 @@ public class TeamRankFragment extends Fragment {
      * @return A new instance of fragment TeamRankFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TeamRankFragment newInstance(List<Map<String, String>> EastRanks,List<Map<String,String>> westRanks) {
+    public static TeamRankFragment newInstance(List<TeamRankInfo> EastRanks,List<TeamRankInfo> westRanks) {
         TeamRankFragment fragment = new TeamRankFragment(EastRanks,westRanks);
         return fragment;
     }
@@ -87,7 +87,7 @@ public class TeamRankFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), TeamActivity.class);
-                intent.putExtra("id", Integer.parseInt(eastRanks.get(position).get("teamID")));
+                intent.putExtra("id", Integer.parseInt(eastRanks.get(position).getTeamId()));
                 startActivity(intent);
             }
         });
@@ -96,7 +96,7 @@ public class TeamRankFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), TeamActivity.class);
-                intent.putExtra("id", Integer.parseInt(westRanks.get(position).get("teamID")));
+                intent.putExtra("id", Integer.parseInt(westRanks.get(position).getTeamId()));
                 startActivity(intent);
             }
         });

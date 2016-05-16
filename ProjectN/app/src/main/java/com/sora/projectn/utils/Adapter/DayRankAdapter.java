@@ -1,4 +1,4 @@
-package com.sora.projectn.utils;
+package com.sora.projectn.utils.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,21 +9,21 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
+import com.sora.projectn.utils.beans.DayRankInfo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by qhy on 2016/4/19.
- * Unfinished
  */
-public class TeamRankAdapter extends BaseAdapter {
+public class DayRankAdapter extends BaseAdapter{
 
-    private List<Map<String,String>> rank;
+    private List<DayRankInfo> rank;
     private LayoutInflater inflater;
-    public TeamRankAdapter(List<Map<String,String>> rank ,Context context){
-        inflater = LayoutInflater.from(context);
+
+    public DayRankAdapter(List<DayRankInfo> rank,Context context){
         this.rank = rank;
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -42,10 +42,7 @@ public class TeamRankAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        // listview每次得到一个item，都要view去绘制，通过getView方法得到view
-        // position为item的序号
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         View view;
         if (convertView != null) {
@@ -57,15 +54,14 @@ public class TeamRankAdapter extends BaseAdapter {
 
         } else {
 //            view = super.getView(position, convertView, parent);
-            view = inflater.inflate(R.layout.item_teamrank, null);
+            view = inflater.inflate(R.layout.item_dayrank, null);
             vh = new ViewHolder(view);
             view.setTag(vh);
 
         }
-        vh.rank.setText(rank.get(position).get("rank"));
-        vh.name.setText(rank.get(position).get("name"));
-        vh.winorlose.setText(rank.get(position).get("wins")+"/"+rank.get(position).get("loses"));
-        vh.gamebehind.setText(rank.get(position).get("gamesBehind"));
+        vh.name.setText(rank.get(position).getName());
+        vh.teamname.setText(rank.get(position).getTeamName());
+        vh.data.setText(rank.get(position).getData());
 
         int[] colors = { Color.WHITE, Color.rgb(219, 238, 244) };//RGB颜色
 
@@ -74,16 +70,15 @@ public class TeamRankAdapter extends BaseAdapter {
         return view;
     }
 
+
     private class ViewHolder {
-        TextView rank;
         TextView name;
-        TextView winorlose;
-        TextView gamebehind;
+        TextView teamname;
+        TextView data;
         ViewHolder(View view){
-            rank = (TextView)view.findViewById(R.id.team_rank);
-            name = (TextView)view.findViewById(R.id.team_rank_name);
-            winorlose = (TextView)view.findViewById(R.id.team_win_lose);
-            gamebehind = (TextView)view.findViewById(R.id.team_field_difference);
+            name = (TextView)view.findViewById(R.id.day_rank_name);
+            teamname = (TextView)view.findViewById(R.id.day_rank_team);
+            data = (TextView)view.findViewById(R.id.day_rank_data);
         }
     }
 

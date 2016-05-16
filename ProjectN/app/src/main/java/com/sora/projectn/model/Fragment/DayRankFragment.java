@@ -12,12 +12,12 @@ import android.widget.TextView;
 import com.sora.projectn.R;
 import com.sora.projectn.utils.Adapter.DayRankAdapter;
 import com.sora.projectn.utils.MyListView;
+import com.sora.projectn.utils.beans.DayRankInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,8 +37,8 @@ public class DayRankFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private List<Map<String,String>> dayranks;
-    private List<Map<String,String>> ranklist1 = new ArrayList<Map<String,String>>(),ranklist2 = new ArrayList<Map<String,String>>(),ranklist3 = new ArrayList<Map<String,String>>(),ranklist4 = new ArrayList<Map<String,String>>();//得分篮板,助攻,抢断
+    private List<DayRankInfo> dayranks;
+    private List<DayRankInfo> ranklist1 = new ArrayList<DayRankInfo>(),ranklist2 = new ArrayList<DayRankInfo>(),ranklist3 = new ArrayList<DayRankInfo>(),ranklist4 = new ArrayList<DayRankInfo>();//得分篮板,助攻,抢断
     private MyListView rank1,rank2,rank3,rank4;
     private TextView titleMessage;
     private String date;
@@ -49,7 +49,7 @@ public class DayRankFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public DayRankFragment(List<Map<String,String>> dayranks,String date){
+    public DayRankFragment(List<DayRankInfo> dayranks,String date){
         this.dayranks = dayranks;
         this.date = date;
         initdata();
@@ -57,8 +57,8 @@ public class DayRankFragment extends Fragment {
 
 
     private void initdata(){
-        for(Map<String,String> player:dayranks){
-            switch (player.get("type")){
+        for(DayRankInfo player:dayranks){
+            switch (player.getType()){
                 case "0":
                     ranklist1.add(player);
                     break;
@@ -73,34 +73,34 @@ public class DayRankFragment extends Fragment {
                     break;
             }
         }
-        Collections.sort(ranklist1, new Comparator<Map<String, String>>() {
+        Collections.sort(ranklist1, new Comparator<DayRankInfo>() {
             @Override
-            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
-                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
+            public int compare(DayRankInfo lhs, DayRankInfo rhs) {
+                if (Double.parseDouble(lhs.getData()) < Double.parseDouble(rhs.getData())) {
                     return 1;
                 } else return -1;
             }
         });
-        Collections.sort(ranklist2, new Comparator<Map<String, String>>() {
+        Collections.sort(ranklist2, new Comparator<DayRankInfo>() {
             @Override
-            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
-                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
+            public int compare(DayRankInfo lhs, DayRankInfo rhs) {
+                if (Double.parseDouble(lhs.getData()) < Double.parseDouble(rhs.getData())) {
                     return 1;
                 } else return -1;
             }
         });
-        Collections.sort(ranklist3, new Comparator<Map<String, String>>() {
+        Collections.sort(ranklist3, new Comparator<DayRankInfo>() {
             @Override
-            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
-                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
+            public int compare(DayRankInfo lhs, DayRankInfo rhs) {
+                if (Double.parseDouble(lhs.getData()) < Double.parseDouble(rhs.getData())) {
                     return 1;
                 } else return -1;
             }
         });
-        Collections.sort(ranklist4, new Comparator<Map<String, String>>() {
+        Collections.sort(ranklist4, new Comparator<DayRankInfo>() {
             @Override
-            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
-                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
+            public int compare(DayRankInfo lhs, DayRankInfo rhs) {
+                if (Double.parseDouble(lhs.getData()) < Double.parseDouble(rhs.getData())) {
                     return 1;
                 } else return -1;
             }

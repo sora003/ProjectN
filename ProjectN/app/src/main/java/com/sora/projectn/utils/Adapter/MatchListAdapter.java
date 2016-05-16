@@ -1,4 +1,4 @@
-package com.sora.projectn.utils;
+package com.sora.projectn.utils.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,31 +9,31 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sora.projectn.R;
+import com.sora.projectn.utils.beans.MatchInfo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by qhy on 2016/4/19.
+ * Created by qhy on 2016/5/4.
  */
-public class DayRankAdapter extends BaseAdapter{
+public class MatchListAdapter extends BaseAdapter {
 
-    private List<Map<String,String>> rank;
+    private List<MatchInfo> matches;
     private LayoutInflater inflater;
 
-    public DayRankAdapter(List<Map<String,String>> rank,Context context){
-        this.rank = rank;
+    public MatchListAdapter(List<MatchInfo> matches,Context context){
+        this.matches = matches;
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return rank.size();
+        return matches.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return rank.get(position);
+        return matches.get(position);
     }
 
     @Override
@@ -54,14 +54,14 @@ public class DayRankAdapter extends BaseAdapter{
 
         } else {
 //            view = super.getView(position, convertView, parent);
-            view = inflater.inflate(R.layout.item_dayrank, null);
+            view = inflater.inflate(R.layout.item_matchlist, null);
             vh = new ViewHolder(view);
             view.setTag(vh);
 
         }
-        vh.name.setText(rank.get(position).get("name"));
-        vh.teamname.setText(rank.get(position).get("teamName"));
-        vh.data.setText(rank.get(position).get("data"));
+        vh.hometeam.setText(matches.get(position).getHomeTeam());
+        vh.matchscore.setText(matches.get(position).getHomeScore()+":"+matches.get(position).getVisitingScore());
+        vh.visitteam.setText(matches.get(position).getVisitingTeam());
 
         int[] colors = { Color.WHITE, Color.rgb(219, 238, 244) };//RGB颜色
 
@@ -72,13 +72,13 @@ public class DayRankAdapter extends BaseAdapter{
 
 
     private class ViewHolder {
-        TextView name;
-        TextView teamname;
-        TextView data;
+        TextView hometeam;
+        TextView matchscore;
+        TextView visitteam;
         ViewHolder(View view){
-            name = (TextView)view.findViewById(R.id.day_rank_name);
-            teamname = (TextView)view.findViewById(R.id.day_rank_team);
-            data = (TextView)view.findViewById(R.id.day_rank_data);
+            hometeam = (TextView)view.findViewById(R.id.hometeam);
+            matchscore = (TextView)view.findViewById(R.id.match_score);
+            visitteam = (TextView)view.findViewById(R.id.visitteam);
         }
     }
 
