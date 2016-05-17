@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements menuClickListener
         mDrawerLayout.closeDrawers();
         switch (menuName){
             case "我关注的球队":
+
                 break;
             case "球队":
                 startActivity(new Intent(getApplicationContext(), TeamListActivity.class));
