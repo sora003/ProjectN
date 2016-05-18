@@ -5,14 +5,14 @@ package com.sora.projectn.utils.beans;
  */
 public class TeamRankInfo {
 
-    private String teamId;
-    private String rank;
-    private String name;
-    private String league;
-    private String wins;
-    private String loses;
-    private String winRate;
-    private String gamesBehind;
+    private String teamId;//球队ID
+    private String rank;//球队排名
+    private String name;//球队名称
+    private String league;//球队所属
+    private String wins;//胜场
+    private String loses;//负场
+    private String winRate;//胜率
+    private String gamesBehind;//胜场差
     private String pspg;
     private String papg;
 

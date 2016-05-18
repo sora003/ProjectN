@@ -5,12 +5,12 @@ package com.sora.projectn.utils.beans;
  */
 public class DayRankInfo {
 
-    private String name;
-    private String id;
-    private String teamName;
-    private String data;
-    private String seasonData;
-    private String type;
+    private String name;//球员姓名
+    private String id;//球员ID
+    private String teamName;//球队名
+    private String data;//数据
+    private String seasonData;//赛季数据
+    private String type;//排行类型
 
     public String getType() {
         return type;

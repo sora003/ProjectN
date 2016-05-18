@@ -23,8 +23,8 @@ import com.sora.projectn.model.Fragment.DayRankFragment;
 import com.sora.projectn.model.Fragment.PlayerRankFragment;
 import com.sora.projectn.model.Fragment.TeamRankFragment;
 import com.sora.projectn.utils.ACache;
-import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.Adapter.FragAdapter;
+import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
 import com.sora.projectn.utils.beans.DayRankInfo;
 import com.sora.projectn.utils.beans.PlayerRankInfo;
@@ -37,7 +37,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -82,7 +81,6 @@ public class RankActivity extends FragmentActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //TODO 这个要改掉
                 playerranks =getPlayerRanks();
                 dayranks = getDayRanks();
                 List<TeamRankInfo> ranks = getTeamRanks();

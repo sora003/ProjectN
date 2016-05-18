@@ -5,27 +5,27 @@ package com.sora.projectn.utils.beans;
  */
 public class PlayerMatchInfo {
 
-    private String playerName;
-    private String playerId;
-    private String matchId;
-    private String teamId;
-    private String isFirst;
-    private String time;
-    private String twoHit;
-    private String twoShot;
-    private String threeHit;
-    private String threeShot;
-    private String freeThrowHit;
-    private String freeThrowShot;
-    private String offReb;
-    private String defReb;
-    private String totReb;
-    private String ass;
-    private String steal;
-    private String blockShot;
-    private String turnOver;
-    private String foul;
-    private String score;
+    private String playerName;//球员姓名
+    private String playerId;//球员ID
+    private String matchId;//比赛ID
+    private String teamId;//球队ID
+    private String isFirst;//是否首发
+    private String time;//出场时间
+    private String twoHit;//两分命中
+    private String twoShot;//两分出售
+    private String threeHit;//三分命中
+    private String threeShot;//三分出售
+    private String freeThrowHit;//罚球命中
+    private String freeThrowShot;//罚球出手
+    private String offReb;//进攻篮板
+    private String defReb;//防守篮板
+    private String totReb;//总篮板
+    private String ass;//助攻
+    private String steal;//抢断
+    private String blockShot;//盖帽
+    private String turnOver;//
+    private String foul;//失误
+    private String score;//得分
 
     public String getPlayerName() {
         return playerName;

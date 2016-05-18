@@ -5,17 +5,17 @@ package com.sora.projectn.utils.beans;
  */
 public class MatchInfo {
 
-    private String id;
-    private String vId;
-    private String visitingTeam;
-    private String hId;
-    private String homeTeam;
-    private String visitingScore;
-    private String homeScore;
-    private String type;
-    private String date;
-    private String year;
-    private String time;
+    private String id;//比赛ID
+    private String vId;//客队ID
+    private String visitingTeam;//客队名称
+    private String hId;//主队ID
+    private String homeTeam;//主队名称
+    private String visitingScore;//客队得分
+    private String homeScore;//主队得分
+    private String type;//比赛类型
+    private String date;//比赛日期
+    private String year;//赛季年份
+    private String time;//比赛时长
     public String getId() {
         return id;
     }
