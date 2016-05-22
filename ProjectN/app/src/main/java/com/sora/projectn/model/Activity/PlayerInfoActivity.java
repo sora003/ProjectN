@@ -24,16 +24,9 @@ import com.sora.projectn.R;
 import com.sora.projectn.model.Fragment.PlayerInfoDetailFragment;
 import com.sora.projectn.model.Fragment.PlayerSeasonAdvancedStatisticsFragment;
 import com.sora.projectn.model.Fragment.PlayerSeasonStatisticsFragment;
-import com.sora.projectn.model.Fragment.TeamDataFragment;
-import com.sora.projectn.model.Fragment.TeamPlayerFragment;
-import com.sora.projectn.model.Fragment.TeamScheduleFragment;
-import com.sora.projectn.model.Fragment.TeamStaticsFragment;
-import com.sora.projectn.utils.ACache;
-import com.sora.projectn.utils.BitmapHelper;
+
 import com.sora.projectn.utils.Consts;
-import com.sora.projectn.utils.FragAdapter;
-import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.beans.SearchPlayerInfo;
+import com.sora.projectn.utils.Adapter.FragAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -143,12 +136,14 @@ public class PlayerInfoActivity extends FragmentActivity {
 
 
     /**
-     * 获取Intent传递来的abbr值
+     * 获取Intent传递来的id值
      */
     private void parseIntent() {
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        Bundle bundle = intent.getBundleExtra("bundleData");
         id = bundle.getInt("id");
+
+        System.out.println("NNNNNNNNNNNNN++++++++++++++++++"+id);
 
         //需要统一Fragment实例化对象 采用全局变量定义
         bundle = new Bundle();

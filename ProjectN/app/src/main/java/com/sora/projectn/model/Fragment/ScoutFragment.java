@@ -1,5 +1,15 @@
-package com.sora.projectn.model.Activity;
+package com.sora.projectn.model.Fragment;
 
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.sora.projectn.R;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,7 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScoutActivity extends FragmentActivity {
+public class ScoutFragment extends Fragment {
 
     private Context mContext;
 
@@ -62,6 +72,9 @@ public class ScoutActivity extends FragmentActivity {
     //ImageView
     private ImageView scoutCursor;
 
+    private View fView;
+
+
     private List<Fragment> fragments;
 
     private FragAdapter adapter;
@@ -74,21 +87,20 @@ public class ScoutActivity extends FragmentActivity {
     private int currIndex = 0;
 
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scout);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_scout,container,false);
+        fView=view;
+        mContext = this.getActivity();
         initView();
 
         initViewPager();
         initListener();
         setTopView();
 
+        return view;
     }
-
-
-
 
     //设置顶层视图
     private void setTopView() {
@@ -101,10 +113,8 @@ public class ScoutActivity extends FragmentActivity {
      */
     private void initView() {
 
-        mContext = this;
 
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) fView.findViewById(R.id.toolbar);
 
         //设置Toolbar标题
         toolbar.setTitle("球探功能");
@@ -114,18 +124,18 @@ public class ScoutActivity extends FragmentActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+//                finish();
             }
         });
 
         //TextView
-        tv_scoutGuide1 = (TextView) findViewById(R.id.tv_scoutGuide1);
-        tv_scoutGuide2 = (TextView) findViewById(R.id.tv_scoutGuide2);
-        tv_season_scout = (TextView) findViewById(R.id.tv_season_scout);
+        tv_scoutGuide1 = (TextView) fView.findViewById(R.id.tv_scoutGuide1);
+        tv_scoutGuide2 = (TextView) fView.findViewById(R.id.tv_scoutGuide2);
+        tv_season_scout = (TextView) fView.findViewById(R.id.tv_season_scout);
 
 
         //ImageView
-        scoutCursor = (ImageView) findViewById(R.id.iv_scoutCursor);
+        scoutCursor = (ImageView) fView.findViewById(R.id.iv_scoutCursor);
 
 
         //Fragment
@@ -138,14 +148,14 @@ public class ScoutActivity extends FragmentActivity {
      * 初始化ViewPager
      */
     private void initViewPager() {
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) fView.findViewById(R.id.viewpager);
 
         fragments = new ArrayList<Fragment>();
         fragments.add(scoutSearchPlayerFragment);
         fragments.add(scoutSearchPlayerByCustomParameterFragment);
 
         //新建适配器对象
-        adapter = new FragAdapter(getSupportFragmentManager(),fragments);
+        adapter = new FragAdapter(getChildFragmentManager(),fragments);
 
 
         //设定适配器
