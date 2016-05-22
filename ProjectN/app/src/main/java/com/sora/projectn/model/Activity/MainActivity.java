@@ -2,6 +2,7 @@ package com.sora.projectn.model.Activity;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,17 +14,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 
 
 import com.sora.projectn.R;
 import com.sora.projectn.model.Fragment.CoachFragment;
 import com.sora.projectn.model.Fragment.MatchListFragment;
-import com.sora.projectn.model.Fragment.ScoutFragment;
+import com.sora.projectn.model.Fragment.Tool_NavigationDrawerFragment;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.SharedPreferencesHelper;
-import com.sora.projectn.utils.beans.PlayerTrainingInfo;
-
-import java.util.ArrayList;
 
 import static com.sora.projectn.model.Fragment.Tool_NavigationDrawerFragment.*;
 
@@ -46,15 +46,7 @@ public class MainActivity extends AppCompatActivity implements menuClickListener
     //正在使用的Fragment
     private Fragment isFragment;
 
-    private ArrayList<PlayerTrainingInfo> playerTrainingInfoList = new ArrayList<>();
 
-    public ArrayList<PlayerTrainingInfo> getPlayerTrainingInfoList() {
-        return playerTrainingInfoList;
-    }
-
-    public void setPlayerTrainingInfoList(ArrayList<PlayerTrainingInfo> playerTrainingInfoList) {
-        this.playerTrainingInfoList = playerTrainingInfoList;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,10 +77,10 @@ public class MainActivity extends AppCompatActivity implements menuClickListener
                 fragmentTransaction.add(R.id.main_fragment_container, new MatchListFragment());
                 break;
             case Consts.SharedPreferences_Value_02:
-                fragmentTransaction.add(R.id.main_fragment_container, new CoachFragment());
+
                 break;
             case Consts.SharedPreferences_Value_03:
-                fragmentTransaction.add(R.id.main_fragment_container, new ScoutFragment());
+
                 break;
         }
 

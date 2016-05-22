@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sora.projectn.R;
-import com.sora.projectn.model.Activity.MainActivity;
+import com.sora.projectn.model.Activity.CoachActivity;
 import com.sora.projectn.utils.CoachMatchingAdapter;
 import com.sora.projectn.utils.CoachTrainAdapter;
 import com.sora.projectn.utils.Consts;
@@ -195,7 +195,7 @@ public class CoachThreeRateFragment extends Fragment {
                         System.out.println(teamPlayers.get(i).getPlayerName()+"#########333333333333");
                     }
 
-                    trainingInfoList=((MainActivity)mContext).getPlayerTrainingInfoList();
+                    trainingInfoList=((CoachActivity)mContext).getPlayerTrainingInfoList();
                     System.out.println(trainingInfoList.size()+"CCCCCCCCCCCCCCCCCCCCCCCCCCCCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                     for(int i=0; i<trainingInfoList.size();i++){
                         System.out.println("#################33333333333"+trainingInfoList.get(i).getState());

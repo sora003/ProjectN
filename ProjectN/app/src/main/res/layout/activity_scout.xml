@@ -90,6 +90,9 @@
                 android:textColor="@color/text_white"
                 android:alpha="0.5" />
 
+
+
+
         </LinearLayout>
 
 

@@ -16,9 +16,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.sora.projectn.R;
+import com.sora.projectn.utils.Calculator;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.MyLexical;
-import com.sora.projectn.utils.MySemantic;
 import com.sora.projectn.utils.MySyntax;
 import com.sora.projectn.utils.SearchPlayerAdapter;
 import com.sora.projectn.utils.beans.SearchPlayerInfo;
@@ -411,7 +411,9 @@ public class ScoutSearchPlayerFragment extends Fragment {
 
         }
 
-        double key = (new MySemantic()).semanticParsing(expression);
+        System.out.println(expression+"NNNNNNNNNNNNNNNNNNNNNNNNNNN");
+        String s = new Calculator().computeString(expression);
+        double key = Double.parseDouble(s);
         int i;
         for(i=0; i<players.size(); i++){
             if(players.get(i).getPlayerId()==player.getPlayerId()){

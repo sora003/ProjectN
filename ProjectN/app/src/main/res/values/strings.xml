@@ -74,7 +74,6 @@
     <string name="character_01">球迷</string>
     <string name="character_02">教练</string>
     <string name="character_03">球探</string>
-    <string name="title_activity_search_player">SearchPlayerActivity</string>
     <!--Test For activity_teamlist_old-->
     <!--<string name="text_wC1T1">小牛</string>-->
     <!--<string name="text_wC1T2">火箭</string>-->

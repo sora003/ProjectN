@@ -11,15 +11,7 @@ public class Consts {
      * Server地址
      */
 
-//    public static final  String url = "http://192.168.191.1:8080/NBADataSystem/";
-
-//    public static final  String url = "http://172.17.154.239:8080/NBADataSystem/";
-
-    public static final  String url = "http://172.17.128.34:8080/NBADataSystem/";
-
-//    public static final  String url = "http://192.168.2.102:8080/NBADataSystem/";
-
-//    public static final  String url = "http://192.168.53.18:8080/NBADataSystem/";
+    public static final  String url = "http://192.168.191.1:8080/NBADataSystem/";
 
     public static final  String getTeams = url + "getTeams.do";
 
