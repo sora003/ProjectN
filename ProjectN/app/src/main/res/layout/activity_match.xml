@@ -40,6 +40,7 @@
                     android:id="@+id/match_t1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -126,6 +127,7 @@
                     android:text="主队"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:layout_below="@id/HSV_for_match1"
                     android:textSize="@dimen/titleSize"/>
                 <HorizontalScrollView
@@ -148,6 +150,7 @@
                     android:id="@+id/match_title2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -228,6 +231,7 @@
                     android:text="客队"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:layout_below="@id/HSV_for_match2"
                     android:textSize="@dimen/titleSize"/>
                 <HorizontalScrollView
@@ -250,6 +254,7 @@
                     android:id="@+id/match_title3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:orientation="horizontal" >
 
                     <TextView

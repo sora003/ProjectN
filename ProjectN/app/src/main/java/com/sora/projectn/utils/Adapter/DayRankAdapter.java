@@ -1,7 +1,6 @@
 package com.sora.projectn.utils.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +62,6 @@ public class DayRankAdapter extends BaseAdapter{
         vh.teamname.setText(rank.get(position).getTeamName());
         vh.data.setText(rank.get(position).getData());
 
-        int[] colors = { Color.WHITE, Color.rgb(219, 238, 244) };//RGB颜色
-
-        view.setBackgroundColor(colors[position % 2]);// 每隔item之间颜色不同
 
         return view;
     }

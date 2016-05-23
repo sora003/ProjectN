@@ -1,7 +1,6 @@
 package com.sora.projectn.utils.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +62,6 @@ public class MatchListAdapter extends BaseAdapter {
         vh.matchscore.setText(matches.get(position).getHomeScore()+":"+matches.get(position).getVisitingScore());
         vh.visitteam.setText(matches.get(position).getVisitingTeam());
 
-        int[] colors = { Color.WHITE, Color.rgb(219, 238, 244) };//RGB颜色
-
-        view.setBackgroundColor(colors[position % 2]);// 每隔item之间颜色不同
 
         return view;
     }

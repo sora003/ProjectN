@@ -1,7 +1,6 @@
 package com.sora.projectn.utils.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,10 +62,6 @@ public class PlayerRankAdapter extends BaseAdapter{
         vh.teamname.setText(rank.get(position).getTeamName());
         vh.data.setText(rank.get(position).getSeasonData());
 
-        int[] colors = { Color.WHITE, Color.rgb(219, 238, 244) };//RGB颜色
-
-        view.setBackgroundColor(colors[position % 2]);// 每隔item之间颜色不同
-
         return view;
     }
 
@@ -81,5 +76,6 @@ public class PlayerRankAdapter extends BaseAdapter{
             data = (TextView)view.findViewById(R.id.player_rank_data);
         }
     }
+    ///
 
 }

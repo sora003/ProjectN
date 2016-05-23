@@ -24,12 +24,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_east_rank"
+            android:paddingTop="@dimen/content_vertical_margin"
+            android:paddingBottom="@dimen/content_vertical_margin"
+            android:paddingLeft="@dimen/twice_activity_horizontal_margin"
+            android:paddingRight="@dimen/content_horizontal_margin"
             android:textSize="@dimen/titleSize"/>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/east_team_rank_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:orientation="horizontal" >
 
         <TextView
@@ -39,7 +44,7 @@
             android:textSize="@dimen/rankSize" />
 
         <TextView
-            android:layout_width="120dip"
+            android:layout_width="90dip"
             android:layout_height="30dp"
             android:text="球队"
             android:textSize="@dimen/rankSize" />
@@ -80,12 +85,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_west_rank"
+            android:paddingTop="@dimen/content_vertical_margin"
+            android:paddingBottom="@dimen/content_vertical_margin"
+            android:paddingLeft="@dimen/twice_activity_horizontal_margin"
+            android:paddingRight="@dimen/content_horizontal_margin"
             android:textSize="@dimen/titleSize"/>
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/west_team_rank_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
             android:orientation="horizontal" >
 
             <TextView
@@ -95,7 +105,7 @@
                 android:textSize="@dimen/rankSize" />
 
             <TextView
-                android:layout_width="120dip"
+                android:layout_width="90dip"
                 android:layout_height="30dp"
                 android:text="球队"
                 android:textSize="@dimen/rankSize" />
