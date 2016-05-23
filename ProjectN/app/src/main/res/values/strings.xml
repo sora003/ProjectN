@@ -54,8 +54,8 @@
     <string name="text_east_rank">东部排行</string>
     <string name="text_west_rank">西部排行</string>
     <string name="text_rankGuide2">联盟排行</string>
-    <string name="text_rankGuide3">球员排行</string>
-    <string name="text_rankGuide4">每日排行</string>
+    <string name="text_rankGuide3">赛季数据王</string>
+    <string name="text_rankGuide4">今日数据王</string>
     <string name="text_fragment_teamseason">本赛季场均数据统计</string>
     <string name="text_league">West Conference</string>
     <string name="text_Keys">筛选条件：</string>
@@ -70,7 +70,7 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcome_text">请选择您的角色</string>
+    <string name="welcome_text">请设置您的角色:</string>
     <string name="character_01">球迷</string>
     <string name="character_02">教练</string>
     <string name="character_03">球探</string>
