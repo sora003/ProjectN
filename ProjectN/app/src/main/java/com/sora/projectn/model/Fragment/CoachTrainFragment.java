@@ -16,12 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sora.projectn.R;
-import com.sora.projectn.model.Activity.CoachActivity;
+import com.sora.projectn.model.Activity.MainActivity;
 import com.sora.projectn.utils.ACache;
 import com.sora.projectn.utils.CoachTrainAdapter;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.TeamStaticsAdapter;
+import com.sora.projectn.utils.Adapter.TeamStaticsAdapter;
 import com.sora.projectn.utils.beans.PlayerMatchInfo;
 import com.sora.projectn.utils.beans.PlayerTrainingInfo;
 import com.sora.projectn.utils.beans.SearchPlayerInfo;
@@ -564,7 +564,7 @@ public class CoachTrainFragment extends Fragment {
                     System.out.println("!!!!!!!MatchIdList     "+matchIdList.get(0));
 
                     getPlayerTrainingInfoList();
-                    ((CoachActivity)mContext).setPlayerTrainingInfoList(playerTrainingInfoList);
+                    ((MainActivity)mContext).setPlayerTrainingInfoList(playerTrainingInfoList);
                     setView();
 
                     break;

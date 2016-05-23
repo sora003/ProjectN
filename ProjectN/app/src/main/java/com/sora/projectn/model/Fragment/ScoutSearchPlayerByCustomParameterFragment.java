@@ -2,8 +2,6 @@ package com.sora.projectn.model.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,17 +10,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.sora.projectn.R;
-import com.sora.projectn.utils.Calculator;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.MyLexical;
+import com.sora.projectn.utils.MySemantic;
 import com.sora.projectn.utils.MySyntax;
 import com.sora.projectn.utils.SearchPlayerAdapter;
 import com.sora.projectn.utils.beans.SearchPlayerInfo;
@@ -400,9 +395,7 @@ public class ScoutSearchPlayerByCustomParameterFragment extends Fragment {
 
         }
 
-        System.out.println(expression+"NNNNNNNNNNNNNNNNNNNNNNNNNNN");
-        String s = new Calculator().computeString(expression);
-        double key = Double.parseDouble(s);
+        double key = (new MySemantic()).semanticParsing(expression);
         int i;
         for(i=0; i<players.size(); i++){
             if(players.get(i).getPlayerId()==player.getPlayerId()){
