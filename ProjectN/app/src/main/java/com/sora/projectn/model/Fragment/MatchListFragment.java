@@ -15,16 +15,16 @@ import android.widget.Toast;
 
 import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
-import com.sora.projectn.utils.Adapter.MainCardsAdapter;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.beans.MatchInfo;
+import com.sora.projectn.utils.Adapter.MainCardsAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -44,7 +44,7 @@ public class MatchListFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private int teamId = 0;
 
-    private Map<String,List<MatchInfo>> latestMatchList = new TreeMap<>();
+    private Map<String,List<Map<String,String>>> latestMatchList = new TreeMap<>();
     private ListView mainCards;
 
     // TODO: Rename and change types of parameters
@@ -89,7 +89,7 @@ public class MatchListFragment extends Fragment {
     }
 
 
-    private List<MatchInfo> getLatestMatches(){
+    private List<Map<String,String>> getLatestMatches(){
         String jsonString;
 
         jsonString = ACache.get(getContext()).getAsString("getLatestMatchList" );
@@ -110,11 +110,11 @@ public class MatchListFragment extends Fragment {
             Log.i("Resource",Consts.resourceFromCache);
         }
 
-        List<MatchInfo> matches = new ArrayList<>();
+        List<Map<String, String>> matches = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
-                MatchInfo temp = new MatchInfo();
+                Map<String,String> temp = new HashMap<>();
                 JSONObject obj = array.getJSONObject(i);
                 String id = obj.getString("id");
                 String vId = obj.getString("vId");
@@ -128,17 +128,17 @@ public class MatchListFragment extends Fragment {
                 String year = obj.getString("year");
                 String time = obj.getString("time");
 
-                temp.setId(id);
-                temp.setvId(vId);
-                temp.setVisitingTeam(visitingTeam);
-                temp.sethId(hId);
-                temp.setHomeTeam(homeTeam);
-                temp.setVisitingScore(visitingScore);
-                temp.setHomeScore(homeScore);
-                temp.setType(type);
-                temp.setDate(date);
-                temp.setYear(year);
-                temp.setTime(time);
+                temp.put("id", id);
+                temp.put("vId", vId);
+                temp.put("visitingTeam", visitingTeam);
+                temp.put("hId", hId);
+                temp.put("homeTeam", homeTeam);
+                temp.put("visitingScore", visitingScore);
+                temp.put("homeScore", homeScore);
+                temp.put("type", type);
+                temp.put("date", date);
+                temp.put("year", year);
+                temp.put("time", time);
 
                 matches.add(temp);
             }
@@ -159,11 +159,11 @@ public class MatchListFragment extends Fragment {
         }
     }
 
-    private List<MatchInfo> getTeamMatches(){
+    private List<Map<String,String>> getTeamMatches(){
 
         String jsonString;
 
-        jsonString = ACache.get(getContext()).getAsString("getTeamMatchList" + teamId);
+        jsonString = ACache.get(getContext()).getAsString("getTeamMatchList" );
 
         if (jsonString == null){
 
@@ -173,7 +173,7 @@ public class MatchListFragment extends Fragment {
                 handler.sendEmptyMessage(Consts.RES_ERROR);
             }
 
-            ACache.get(getContext()).put("getTeamMatchList" + teamId,jsonString,ACache.TEST_TIME);
+            ACache.get(getContext()).put("getTeamMatchList" ,jsonString,ACache.TEST_TIME);
             Log.i("Resource", Consts.resourceFromServer);
         }
         else
@@ -181,11 +181,11 @@ public class MatchListFragment extends Fragment {
             Log.i("Resource",Consts.resourceFromCache);
         }
 
-        List<MatchInfo> matches = new ArrayList<>();
+        List<Map<String, String>> matches = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
-                MatchInfo temp = new MatchInfo();
+                Map<String,String> temp = new HashMap<>();
                 JSONObject obj = array.getJSONObject(i);
                 String id = obj.getString("id");
                 String vId = obj.getString("vId");
@@ -199,17 +199,17 @@ public class MatchListFragment extends Fragment {
                 String year = obj.getString("year");
                 String time = obj.getString("time");
 
-                temp.setId(id);
-                temp.setvId(vId);
-                temp.setVisitingTeam(visitingTeam);
-                temp.sethId(hId);
-                temp.setHomeTeam(homeTeam);
-                temp.setVisitingScore(visitingScore);
-                temp.setHomeScore(homeScore);
-                temp.setType(type);
-                temp.setDate(date);
-                temp.setYear(year);
-                temp.setTime(time);
+                temp.put("id", id);
+                temp.put("vId", vId);
+                temp.put("visitingTeam", visitingTeam);
+                temp.put("hId", hId);
+                temp.put("homeTeam", homeTeam);
+                temp.put("visitingScore", visitingScore);
+                temp.put("homeScore", homeScore);
+                temp.put("type", type);
+                temp.put("date", date);
+                temp.put("year", year);
+                temp.put("time", time);
 
                 matches.add(temp);
             }
@@ -243,15 +243,14 @@ public class MatchListFragment extends Fragment {
         }
     };
 
-    private void initData(List<MatchInfo> matches){
+    private void initData(List<Map<String, String>> matches){
         //TODO 这里对数据进行接收和处理
-        latestMatchList = new TreeMap<>();
-        for(MatchInfo m:matches){
-            if(latestMatchList.get(m.getDate()) != null){
-                latestMatchList.get(m.getDate()).add(m);
+        for(Map<String,String> m:matches){
+            if(latestMatchList.get(m.get("date")) != null){
+                latestMatchList.get(m.get("date")).add(m);
             }else{
-                latestMatchList.put(m.getDate(), new ArrayList<MatchInfo>());
-                latestMatchList.get(m.getDate()).add(m);
+                latestMatchList.put(m.get("date"), new ArrayList<Map<String, String>>());
+                latestMatchList.get(m.get("date")).add(m);
             }
         }
     }
@@ -265,16 +264,10 @@ public class MatchListFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //TODO 这个要改掉
+//            list = BLS.getTeamConference(mContext);
                 if(teamId == 0){
                     initData(getLatestMatches());
-                    ACache a = ACache.get(getContext());
-                    Map.Entry<String,List<MatchInfo>> entry = ((TreeMap<String,List<MatchInfo>>)latestMatchList).lastEntry();
-                    int year = Integer.parseInt(entry.getValue().get(0).getYear());
-                    int monthOfYear = Integer.parseInt(entry.getKey().split("月")[0]);
-                    int dayOfMonth = Integer.parseInt(entry.getKey().split("月")[1].split("日")[0]);
-                    String date = String.valueOf(year) + "-" + String.format("%02d", monthOfYear) + "-" + String.format("%02d", dayOfMonth);
-
-                    a.put("LatestMatchDate", date, ACache.TEST_TIME);
                 }
                 else{
                     initData(getTeamMatches());

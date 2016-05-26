@@ -38,7 +38,7 @@ public class SharedPreferencesHelper {
     }
 
     /**
-     * 获取用户名
+     * 获取角色类型
      * @param context
      * @return
      */
@@ -66,32 +66,8 @@ public class SharedPreferencesHelper {
 
     }
 
-    /**
-     * 获取关注的球队
-     * @param context
-     * @return
-     */
-    public static String getFavTeam(Context context) {
-
-        //使用SharedPreferences 读取球队基本数据是否已经存在
-        SharedPreferences sharedPreferences = context.getSharedPreferences("favTeam", context.MODE_PRIVATE);
-
-        return sharedPreferences.getString(Consts.SharedPreferences_KEY_03, "");
-
+    public String getFanTeam(Context context){
+        return "老鹰";
     }
 
-    /**
-     * 设置关注的球队
-     * @param context
-     * @param favTeam
-     */
-    public static void  setFavTeam(Context context,String favTeam) {
-
-        //使用SharedPreferences 读取球队基本数据是否已经存在
-        SharedPreferences sharedPreferences = context.getSharedPreferences("favTeam", context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Consts.SharedPreferences_KEY_03, favTeam);
-        editor.commit();
-
-    }
 }

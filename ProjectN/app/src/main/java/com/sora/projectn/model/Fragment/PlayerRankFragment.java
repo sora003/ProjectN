@@ -9,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sora.projectn.R;
-import com.sora.projectn.utils.Adapter.PlayerRankAdapter;
 import com.sora.projectn.utils.MyListView;
-import com.sora.projectn.utils.beans.PlayerRankInfo;
+import com.sora.projectn.utils.Adapter.PlayerRankAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +31,8 @@ public class PlayerRankFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private List<PlayerRankInfo> playerRanks;
-    private List<PlayerRankInfo> rankList1 = new ArrayList<>(), rankList2 = new ArrayList<>(), rankList3 = new ArrayList<>(), rankList4 = new ArrayList<>();//得分篮板,助攻,抢断
+    private List<Map<String,String>> playerRanks;
+    private List<Map<String,String>> rankList1 = new ArrayList<>(), rankList2 = new ArrayList<>(), rankList3 = new ArrayList<>(), rankList4 = new ArrayList<>();//得分篮板,助攻,抢断
     private MyListView rank1,rank2,rank3,rank4;
 
     // TODO: Rename and change types of parameters
@@ -45,14 +45,14 @@ public class PlayerRankFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public PlayerRankFragment(List<PlayerRankInfo> playerRanks){
+    public PlayerRankFragment(List<Map<String,String>> playerRanks){
         this.playerRanks = playerRanks;
         initdata();
     }
 
     private void initdata(){
-        for(PlayerRankInfo player: playerRanks){
-            switch (player.getType()){
+        for(Map<String,String> player: playerRanks){
+            switch (player.get("type")){
                 case "0":
                     rankList1.add(player);
                     break;
@@ -67,34 +67,34 @@ public class PlayerRankFragment extends Fragment {
                     break;
             }
         }
-        Collections.sort(rankList1, new Comparator<PlayerRankInfo>() {
+        Collections.sort(rankList1, new Comparator<Map<String, String>>() {
             @Override
-            public int compare(PlayerRankInfo lhs, PlayerRankInfo rhs) {
-                if (Double.parseDouble(lhs.getSeasonData()) < Double.parseDouble(rhs.getSeasonData())) {
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("seasonData")) < Double.parseDouble(rhs.get("seasonData"))) {
                     return 1;
                 } else return -1;
             }
         });
-        Collections.sort(rankList2, new Comparator<PlayerRankInfo>() {
+        Collections.sort(rankList2, new Comparator<Map<String, String>>() {
             @Override
-            public int compare(PlayerRankInfo lhs, PlayerRankInfo rhs) {
-                if (Double.parseDouble(lhs.getSeasonData()) < Double.parseDouble(rhs.getSeasonData())) {
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("seasonData")) < Double.parseDouble(rhs.get("seasonData"))) {
                     return 1;
                 } else return -1;
             }
         });
-        Collections.sort(rankList3, new Comparator<PlayerRankInfo>() {
+        Collections.sort(rankList3, new Comparator<Map<String, String>>() {
             @Override
-            public int compare(PlayerRankInfo lhs, PlayerRankInfo rhs) {
-                if (Double.parseDouble(lhs.getSeasonData()) < Double.parseDouble(rhs.getSeasonData())) {
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("seasonData")) < Double.parseDouble(rhs.get("seasonData"))) {
                     return 1;
                 } else return -1;
             }
         });
-        Collections.sort(rankList4, new Comparator<PlayerRankInfo>() {
+        Collections.sort(rankList4, new Comparator<Map<String, String>>() {
             @Override
-            public int compare(PlayerRankInfo lhs, PlayerRankInfo rhs) {
-                if (Double.parseDouble(lhs.getSeasonData()) < Double.parseDouble(rhs.getSeasonData())) {
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("seasonData")) < Double.parseDouble(rhs.get("seasonData"))) {
                     return 1;
                 } else return -1;
             }

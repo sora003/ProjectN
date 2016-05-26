@@ -7,17 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.utils.Adapter.DayRankAdapter;
 import com.sora.projectn.utils.MyListView;
-import com.sora.projectn.utils.beans.DayRankInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,11 +36,9 @@ public class DayRankFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private List<DayRankInfo> dayranks;
-    private List<DayRankInfo> ranklist1 = new ArrayList<DayRankInfo>(),ranklist2 = new ArrayList<DayRankInfo>(),ranklist3 = new ArrayList<DayRankInfo>(),ranklist4 = new ArrayList<DayRankInfo>();//得分篮板,助攻,抢断
+    private List<Map<String,String>> dayranks;
+    private List<Map<String,String>> ranklist1 = new ArrayList<Map<String,String>>(),ranklist2 = new ArrayList<Map<String,String>>(),ranklist3 = new ArrayList<Map<String,String>>(),ranklist4 = new ArrayList<Map<String,String>>();//得分篮板,助攻,抢断
     private MyListView rank1,rank2,rank3,rank4;
-    private TextView titleMessage;
-    private String date;
 
     private OnFragmentInteractionListener mListener;
 
@@ -49,16 +46,15 @@ public class DayRankFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public DayRankFragment(List<DayRankInfo> dayranks,String date){
+    public DayRankFragment(List<Map<String,String>> dayranks){
         this.dayranks = dayranks;
-        this.date = date;
         initdata();
     }
 
 
     private void initdata(){
-        for(DayRankInfo player:dayranks){
-            switch (player.getType()){
+        for(Map<String,String> player:dayranks){
+            switch (player.get("type")){
                 case "0":
                     ranklist1.add(player);
                     break;
@@ -73,34 +69,34 @@ public class DayRankFragment extends Fragment {
                     break;
             }
         }
-        Collections.sort(ranklist1, new Comparator<DayRankInfo>() {
+        Collections.sort(ranklist1, new Comparator<Map<String, String>>() {
             @Override
-            public int compare(DayRankInfo lhs, DayRankInfo rhs) {
-                if (Double.parseDouble(lhs.getData()) < Double.parseDouble(rhs.getData())) {
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
                     return 1;
                 } else return -1;
             }
         });
-        Collections.sort(ranklist2, new Comparator<DayRankInfo>() {
+        Collections.sort(ranklist2, new Comparator<Map<String, String>>() {
             @Override
-            public int compare(DayRankInfo lhs, DayRankInfo rhs) {
-                if (Double.parseDouble(lhs.getData()) < Double.parseDouble(rhs.getData())) {
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
                     return 1;
                 } else return -1;
             }
         });
-        Collections.sort(ranklist3, new Comparator<DayRankInfo>() {
+        Collections.sort(ranklist3, new Comparator<Map<String, String>>() {
             @Override
-            public int compare(DayRankInfo lhs, DayRankInfo rhs) {
-                if (Double.parseDouble(lhs.getData()) < Double.parseDouble(rhs.getData())) {
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
                     return 1;
                 } else return -1;
             }
         });
-        Collections.sort(ranklist4, new Comparator<DayRankInfo>() {
+        Collections.sort(ranklist4, new Comparator<Map<String, String>>() {
             @Override
-            public int compare(DayRankInfo lhs, DayRankInfo rhs) {
-                if (Double.parseDouble(lhs.getData()) < Double.parseDouble(rhs.getData())) {
+            public int compare(Map<String, String> lhs, Map<String, String> rhs) {
+                if (Double.parseDouble(lhs.get("data")) < Double.parseDouble(rhs.get("data"))) {
                     return 1;
                 } else return -1;
             }
@@ -143,7 +139,6 @@ public class DayRankFragment extends Fragment {
         rank2 = (MyListView)view.findViewById(R.id.day_rank_2);
         rank3 = (MyListView)view.findViewById(R.id.day_rank_3);
         rank4 = (MyListView)view.findViewById(R.id.day_rank_4);
-        titleMessage = (TextView)view.findViewById(R.id.dayrank_titlemessage);
         DayRankAdapter adapter1 = new DayRankAdapter(ranklist1,getContext());
         DayRankAdapter adapter2 = new DayRankAdapter(ranklist2,getContext());
         DayRankAdapter adapter3 = new DayRankAdapter(ranklist3,getContext());
@@ -152,7 +147,6 @@ public class DayRankFragment extends Fragment {
         rank2.setAdapter(adapter2);
         rank3.setAdapter(adapter3);
         rank4.setAdapter(adapter4);
-        titleMessage.setText("以下是" + date + "最新消息");
         return view;
     }
 
