@@ -1,7 +1,6 @@
 package com.sora.projectn.model.Fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,7 +17,7 @@ import com.sora.projectn.R;
 import com.sora.projectn.model.Activity.MainActivity;
 import com.sora.projectn.utils.CoachMatchingAdapter;
 import com.sora.projectn.utils.Consts;
-import com.sora.projectn.utils.beans.PlayerMatchInfo;
+import com.sora.projectn.utils.beans.PlayerHistoryMatchInfo;
 import com.sora.projectn.utils.beans.PlayerMatchingInfo;
 import com.sora.projectn.utils.beans.PlayerTrainingInfo;
 import com.sora.projectn.utils.beans.SearchPlayerInfo;
@@ -244,7 +243,7 @@ public class CoachFreeThrowRateFragment extends Fragment {
         }
     };
 
-    private boolean hasPlayerId(int id, ArrayList<PlayerMatchInfo> list){
+    private boolean hasPlayerId(int id, ArrayList<PlayerHistoryMatchInfo> list){
         for (int i=0; i<list.size(); i++){
             if (id==list.get(i).getPlayerId()){
                 return true;
@@ -254,7 +253,7 @@ public class CoachFreeThrowRateFragment extends Fragment {
         return false;
     }
 
-    private PlayerMatchInfo getPlayerById(int playerId,ArrayList<PlayerMatchInfo> list){
+    private PlayerHistoryMatchInfo getPlayerById(int playerId,ArrayList<PlayerHistoryMatchInfo> list){
         for (int i=0; i<list.size(); i++){
             if (playerId==list.get(i).getPlayerId()){
                 return list.get(i);
@@ -265,7 +264,7 @@ public class CoachFreeThrowRateFragment extends Fragment {
 
 
 
-    private int getIndexByPlayerId(int playerId, ArrayList<PlayerMatchInfo> list){
+    private int getIndexByPlayerId(int playerId, ArrayList<PlayerHistoryMatchInfo> list){
         int index=0;
         for(index=0; index<list.size(); index++){
             if (list.get(index).getPlayerId()==playerId){

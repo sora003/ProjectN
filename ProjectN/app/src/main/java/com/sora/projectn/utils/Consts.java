@@ -1,7 +1,5 @@
 package com.sora.projectn.utils;
 
-import android.content.SharedPreferences;
-
 /**
  * Created by Sora on 2016-04-26.
  */
@@ -11,7 +9,7 @@ public class Consts {
      * Server地址
      */
 
-    public static final  String url = "http://192.168.191.1:8080/NBADataSystem/";
+    public static final  String url = "http://192.168.31.225:8080/NBADataSystem/";
 
     public static final  String getTeams = url + "getTeams.do";
 
@@ -27,7 +25,7 @@ public class Consts {
 
     public static final String playerrank = url + "getPlayerRanks.do";
 
-    public static final String dayrank = url + "getPlayerRanks.do?date=2016-03-21";
+    public static final String dayrank = url + "getPlayerRanks.do";
 
     public static final  String getPlayerRanks = url + "getPlayerRanks.do";
 

@@ -3,14 +3,15 @@ package com.sora.projectn.utils.beans;
 /**
  * Created by qhy on 2016/5/16.
  */
-public class PlayerMatchInfo {
+public class TeamMatchInfo {
 
-    private String playerName;//球员姓名
-    private String playerId;//球员ID
+
     private String matchId;//比赛ID
     private String teamId;//球队ID
-    private String isFirst;//是否首发
-    private String time;//出场时间
+    private String name;//球队名称
+    private String ifHome;//是否主场
+    private String time;//比赛时间
+    private String isFirst;
     private String twoHit;//两分命中
     private String twoShot;//两分出售
     private String threeHit;//三分命中
@@ -27,21 +28,6 @@ public class PlayerMatchInfo {
     private String foul;//失误
     private String score;//得分
 
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public String getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
-    }
 
     public String getMatchId() {
         return matchId;
@@ -57,6 +43,22 @@ public class PlayerMatchInfo {
 
     public void setTeamId(String teamId) {
         this.teamId = teamId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIfHome() {
+        return ifHome;
+    }
+
+    public void setIfHome(String ifHome) {
+        this.ifHome = ifHome;
     }
 
     public String getIsFirst() {

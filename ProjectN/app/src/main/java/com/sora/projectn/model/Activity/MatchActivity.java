@@ -13,19 +13,19 @@ import android.widget.ListView;
 
 import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
-import com.sora.projectn.utils.Consts;
-import com.sora.projectn.utils.GetHttpResponse;
 import com.sora.projectn.utils.Adapter.MatchPlayerAdapter;
 import com.sora.projectn.utils.Adapter.MatchTeamAdapter;
+import com.sora.projectn.utils.Consts;
+import com.sora.projectn.utils.GetHttpResponse;
+import com.sora.projectn.utils.beans.PlayerMatchInfo;
+import com.sora.projectn.utils.beans.TeamMatchInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Sora on 2016/2/6.
@@ -36,9 +36,9 @@ public class MatchActivity extends AppCompatActivity{
     private int matchId = 2015102701;
     private int homeTeamId = 0 , customTeamId = 0;
     private static final int GET_DATA = 0x01;
-    private List<Map<String,String>> matchTeamInfo = new ArrayList<>();
-    private List<Map<String,String>> matchHomeTeamPlayerInfo = new ArrayList<>();
-    private List<Map<String,String>> matchCustomTeamPlayerInfos = new ArrayList<>();
+    private List<TeamMatchInfo> matchTeamInfo = new ArrayList<>();
+    private List<PlayerMatchInfo> matchHomeTeamPlayerInfo = new ArrayList<>();
+    private List<PlayerMatchInfo> matchCustomTeamPlayerInfos = new ArrayList<>();
 
     private Toolbar toolbar;
 
@@ -66,13 +66,13 @@ public class MatchActivity extends AppCompatActivity{
      */
     private void getData() {
         matchTeamInfo = getMatchTeamInfo();
-        List<Map<String,String>> matchPlayerInfo = getMatchPlayerInfo();
+        List<PlayerMatchInfo> matchPlayerInfo = getMatchPlayerInfo();
 
-        for(Map<String,String> t: matchPlayerInfo){
-            if(Integer.parseInt(t.get("teamId")) == homeTeamId){
+        for(PlayerMatchInfo t: matchPlayerInfo){
+            if(Integer.parseInt(t.getTeamId()) == homeTeamId){
                 matchHomeTeamPlayerInfo.add(t);
             }
-            else if(Integer.parseInt(t.get("teamId")) == customTeamId){
+            else if(Integer.parseInt(t.getTeamId()) == customTeamId){
                 matchCustomTeamPlayerInfos.add(t);
             }
         }
@@ -108,8 +108,8 @@ public class MatchActivity extends AppCompatActivity{
 
 
 
-    private List<Map<String,String>> getMatchTeamInfo(){
-        List<Map<String, String>> matchTeamInfo = new ArrayList<>();
+    private List<TeamMatchInfo> getMatchTeamInfo(){
+        List<TeamMatchInfo> matchTeamInfo = new ArrayList<>();
         String jsonString1;
         jsonString1 = ACache.get(this).getAsString("getTeamMatchStatistics - " + matchId);
         if(jsonString1 == null) {
@@ -120,7 +120,7 @@ public class MatchActivity extends AppCompatActivity{
         try {
             JSONArray array = new JSONArray(jsonString1);
             for (int i = 0; i < array.length(); i++) {
-                Map<String,String> temp = new HashMap<>();
+                TeamMatchInfo temp = new TeamMatchInfo();
                 JSONObject obj = array.getJSONObject(i);
                 String name = null;
                 String jsonString;
@@ -174,6 +174,7 @@ public class MatchActivity extends AppCompatActivity{
                 String freeThrowShot = obj.getString("freeThrowShot");
                 String offReb = obj.getString("offReb");
                 String defReb = obj.getString("defReb");
+                String totReb = obj.getString("totReb");
                 String ass = obj.getString("ass");
                 String steal = obj.getString("steal");
                 String blockShot = obj.getString("blockShot");
@@ -181,31 +182,32 @@ public class MatchActivity extends AppCompatActivity{
                 String foul = obj.getString("foul");
                 String score = obj.getString("score");
 
-                temp.put("matchId",matchId);
-                temp.put("teamId",teamId);
-                temp.put("name",name);
-                temp.put("ifHome",ifHome);
+                temp.setMatchId(matchId);
+                temp.setTeamId(teamId);
+                temp.setName(name);
+                temp.setIfHome(ifHome);
                 if(customTeamId == 0 && Integer.parseInt(ifHome) == 0){
                     customTeamId = Integer.parseInt(teamId);
                 }
                 else if(homeTeamId == 0 && Integer.parseInt(ifHome) == 1){
                     homeTeamId = Integer.parseInt(teamId);
                 }
-                temp.put("time",time);
-                temp.put("twoHit",twoHit);
-                temp.put("twoShot",twoShot);
-                temp.put("threeHit",threeHit);
-                temp.put("threeShot",threeShot);
-                temp.put("freeThrowHit",freeThrowHit);
-                temp.put("freeThrowShot",freeThrowShot);
-                temp.put("offReb",offReb);
-                temp.put("defReb",defReb);
-                temp.put("ass",ass);
-                temp.put("steal",steal);
-                temp.put("blockShot",blockShot);
-                temp.put("turnOver",turnOver);
-                temp.put("foul",foul);
-                temp.put("score",score);
+                temp.setTime(time);
+                temp.setTwoHit(twoHit);
+                temp.setTwoShot(twoShot);
+                temp.setThreeHit(threeHit);
+                temp.setThreeShot(threeShot);
+                temp.setFreeThrowHit(freeThrowHit);
+                temp.setFreeThrowShot(freeThrowShot);
+                temp.setOffReb(offReb);
+                temp.setDefReb(defReb);
+                temp.setTotReb(totReb);
+                temp.setAss(ass);
+                temp.setSteal(steal);
+                temp.setBlockShot(blockShot);
+                temp.setTurnOver(turnOver);
+                temp.setFoul(foul);
+                temp.setScore(score);
 
 
 
@@ -227,9 +229,9 @@ public class MatchActivity extends AppCompatActivity{
         }
     }
 
-    private List<Map<String,String>> getMatchPlayerInfo(){
+    private List<PlayerMatchInfo> getMatchPlayerInfo(){
 
-        List<Map<String, String>> matchPlayerInfo = new ArrayList<>();
+        List<PlayerMatchInfo> matchPlayerInfo = new ArrayList<>();
         String jsonString;
         jsonString = ACache.get(this).getAsString("getPlayerMatchStatistics - "+matchId );
         if(jsonString == null) {
@@ -245,7 +247,7 @@ public class MatchActivity extends AppCompatActivity{
         try {
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
-                Map<String,String> temp = new HashMap<>();
+                PlayerMatchInfo temp = new PlayerMatchInfo();
                 JSONObject obj = array.getJSONObject(i);
                 String matchId = obj.getString("matchId");
                 String playerId = obj.getString("playerId");
@@ -261,6 +263,7 @@ public class MatchActivity extends AppCompatActivity{
                 String freeThrowShot = obj.getString("freeThrowShot");
                 String offReb = obj.getString("offReb");
                 String defReb = obj.getString("defReb");
+                String totReb = obj.getString("totReb");
                 String ass = obj.getString("ass");
                 String steal = obj.getString("steal");
                 String blockShot = obj.getString("blockShot");
@@ -268,26 +271,27 @@ public class MatchActivity extends AppCompatActivity{
                 String foul = obj.getString("foul");
                 String score = obj.getString("score");
 
-                temp.put("playerName",playerName);
-                temp.put("playerId",playerId);
-                temp.put("matchId",matchId);
-                temp.put("teamId",teamId);
-                temp.put("isFirst",isFirst);
-                temp.put("time",time);
-                temp.put("twoHit",twoHit);
-                temp.put("twoShot",twoShot);
-                temp.put("threeHit",threeHit);
-                temp.put("threeShot",threeShot);
-                temp.put("freeThrowHit",freeThrowHit);
-                temp.put("freeThrowShot",freeThrowShot);
-                temp.put("offReb",offReb);
-                temp.put("defReb",defReb);
-                temp.put("ass",ass);
-                temp.put("steal",steal);
-                temp.put("blockShot",blockShot);
-                temp.put("turnOver",turnOver);
-                temp.put("foul",foul);
-                temp.put("score",score);
+                temp.setMatchId(matchId);
+                temp.setPlayerId(playerId);
+                temp.setTeamId(teamId);
+                temp.setPlayerName(playerName);
+                temp.setIsFirst(isFirst);
+                temp.setTime(time);
+                temp.setTwoHit(twoHit);
+                temp.setTwoShot(twoShot);
+                temp.setThreeHit(threeHit);
+                temp.setThreeShot(threeShot);
+                temp.setFreeThrowHit(freeThrowHit);
+                temp.setFreeThrowShot(freeThrowShot);
+                temp.setOffReb(offReb);
+                temp.setDefReb(defReb);
+                temp.setTotReb(totReb);
+                temp.setAss(ass);
+                temp.setSteal(steal);
+                temp.setBlockShot(blockShot);
+                temp.setTurnOver(turnOver);
+                temp.setFoul(foul);
+                temp.setScore(score);
 
 
 

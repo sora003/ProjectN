@@ -15,18 +15,17 @@ import android.widget.Toast;
 
 import com.sora.projectn.R;
 import com.sora.projectn.utils.ACache;
+import com.sora.projectn.utils.Adapter.MatchListAdapter;
 import com.sora.projectn.utils.Consts;
 import com.sora.projectn.utils.GetHttpResponse;
-import com.sora.projectn.utils.Adapter.MatchListAdapter;
+import com.sora.projectn.utils.beans.MatchInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by qhy on 2016/5/4.
@@ -35,7 +34,7 @@ public class MatchSearchActivity  extends FragmentActivity {
 
 
     private Toolbar toolbar;
-    private List<Map<String,String>> matchList = new ArrayList<>();
+    private List<MatchInfo> matchList = new ArrayList<>();
     private ListView matchListView;
     private DatePicker datePicker;
     private int year, monthOfYear, DayOfMonth;
@@ -69,7 +68,7 @@ public class MatchSearchActivity  extends FragmentActivity {
             @Override
             public void onDateChanged(DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
                 MatchSearchActivity.this.year = year;
-                MatchSearchActivity.this.monthOfYear = monthOfYear;
+                MatchSearchActivity.this.monthOfYear = monthOfYear + 1;
                 MatchSearchActivity.this.DayOfMonth = dayOfMonth;
                 new Thread(new Runnable() {
                     @Override
@@ -130,11 +129,11 @@ public class MatchSearchActivity  extends FragmentActivity {
         {
             Log.i("Resource",Consts.resourceFromCache);
         }
-        List<Map<String, String>> matchForDate = new ArrayList<>();
+        List<MatchInfo> matchForDate = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
-                Map<String,String> temp = new HashMap<>();
+               MatchInfo temp = new MatchInfo();
                 JSONObject obj = array.getJSONObject(i);
                 String id = obj.getString("id");
                 String vId = obj.getString("vId");
@@ -148,18 +147,18 @@ public class MatchSearchActivity  extends FragmentActivity {
                 String year = obj.getString("year");
                 String time = obj.getString("time");
 
-                temp.put("id", id);
-                temp.put("vId", vId);
-                temp.put("visitingTeam", visitingTeam);
-                temp.put("hId", hId);
-                temp.put("homeTeam", homeTeam);
-                temp.put("visitingScore", visitingScore);
-                temp.put("homeScore", homeScore);
-                temp.put("type", type);
-                temp.put("date", date);
-                temp.put("year", year);
-                temp.put("time", time);
 
+                temp.setId(id);
+                temp.setvId(vId);
+                temp.setVisitingTeam(visitingTeam);
+                temp.sethId(hId);
+                temp.setHomeTeam(homeTeam);
+                temp.setVisitingScore(visitingScore);
+                temp.setHomeScore(homeScore);
+                temp.setType(type);
+                temp.setDate(date);
+                temp.setYear(year);
+                temp.setTime(time);
                 matchForDate.add(temp);
             }
 
@@ -176,7 +175,7 @@ public class MatchSearchActivity  extends FragmentActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             Intent intent = new Intent(MatchSearchActivity.this, MatchActivity.class);
-            intent.putExtra("no",Integer.parseInt(matchList.get(position).get("id")));
+            intent.putExtra("no",Integer.parseInt(matchList.get(position).getId()));
             startActivity(intent);
 
 
