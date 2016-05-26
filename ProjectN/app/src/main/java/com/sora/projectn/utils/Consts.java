@@ -91,6 +91,8 @@ public class Consts {
 
     public static final String SharedPreferences_KEY_02 = "user";
 
+    public static final String SharedPreferences_KEY_03 = "favTeam";
+
     /**
      * 球迷
      */
